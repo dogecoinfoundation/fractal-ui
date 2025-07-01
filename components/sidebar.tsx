@@ -50,10 +50,8 @@ export const SideBar = () => {
   return (
     <nav className="flex flex-col gap-2 min-h-full p-2 select-none border-r-1 border-r-gray-200 bg-gray-50">
       <Link
-        href={"/"}
-        className={
-          "flex flex-col items-center mb-3 select-none rounded-md hover:text-gray-500"
-        }
+        href="/"
+        className="flex flex-col items-center mb-3 select-none rounded-md hover:text-gray-500"
       >
         <h1 className="text-md font-semibold">Fractal Administration</h1>
         <h2 className="font-mono text-xs font-normal border-1 border-blue-600/25 bg-blue-200 text-blue-700 px-1 py-0.25 rounded-sm">
