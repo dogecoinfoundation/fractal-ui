@@ -1,5 +1,5 @@
-import { Header } from "../../components/header";
-import { Separator } from "../../components/separator";
+import { Header } from "../../../components/header";
+import { Separator } from "../../../components/separator";
 
 export default function ListMints() {
   return (

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { SideBar } from "@/app/components/sidebar";
+import { SideBar } from "@/components/sidebar";
 
 export const metadata: Metadata = {
   title: "Fractal Admin",
