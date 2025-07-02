@@ -1,4 +1,3 @@
-import { readFileSync } from "node:fs";
 import path from "node:path";
 import Database from "better-sqlite3";
 import { type NextRequest, NextResponse } from "next/server";
