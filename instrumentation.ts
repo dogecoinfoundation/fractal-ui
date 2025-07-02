@@ -1,22 +1,16 @@
-import { readFileSync } from "node:fs";
-import path from "node:path";
 import Database from "better-sqlite3";
+import { mintsDataSql, mintsTableSql } from "@/sql/mints";
 
 export async function register() {
-  const dbPath = path.join(process.cwd(), "database.sqlite");
-  const db = new Database(dbPath);
+  const db = new Database("database.sqlite");
 
   console.log("Registering mints table...");
-  const tableSqlPath = path.join(process.cwd(), "sql", "mints-table.sql");
-  const tableSqlContent = readFileSync(tableSqlPath, "utf-8");
-  db.exec(tableSqlContent);
+  db.exec(mintsTableSql);
 
   const mintsData = db.prepare("SELECT * FROM mints").all();
 
   if (mintsData.length === 0) {
-    console.log("No mints sample data found. Inserting sample data.");
-    const dataSqlPath = path.join(process.cwd(), "sql", "mints-data.sql");
-    const dataSqlContents = readFileSync(dataSqlPath, "utf-8");
-    db.exec(dataSqlContents);
+    console.log("No mints sample data found! Inserting sample data.");
+    db.exec(mintsDataSql);
   }
 }
