@@ -17,9 +17,7 @@ export default function RootLayout({
       <body className="antialiased h-full">
         <div className="flex flex-row min-h-full" role="document">
           <SideBar />
-          <main className="flex flex-col flex-1 overflow-y-auto gap-2 p-4">
-            {children}
-          </main>
+          <main className="flex flex-col flex-1">{children}</main>
         </div>
       </body>
     </html>
