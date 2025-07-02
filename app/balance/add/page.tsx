@@ -1,12 +1,9 @@
-import { Header } from "@/components/header";
-import { Separator } from "@/components/separator";
+import { PageContainer } from "@/components/page-container";
 
 export default function AddBalance() {
   return (
-    <>
-      <Header label="Add Balance" />
-      <Separator />
+    <PageContainer label="Add Balance">
       <section>Placeholder</section>
-    </>
+    </PageContainer>
   );
 }

@@ -1,12 +1,9 @@
-import { Header } from "@/components/header";
-import { Separator } from "@/components/separator";
+import { PageContainer } from "@/components/page-container";
 
 export default function NewMint() {
   return (
-    <>
-      <Header label="Mint an Asset" />
-      <Separator />
+    <PageContainer label="Mint an Asset">
       <section>Placeholder</section>
-    </>
+    </PageContainer>
   );
 }

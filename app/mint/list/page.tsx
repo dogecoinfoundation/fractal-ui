@@ -8,5 +8,7 @@ export default function ListMints() {
       <Separator />
       <section>Placeholder</section>
     </>
+    <PageContainer label="Minted Assets">
+    </PageContainer>
   );
 }
