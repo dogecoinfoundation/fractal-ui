@@ -1,6 +1,7 @@
 INSERT OR IGNORE INTO mints (
   title,
   description,
+  created_at,
   metadata,
   fraction_count,
   hash,
@@ -11,6 +12,7 @@ INSERT OR IGNORE INTO mints (
 ) VALUES (
   'Automobile Asset',
   'A sample automobile asset for testing purposes.',
+  '2023-06-12 12:34:20',
   '{"type": "car", "make": "DeLorean", "model": "DMC-12", "year": 1981, "vin": "1234567890"}',
   10000,
   'd61a1a36598dab02848342e9d4b6cc20',
@@ -22,6 +24,7 @@ INSERT OR IGNORE INTO mints (
 (
   'Trading Card Asset',
   'A sample trading card asset for testing purposes.',
+  '2019-10-31 19:45:01',
   '{"type": "trading_card", "category": "Pokemon", "name": "Pikachu", "rarity": "common", "set": "Pokémon TCG"}',
   100,
   '9c3061475e1b64c7abb9514043e647da',
@@ -33,6 +36,7 @@ INSERT OR IGNORE INTO mints (
 (
   'Property Asset',
   'A sample property asset for testing purposes.',
+  '2024-02-20 10:20:30',
   '{"type": "property", "category": "House", "address": "123 Main St, Anytown, USA", "city": "Anytown", "state": "CA", "zip": "12345", "country": "USA"}',
   1000000,
   'a1e48d1794aaa2a78f54c88d2097d76b',
