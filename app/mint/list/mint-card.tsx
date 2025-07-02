@@ -65,7 +65,7 @@ export const MintCard = ({ mint }: { mint: Mint }) => {
           {mint.tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center justify-center rounded-sm border px-1.25 py-0.25 text-xs font-medium w-fit whitespace-nowrap shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 overflow-hidden border-transparent bg-green-200 text-green-900"
+              className="inline-flex items-center justify-center rounded-xs border px-1.25 py-0.25 text-xs font-medium w-fit whitespace-nowrap shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] overflow-hidden border-transparent bg-green-200 text-green-900"
             >
               {tag}
             </span>
