@@ -21,13 +21,22 @@ export type ApiMint = Mint & {
   tags: string;
 };
 
+
+const mapApiMintsToMints = (data: ApiMint[]): Mint[] => {
+  return data.map((mint) => ({
+    ...mint,
+    tags: JSON.parse(mint.tags),
+    metadata: JSON.parse(mint.metadata),
+  }));
+};
+
 const dbPath = path.join(process.cwd(), "database.sqlite");
 const db = new Database(dbPath);
 
 export async function GET() {
   try {
-    const mints = db.prepare("SELECT * FROM mints").all();
-    return NextResponse.json(mints);
+    const mints = db.prepare("SELECT * FROM mints").all() as ApiMint[];
+    return NextResponse.json<Mint[]>(mapApiMintsToMints(mints));
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
