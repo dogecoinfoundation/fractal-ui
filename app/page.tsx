@@ -1,9 +1,12 @@
-import { PageContainer } from "@/components/page-container";
+import { Header } from "@/components/header";
+import { Separator } from "@/components/separator";
 
 export default function Home() {
   return (
-    <PageContainer label="Home">
+    <>
+      <Header label="Home" />
+      <Separator />
       <section>Placeholder</section>
-    </PageContainer>
+    </>
   );
 }
