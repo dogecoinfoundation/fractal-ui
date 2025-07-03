@@ -10,7 +10,8 @@ export const mintsTableSql = `
     feed_url TEXT NOT NULL,
     block_height INTEGER NOT NULL DEFAULT 0,
     tags TEXT NOT NULL DEFAULT '[]',
-    transaction_hash TEXT NULL
+    transaction_hash TEXT NULL,
+    owner_address TEXT NULL
   );
 `;
 
