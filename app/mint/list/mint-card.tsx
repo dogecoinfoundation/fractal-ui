@@ -1,7 +1,9 @@
+import { tz } from "@date-fns/tz";
 import { format } from "date-fns/format";
+
 import { ArrowUpRight, Cake, Tags } from "lucide-react";
 import type { Mint } from "@/app/api/mints/route";
-import { Separator } from "../../../components/separator";
+import { Separator } from "@/components/separator";
 
 export const MintCard = ({ mint }: { mint: Mint }) => {
   return (
@@ -59,7 +61,13 @@ export const MintCard = ({ mint }: { mint: Mint }) => {
       <footer className="flex flex-wrap justify-between items-center">
         <div className="flex gap-1 text-xs h-4 text-zinc-600">
           <Cake className="size-4 shrink-0 text-zinc-400" />
-          {`Minted on ${format(mint.created_at, "MMMM dd, yyyy 'at' h:mm a")}`}
+          {`Minted on ${format(
+            new Date(Number(mint.created_at) * 1000),
+            "MMMM dd, yyyy 'at' h:mm a",
+            {
+              in: tz("Australia/Sydney"),
+            },
+          )}`}
         </div>
         <div className="flex flex-wrap gap-2 items-center">
           {mint.tags.map((tag) => (
