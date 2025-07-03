@@ -2,8 +2,8 @@
 
 import useSWR from "swr";
 import type { Mint } from "@/app/api/mints/route";
-import { MintCard } from "@/app/mint/list/mint-card";
 import { Header } from "@/components/header";
+import { MintCard } from "@/components/mint-card";
 import { Separator } from "@/components/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 
