@@ -3,7 +3,7 @@ import Database from "better-sqlite3";
 import { type NextRequest, NextResponse } from "next/server";
 
 export type Mint = {
-  id: number;
+  id: number | bigint;
   title: string;
   description: string;
   created_at: string;
