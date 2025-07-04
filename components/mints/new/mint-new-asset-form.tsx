@@ -81,7 +81,7 @@ export const MintNewAssetForm = () => {
           inputType="number"
         />
 
-        <Button type="submit" variant="emerald" className="cursor-pointer">
+        <Button type="submit" variant="creative" className="cursor-pointer">
           Mint
         </Button>
       </form>
