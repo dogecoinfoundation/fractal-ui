@@ -3,7 +3,7 @@ import Database from "better-sqlite3";
 import { type NextRequest, NextResponse } from "next/server";
 
 export type Mint = {
-  id: number;
+  id: number | bigint;
   title: string;
   description: string;
   created_at: string;
@@ -21,13 +21,30 @@ export type ApiMint = Mint & {
   tags: string;
 };
 
+export type NewMint = Pick<
+  Mint,
+  "title" | "description" | "metadata" | "fraction_count" | "feed_url" | "tags"
+>;
+
+type MintResponse = Pick<Mint, "id" | "transaction_hash"> & {
+  encoded_transaction_body: string;
+};
+
+const mapApiMintsToMints = (data: ApiMint[]): Mint[] => {
+  return data.map((mint) => ({
+    ...mint,
+    tags: JSON.parse(mint.tags),
+    metadata: JSON.parse(mint.metadata),
+  }));
+};
+
 const dbPath = path.join(process.cwd(), "database.sqlite");
 const db = new Database(dbPath);
 
 export async function GET() {
   try {
-    const mints = db.prepare("SELECT * FROM mints").all();
-    return NextResponse.json(mints);
+    const mints = db.prepare("SELECT * FROM mints").all() as ApiMint[];
+    return NextResponse.json<Mint[]>(mapApiMintsToMints(mints));
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
@@ -39,34 +56,27 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const {
-      title,
-      description,
-      metadata,
-      fraction_count,
-      hash,
-      feed_url,
-      block_height,
-      tags,
-      transaction_hash,
-    } = await request.json();
+    const newMint: NewMint = await request.json();
+    const { title, description, metadata, fraction_count, feed_url, tags } =
+      newMint;
 
     const statement = db.prepare(
-      "INSERT INTO mints (title, description, metadata, fraction_count, hash, feed_url, block_height, tags, transaction_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO mints (title, description, metadata, fraction_count, feed_url, tags) VALUES (?, ?, ?, ?, ?, ?)",
     );
-    statement.run(
+    const info = statement.run(
       title,
       description,
       JSON.stringify(metadata),
       fraction_count,
-      hash,
       feed_url,
-      block_height,
       JSON.stringify(tags),
-      transaction_hash,
     );
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json<MintResponse>({
+      id: info.lastInsertRowid,
+      encoded_transaction_body: JSON.stringify({ body: "example" }),
+      transaction_hash: "a49d37c2b2d964cb284d670b2c017ba9",
+    });
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(

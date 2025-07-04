@@ -18,7 +18,7 @@ export default function RootLayout({
         <div className="flex flex-row min-h-full" role="document">
           <SideBar />
           <main className="flex flex-col flex-1">
-            <div className="flex flex-col h-screen gap-2 p-2">{children}</div>
+            <div className="flex flex-col h-screen gap-3 p-4">{children}</div>
           </main>
         </div>
       </body>

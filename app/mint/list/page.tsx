@@ -1,24 +1,14 @@
 "use client";
 
 import useSWR from "swr";
-import type { ApiMint, Mint } from "@/app/api/mints/route";
-import { MintCard } from "@/app/mint/list/mint-card";
+import type { Mint } from "@/app/api/mints/route";
 import { Header } from "@/components/header";
+import { MintCard } from "@/components/mints/mint-card";
 import { Separator } from "@/components/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const mapApiMintsToMints = (data: ApiMint[]): Mint[] => {
-  return data.map((mint) => ({
-    ...mint,
-    tags: JSON.parse(mint.tags),
-    metadata: JSON.parse(mint.metadata),
-  }));
-};
-
-const fetcher = (url: string) =>
-  fetch(url)
-    .then((res) => res.json())
-    .then((json) => mapApiMintsToMints(json));
+const fetcher = (url: string): Promise<Mint[]> =>
+  fetch(url).then((res) => res.json());
 
 export default function ListMints() {
   const { data, isLoading, error } = useSWR("/api/mints", fetcher);

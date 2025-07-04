@@ -48,7 +48,7 @@ export const SideBar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-col gap-2 p-2 h-screen sticky top-0 overflow-y-auto select-none border-r-1 border-r-gray-200 bg-gray-50">
+    <nav className="flex flex-col gap-2 p-2 h-screen sticky top-0 overflow-y-auto select-none border-r-1 border-r-gray-200 bg-gray-50 px-4">
       <Link
         href="/"
         className="flex flex-col items-center mb-3 select-none rounded-md hover:text-gray-500"
