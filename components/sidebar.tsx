@@ -33,7 +33,7 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
-    name: "Balance",
+    name: "Manage",
     items: [
       {
         label: "Add Balance",
