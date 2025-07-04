@@ -63,7 +63,7 @@ export const MintNewAssetForm = () => {
   return (
     <Form {...form}>
       <form
-        className="min-w-xl h-xl flex-0 bg-white/80 border-zinc-300 border-1 rounded-sm p-4 gap-4 flex flex-col"
+        className="min-w-xl h-xl flex-0 bg-white border-zinc-300 border-1 rounded-sm p-4 gap-4 flex flex-col z-1 shadow-sm shadow-zinc-300/50"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <MintFormField control={form.control} name="title" label="Asset Name" />
