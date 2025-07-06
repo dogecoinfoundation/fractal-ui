@@ -23,11 +23,11 @@ const Widget = ({ title, statuses, titleRight }: WidgetProps) => {
     <div className="flex flex-col bg-white border-1 border-gray-200 rounded-md gap-2 p-2">
       <div className="flex justify-between">
         <h3 className="text-sm font-semibold">{title}</h3>
-        {titleRight && (
+        {titleRight ? (
           <Badge variant="secondary" className="px-1 text-muted-foreground">
             {titleRight.toLocaleString()}
           </Badge>
-        )}
+        ) : null}
       </div>
       <div className="flex flex-col gap-2">
         {statuses.map(({ status }) => (

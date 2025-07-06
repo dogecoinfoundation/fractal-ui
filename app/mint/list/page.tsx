@@ -19,8 +19,8 @@ export default function ListMints() {
       <Header label="Minted Assets" />
       <Separator />
       <Paper>
-        {error && <h1>Error fetching mints.</h1>}
-        {isLoading && <Skeleton className="h-10 w-full" />}
+        {error ? <h1>Error fetching mints.</h1> : null}
+        {isLoading ? <Skeleton className="h-10 w-full" /> : null}
         {data?.map((mint) => (
           <MintCard key={mint.id} mint={mint} />
         ))}
