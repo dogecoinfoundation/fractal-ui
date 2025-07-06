@@ -5,7 +5,7 @@ export const Paper = ({
   className,
   children,
 }: {
-  className: string;
+  className?: string;
   children: ReactNode;
 }) => {
   return (
