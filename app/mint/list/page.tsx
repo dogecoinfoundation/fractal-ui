@@ -2,9 +2,7 @@
 
 import useSWR from "swr";
 import type { Mint } from "@/app/api/mints/route";
-import { Header } from "@/components/header";
 import { MintCard } from "@/components/mints/mint-card";
-import { Separator } from "@/components/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Paper } from "@/components/ui/surfaces/Paper";
 
@@ -15,16 +13,12 @@ export default function ListMints() {
   const { data, isLoading, error } = useSWR("/api/mints", fetcher);
 
   return (
-    <>
-      <Header label="Minted Assets" />
-      <Separator />
-      <Paper>
-        {error ? <h1>Error fetching mints.</h1> : null}
-        {isLoading ? <Skeleton className="h-10 w-full" /> : null}
-        {data?.map((mint) => (
-          <MintCard key={mint.id} mint={mint} />
-        ))}
-      </Paper>
-    </>
+    <Paper>
+      {error ? <h1>Error fetching mints.</h1> : null}
+      {isLoading ? <Skeleton className="h-10 w-full" /> : null}
+      {data?.map((mint) => (
+        <MintCard key={mint.id} mint={mint} />
+      ))}
+    </Paper>
   );
 }
