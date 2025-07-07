@@ -1,6 +1,5 @@
-import path from "node:path";
-import Database from "better-sqlite3";
 import { NextResponse } from "next/server";
+import { getDatabase } from "@/app/database";
 
 export type Balance = {
   id: number;
@@ -9,8 +8,7 @@ export type Balance = {
   value: number;
 };
 
-const dbPath = path.join(process.cwd(), "database.sqlite");
-const db = new Database(dbPath);
+const db = getDatabase();
 
 export async function GET() {
   try {

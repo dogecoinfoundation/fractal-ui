@@ -1,6 +1,7 @@
 import path from "node:path";
 import Database from "better-sqlite3";
 import { type NextRequest, NextResponse } from "next/server";
+import { getDatabase } from "@/app/database";
 
 export type Mint = {
   id: number | bigint;
@@ -38,8 +39,7 @@ const mapApiMintsToMints = (data: ApiMint[]): Mint[] => {
   }));
 };
 
-const dbPath = path.join(process.cwd(), "database.sqlite");
-const db = new Database(dbPath);
+const db = getDatabase();
 
 export async function GET() {
   try {
