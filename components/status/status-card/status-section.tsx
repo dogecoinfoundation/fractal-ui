@@ -15,7 +15,7 @@ type SectionContent = {
 
 export const Monospace = ({ children }: { children: ReactNode }) => {
   return (
-    <span className="font-mono bg-orange-200 text-orange-900 px-1 py-0.2 rounded-sm">
+    <span className="font-mono bg-orange-100 text-amber-800 px-1 py-0.2 rounded-sm">
       {children}
     </span>
   );
