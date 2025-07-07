@@ -31,9 +31,9 @@ export const StatusSection = (props: StatusSectionProps) => {
       <Separator />
       <div className="flex flex-col gap-2">
         {props.items.map((item) => (
-          <h4 key={item.id} className="flex text-sm items-center gap-2">
+          <div key={item.id} className="flex text-sm items-center gap-2">
             {item.value}
-          </h4>
+          </div>
         ))}
       </div>
     </section>
