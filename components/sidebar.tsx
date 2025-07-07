@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BalanceWidget } from "@/components/balance/balance-widget";
 import { StatusWidget } from "@/components/status/status-widget";
 import metadata from "@/package.json";
 
@@ -105,7 +106,10 @@ export const SideBar = () => {
         </div>
       </div>
 
-      <StatusWidget />
+      <div className="flex flex-col gap-4">
+        <BalanceWidget />
+        <StatusWidget />
+      </div>
     </nav>
   );
 };
