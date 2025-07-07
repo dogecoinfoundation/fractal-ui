@@ -6,6 +6,7 @@ import {
   StatusLabel,
   type StatusProps,
 } from "@/components/ui/kibo-ui/status";
+import { WidgetContainer } from "@/components/ui/widget/widget-container";
 
 type WidgetProps = {
   title: string;
@@ -20,7 +21,7 @@ type WidgetStatus = {
 
 const Widget = ({ title, statuses, titleRight }: WidgetProps) => {
   return (
-    <div className="flex flex-col bg-white border-1 border-gray-200 rounded-md gap-2 p-2">
+    <WidgetContainer>
       <div className="flex justify-between">
         <h3 className="text-sm font-semibold">{title}</h3>
         {titleRight ? (
@@ -37,14 +38,14 @@ const Widget = ({ title, statuses, titleRight }: WidgetProps) => {
           </Status>
         ))}
       </div>
-    </div>
+    </WidgetContainer>
   );
 };
 
 export const StatusWidget = () => {
   return (
     <Link href="/status">
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         <Widget
           title="Fractal Engine"
           titleRight="v1.2.3"

@@ -13,9 +13,18 @@ export const mintsTableSql = `
     transaction_hash TEXT NULL,
     owner_address TEXT NULL
   );
+
+  CREATE TABLE IF NOT EXISTS balance (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    currency TEXT NOT NULL,
+    symbol TEXT NOT NULL,
+    value INTEGER NOT NULL DEFAULT 0
+  );
 `;
 
 export const mintsDataSql = `
+  INSERT OR IGNORE INTO balance (currency, symbol, value) VALUES ('dogecoin', 'Ð', 0);
+
   INSERT OR IGNORE INTO mints (
     title,
     description,
