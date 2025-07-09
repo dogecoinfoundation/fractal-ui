@@ -1,13 +1,10 @@
 import Link from "next/link";
-import useSWR from "swr";
 import type { Balance } from "@/app/api/balance/route";
 import { WidgetContainer } from "@/components/ui/widget/widget-container";
-
-const fetcher = (url: string): Promise<Balance[]> =>
-  fetch(url).then((res) => res.json());
+import { useAPI } from "@/hooks/useAPI";
 
 export const BalanceWidget = () => {
-  const { data, isLoading, error } = useSWR("/api/balance", fetcher);
+  const { data, isLoading, error } = useAPI<Balance[]>("/api/balance");
 
   return (
     <Link href="/balance/add">

@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import useSWR from "swr";
 import z from "zod";
 import type { Mint } from "@/app/api/mints/route";
 import { MintFormField } from "@/components/mints/new/mint-form-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { useAPI } from "@/hooks/useAPI";
 
 export const FormSchema = z.object({
   title: z.string().nonempty({
@@ -22,11 +22,8 @@ export const FormSchema = z.object({
     }),
 });
 
-const fetcher = (url: string): Promise<Mint[]> =>
-  fetch(url).then((res) => res.json());
-
 export const MintNewAssetForm = () => {
-  const { mutate } = useSWR("/api/mints", fetcher);
+  const { mutate } = useAPI<Mint[]>("/api/mints");
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

@@ -1,29 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import useSWR from "swr";
 import type { Mint } from "@/app/api/mints/route";
 import { MintsSidebar } from "@/components/mints/list/mints-sidebar";
 import { MintCard } from "@/components/mints/mint-card";
 import { Input } from "@/components/ui/input";
 import { Paper } from "@/components/ui/surfaces/Paper";
+import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";
-
-const fetcher = async (url: string) => {
-  const res = await fetch(url);
-
-  if (!res.ok) {
-    const errorRes = await res.json();
-    throw new Error(errorRes.error);
-  }
-
-  return await res.json();
-};
 
 export default function ListMints() {
   const [activeMint, setActiveMint] = useState<Mint | null>(null);
   const [filterText, setFilterText] = useState("");
-  const { data, isLoading, error } = useSWR("/api/mints", fetcher);
+  const { data, isLoading, error } = useAPI<Mint[]>("/api/mints");
 
   return (
     <Paper className="h-full p-0">

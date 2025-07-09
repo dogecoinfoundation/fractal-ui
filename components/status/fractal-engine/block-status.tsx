@@ -1,5 +1,4 @@
 import { RefreshCw } from "lucide-react";
-import useSWR from "swr";
 import type { Health } from "@/app/api/health/route";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -8,9 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-const fetcher = (url: string): Promise<Health> =>
-  fetch(url).then((res) => res.json());
+import { useAPI } from "@/hooks/useAPI";
 
 const getProgressValue = (isLoading: boolean, data?: Health) => {
   if (isLoading) return 0;
@@ -19,7 +16,7 @@ const getProgressValue = (isLoading: boolean, data?: Health) => {
 };
 
 export const BlockStatus = () => {
-  const { data, isLoading, error } = useSWR("/api/health", fetcher);
+  const { data, isLoading, error } = useAPI<Health>("/api/health");
 
   return (
     <div className="flex flex-col gap-2 flex-1">
