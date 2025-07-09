@@ -11,6 +11,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BalanceWidget } from "@/components/balance/balance-widget";
 import { StatusWidget } from "@/components/status/status-widget";
+import { cn } from "@/lib/utils";
 import metadata from "@/package.json";
 
 type NavGroup = {
@@ -89,11 +90,12 @@ export const SideBar = () => {
                     <li key={item.label} className="group/menu-item relative">
                       <Link
                         href={item.url}
-                        className={`flex items-center gap-2 p-1 px-2 rounded-md [&>svg]:size-4 [&>svg]:shrink-0 h-8 font-normal transition-colors duration-200 ${
+                        className={cn(
+                          "flex items-center gap-2 p-1 px-2 rounded-md [&>svg]:size-4 [&>svg]:shrink-0 h-8 font-normal transition-colors duration-200",
                           isActive
                             ? "bg-blue-100 text-blue-700 [&>svg]:text-blue-600"
-                            : "hover:bg-gray-100 [&>svg]:text-gray-600"
-                        }`}
+                            : "hover:bg-gray-100 [&>svg]:text-gray-600",
+                        )}
                       >
                         <item.icon /> {item.label}
                       </Link>
