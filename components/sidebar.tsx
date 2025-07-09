@@ -67,7 +67,7 @@ export const SideBar = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-col justify-between gap-2 h-screen min-w-55 sticky top-0 overflow-y-auto select-none border-r-1 border-r-gray-200 bg-gray-50 p-4">
+    <nav className="flex flex-col justify-between gap-2 h-screen min-w-55 sticky top-0 overflow-y-auto select-none border-r-1 border-r-gray-300 bg-gray-50 p-3">
       <div>
         <Link
           href="/"
@@ -108,7 +108,7 @@ export const SideBar = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         <BalanceWidget />
         <StatusWidget />
       </div>
