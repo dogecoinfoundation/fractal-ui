@@ -9,17 +9,24 @@ import { Input } from "@/components/ui/input";
 import { Paper } from "@/components/ui/surfaces/Paper";
 import { cn } from "@/lib/utils";
 
-const fetcher = (url: string): Promise<Mint[]> =>
-  fetch(url).then((res) => res.json());
+const fetcher = async (url: string) => {
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    const errorRes = await res.json();
+    throw new Error(errorRes.error);
+  }
+
+  return await res.json();
+};
 
 export default function ListMints() {
   const [activeMint, setActiveMint] = useState<Mint | null>(null);
   const [filterText, setFilterText] = useState("");
   const { data, isLoading, error } = useSWR("/api/mints", fetcher);
+
   return (
     <Paper className="h-full p-0">
-      {error ? <h1>Error fetching mints.</h1> : null}
-
       <div className="flex flex-row h-full overflow-hidden">
         <div className="w-80 flex flex-col overflow-auto border-r-1 border-gray-300">
           <div className="p-3">
@@ -53,7 +60,9 @@ export default function ListMints() {
             >
               {isLoading
                 ? "Loading..."
-                : "Please select a mint from the list to the left."}
+                : error
+                  ? "Error fetching mints!"
+                  : "Please select a mint from the list to the left."}
             </div>
           )}
         </div>
