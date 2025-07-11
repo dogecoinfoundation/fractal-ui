@@ -1,5 +1,3 @@
-import path from "node:path";
-import Database from "better-sqlite3";
 import { type NextRequest, NextResponse } from "next/server";
 import { getDatabase } from "@/app/database";
 
@@ -8,7 +6,7 @@ export type Mint = {
   title: string;
   description: string;
   created_at: string;
-  metadata: Record<string, string>;
+  metadata: Record<string, string | number>;
   fraction_count: number;
   hash: string;
   feed_url: string;

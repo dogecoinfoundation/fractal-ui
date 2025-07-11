@@ -1,1 +1,5 @@
-export const Separator = () => <hr className="border-gray-200" />;
+import { cn } from "@/lib/utils";
+
+export const Separator = ({ className }: { className?: string }) => (
+  <hr className={cn("border-gray-200", className)} />
+);
