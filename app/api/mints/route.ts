@@ -41,7 +41,7 @@ const db = getDatabase();
 
 export async function GET() {
   try {
-    const mints = getAllRows("mints") as ApiMint[];
+    const mints = getAllRows<ApiMint>("mints");
     return NextResponse.json<Mint[]>(mapApiMintsToMints(mints));
   } catch (error) {
     console.error("Database error:", error);

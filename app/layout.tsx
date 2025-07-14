@@ -4,7 +4,7 @@ import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
 import { SetupWizard } from "@/components/setup/setup-wizard";
 import { SideBar } from "@/components/sidebar";
-import { ConfigKeys } from "./api/config/route";
+import { ConfigKeys, type ConfigRow } from "./api/config/route";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const configData = getAllRows("config");
+  const configData = getAllRows<ConfigRow>("config");
 
   return (
     <html lang="en" className="h-full">

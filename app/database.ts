@@ -7,14 +7,14 @@ export const getDatabase = () => {
   return db;
 };
 
-export const getAllRows = (table: string) =>
-  getDatabase().prepare(`SELECT * FROM ${table}`).all();
+export const getAllRows = <T>(table: string): T[] =>
+  getDatabase().prepare(`SELECT * FROM ${table}`).all() as T[];
 
-export const getRowByColumnValue = (
+export const getRowByColumnValue = <T>(
   table: string,
   columnName: string,
   value: string,
-) =>
+): T | null =>
   getDatabase()
     .prepare(`SELECT * FROM ${table} WHERE ${columnName} = ?`)
-    .get(value);
+    .get(value) as T | null;

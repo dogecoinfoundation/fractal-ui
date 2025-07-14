@@ -19,9 +19,13 @@ export async function GET(request: NextRequest) {
 
     if (configKey) {
       config =
-        (getRowByColumnValue("config", "key", configKey) as ConfigRow) || [];
+        (getRowByColumnValue<ConfigRow>(
+          "config",
+          "key",
+          configKey,
+        ) as ConfigRow) || [];
     } else {
-      config = getAllRows("config") as ConfigRow[];
+      config = getAllRows<ConfigRow>("config");
     }
 
     return NextResponse.json(config);

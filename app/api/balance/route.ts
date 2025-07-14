@@ -10,7 +10,7 @@ export type Balance = {
 
 export async function GET() {
   try {
-    const balance = getAllRows("balance") as Balance[];
+    const balance = getAllRows<Balance>("balance");
     return NextResponse.json<Balance[]>(balance);
   } catch (error) {
     console.error("Database error:", error);
