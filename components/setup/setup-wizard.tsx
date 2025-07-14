@@ -10,11 +10,17 @@ export const StepContext = createContext<{
   currentStep: number;
   previousStep: () => void;
   nextStep: () => void;
+  disableNextStep?: boolean;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }>({
   totalSteps: 0,
   currentStep: 0,
   previousStep: () => {},
   nextStep: () => {},
+  disableNextStep: false,
+  loading: false,
+  setLoading: () => {},
 });
 
 export const SetupWizard = () => {
@@ -26,6 +32,7 @@ export const SetupWizard = () => {
   const totalSteps = steps.length;
 
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const previousStep = useCallback(() => {
     setCurrentStep((previousState) => Math.max(previousState - 1, 0));
@@ -38,7 +45,16 @@ export const SetupWizard = () => {
   }, []);
 
   return (
-    <StepContext value={{ totalSteps, currentStep, previousStep, nextStep }}>
+    <StepContext
+      value={{
+        totalSteps,
+        currentStep,
+        previousStep,
+        nextStep,
+        loading,
+        setLoading,
+      }}
+    >
       <div className="bg-black/80 w-full min-h-full flex items-center justify-center">
         {steps[currentStep]}
       </div>
