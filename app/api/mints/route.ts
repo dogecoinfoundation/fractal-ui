@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getDatabase } from "@/app/database";
+import { getAllRows, getDatabase } from "@/app/database";
 
 export type Mint = {
   id: number | bigint;
@@ -41,7 +41,7 @@ const db = getDatabase();
 
 export async function GET() {
   try {
-    const mints = db.prepare("SELECT * FROM mints").all() as ApiMint[];
+    const mints = getAllRows("mints") as ApiMint[];
     return NextResponse.json<Mint[]>(mapApiMintsToMints(mints));
   } catch (error) {
     console.error("Database error:", error);

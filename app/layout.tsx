@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getDatabase } from "@/app/database";
+import { getAllRows } from "@/app/database";
 import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
 import { SetupWizard } from "@/components/setup/setup-wizard";
@@ -16,8 +16,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const db = getDatabase();
-  const configData = db.prepare("SELECT * FROM config").all();
+  const configData = getAllRows("config");
 
   return (
     <html lang="en" className="h-full">
