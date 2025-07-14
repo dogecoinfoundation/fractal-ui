@@ -4,6 +4,7 @@ import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
 import { SetupWizard } from "@/components/setup/setup-wizard";
 import { SideBar } from "@/components/sidebar";
+import { ConfigKeys } from "./api/config/route";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body className="antialiased h-full">
         <div className="flex flex-row min-h-full" role="document">
-          {configData.length <= 0 ? (
+          {configData.length < ConfigKeys.length ? (
             <SetupWizard />
           ) : (
             <>
