@@ -15,16 +15,16 @@ import { cn } from "@/lib/utils";
 
 type SetupCardProps = {
   cardDescription: string;
-  cardContent: ReactNode;
+  children: ReactNode;
   onComplete?: () => void;
 };
 
 export const SetupCard = ({
   cardDescription,
-  cardContent,
+  children,
   onComplete,
 }: SetupCardProps) => {
-  const { totalSteps, currentStep, previousStep, nextStep } =
+  const { totalSteps, currentStep, previousStep, nextStep, loading } =
     useContext(StepContext);
 
   const isFirstStep = currentStep === 0;
@@ -41,16 +41,20 @@ export const SetupCard = ({
       </CardHeader>
       <Separator />
 
-      <CardContent className="flex flex-col flex-1 gap-2 items-start">
-        {cardContent}
+      <CardContent className="flex flex-col flex-1 gap-4 items-start">
+        {children}
       </CardContent>
 
       <Separator />
       <CardFooter
         className={cn("flex", !isFirstStep ? "justify-between" : "justify-end")}
       >
-        {!isFirstStep && <Button onClick={previousStep}>Previous</Button>}
-        <Button onClick={onComplete ? onComplete : nextStep}>
+        {!isFirstStep && (
+          <Button onClick={previousStep} disabled={loading}>
+            Previous
+          </Button>
+        )}
+        <Button onClick={onComplete ? onComplete : nextStep} disabled={loading}>
           {onComplete ? "Complete" : "Next"}
         </Button>
       </CardFooter>
