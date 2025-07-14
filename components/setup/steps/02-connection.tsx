@@ -4,12 +4,10 @@ export const Connection = () => {
   return (
     <SetupCard
       cardDescription="Connection"
-      cardContent={
-        <>
-          <h2>Connection</h2>
-          <p>etc</p>
-        </>
-      }
-    />
+      onComplete={() => window.location.reload()}
+    >
+      <h2>Connection</h2>
+      <p>etc</p>
+    </SetupCard>
   );
 };
