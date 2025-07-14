@@ -5,14 +5,12 @@ import { Welcome } from "@/components/setup/steps/00-welcome";
 import { General } from "@/components/setup/steps/01-general";
 import { Connection } from "@/components/setup/steps/02-connection";
 
-type StepContextShape = {
+export const StepContext = createContext<{
   totalSteps: number;
   currentStep: number;
   previousStep: () => void;
   nextStep: () => void;
-};
-
-export const StepContext = createContext<StepContextShape>({
+}>({
   totalSteps: 0,
   currentStep: 0,
   previousStep: () => {},
