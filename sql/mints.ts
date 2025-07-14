@@ -1,7 +1,7 @@
 export const mintsTableSql = `
   CREATE TABLE IF NOT EXISTS config (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    key TEXT NOT NULL,
+    key TEXT UNIQUE NOT NULL,
     value TEXT NOT NULL
   );
 
