@@ -2,19 +2,9 @@ import type { Metadata } from "next";
 import { getDatabase } from "@/app/database";
 import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
-import { SideBar } from "@/components/sidebar";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import "./globals.css";
 import { SetupWizard } from "@/components/setup/setup-wizard";
-import { Button } from "@/components/ui/button";
+import { SideBar } from "@/components/sidebar";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Fractal Admin",
