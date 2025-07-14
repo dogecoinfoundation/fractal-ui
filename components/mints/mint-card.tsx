@@ -4,6 +4,30 @@ import { format } from "date-fns/format";
 import { ArrowUpRight, Cake, Tags } from "lucide-react";
 import type { Mint } from "@/app/api/mints/route";
 import { Separator } from "@/components/separator";
+import { cn } from "@/lib/utils";
+
+export const MintTimestamp = ({
+  createdAt,
+  timezone,
+  className,
+}: {
+  createdAt: string;
+  timezone: string;
+  className?: string;
+}) => {
+  return (
+    <div className={cn("flex flex-row gap-1 text-xs text-zinc-600", className)}>
+      <Cake className="size-4 shrink-0 text-zinc-400" />
+      {`Minted on ${format(
+        new Date(Number(createdAt) * 1000),
+        "MMMM dd, yyyy 'at' h:mm a",
+        {
+          in: tz(timezone),
+        },
+      )}`}
+    </div>
+  );
+};
 
 export const MintCard = ({ mint }: { mint: Mint }) => {
   return (
@@ -60,16 +84,10 @@ export const MintCard = ({ mint }: { mint: Mint }) => {
       <footer className="flex flex-col gap-2">
         <Separator />
         <div className="flex flex-row gap-2 justify-between">
-          <div className="flex gap-1 text-xs h-4 text-zinc-600">
-            <Cake className="size-4 shrink-0 text-zinc-400" />
-            {`Minted on ${format(
-              new Date(Number(mint.created_at) * 1000),
-              "MMMM dd, yyyy 'at' h:mm a",
-              {
-                in: tz("Australia/Sydney"),
-              },
-            )}`}
-          </div>
+          <MintTimestamp
+            createdAt={mint.created_at}
+            timezone="Australia/Sydney"
+          />
           <div className="flex flex-wrap gap-2 items-center">
             {mint.tags.map((tag) => (
               <span
