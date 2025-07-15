@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getDatabase } from "@/app/database";
+import { getAllRows } from "@/app/database";
 
 export type Balance = {
   id: number;
@@ -8,11 +8,9 @@ export type Balance = {
   value: number;
 };
 
-const db = getDatabase();
-
 export async function GET() {
   try {
-    const balance = db.prepare("SELECT * FROM balance").all() as Balance[];
+    const balance = getAllRows<Balance>("balance");
     return NextResponse.json<Balance[]>(balance);
   } catch (error) {
     console.error("Database error:", error);
