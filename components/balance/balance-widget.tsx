@@ -1,6 +1,6 @@
 import Link from "next/link";
-import type { Balance } from "@/app/api/balance/route";
 import { WidgetContainer } from "@/components/ui/widget/widget-container";
+import type { Balance } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 
 export const BalanceWidget = () => {

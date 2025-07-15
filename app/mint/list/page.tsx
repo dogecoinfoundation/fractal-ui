@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Mint } from "@/app/api/mints/route";
+import type { MintWithTags } from "@/app/api/mints/route";
 import { MintsSidebar } from "@/components/mints/list/mints-sidebar";
 import { MintCard } from "@/components/mints/mint-card";
 import { Input } from "@/components/ui/input";
@@ -10,9 +10,17 @@ import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";
 
 export default function ListMints() {
-  const [activeMint, setActiveMint] = useState<Mint | null>(null);
+  const [activeMint, setActiveMint] = useState<MintWithTags | null>(null);
   const [filterText, setFilterText] = useState("");
-  const { data, isLoading, error } = useAPI<Mint[]>("/api/mints");
+  const { data, isLoading, error } = useAPI<MintWithTags[]>("/api/mints");
+
+  const getBodyText = () => {
+    if (isLoading) return "Loading...";
+    if (error) return "Error fetching mints!";
+    if (data && data.length === 0) return "No mints found.";
+
+    return "Please select a mint from the list to the left.";
+  };
 
   return (
     <Paper className="h-full p-0">
@@ -47,11 +55,7 @@ export default function ListMints() {
                 isLoading ? "text-gray-700 animate-pulse" : "",
               )}
             >
-              {isLoading
-                ? "Loading..."
-                : error
-                  ? "Error fetching mints!"
-                  : "Please select a mint from the list to the left."}
+              {getBodyText()}
             </div>
           )}
         </div>

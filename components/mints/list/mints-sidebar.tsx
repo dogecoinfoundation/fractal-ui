@@ -1,13 +1,13 @@
-import type { Mint } from "@/app/api/mints/route";
+import type { MintWithTags } from "@/app/api/mints/route";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 interface MintsSidebarProps {
   isLoading: boolean;
   filterText: string;
-  activeMint: Mint | null;
-  setActiveMint: (mint: Mint) => void;
-  data?: Mint[];
+  activeMint: MintWithTags | null;
+  setActiveMint: (mint: MintWithTags) => void;
+  data?: MintWithTags[];
 }
 
 export const MintsSidebar = ({
