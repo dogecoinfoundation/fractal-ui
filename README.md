@@ -16,7 +16,10 @@ pnpm install
 DATABASE_URL="file:./dev.db"
 ```
 
-3. TODO: Run `prisma migrate dev`?
+3. Run Prisma's `migrate` command to bootstrap the SQLite database.
+```shell
+pnpm prisma migrate dev
+```
 
 4. Seed the database with some sample data (optional):
 ```shell
