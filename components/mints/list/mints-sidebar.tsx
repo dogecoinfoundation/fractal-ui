@@ -36,9 +36,9 @@ export const MintsSidebar = ({
               type="button"
               key={mint.id}
               className={cn(
-                "flex flex-col gap-1 w-full justify-start items-center cursor-pointer text-left text-sm bg-white/80 hover:bg-gray-100 transition-colors p-2",
+                "flex flex-col gap-1 w-full justify-start items-center cursor-pointer text-left text-sm border-l-2 border-l-white/80 bg-white/80 hover:bg-gray-100 hover:border-l-gray-100 transition-colors p-2",
                 activeMint?.id === mint.id
-                  ? "bg-blue-100/65 hover:bg-blue-100/65 [&>h2]:text-blue-900 [&>h3]:text-blue-900/85"
+                  ? "border-l-2 border-l-blue-500/30 bg-blue-100/65 hover:bg-blue-100/65 hover:border-l-blue-500/30 [&>h2]:text-blue-900 [&>h3]:text-blue-900/85"
                   : "",
               )}
               onClick={() => setActiveMint(mint)}
