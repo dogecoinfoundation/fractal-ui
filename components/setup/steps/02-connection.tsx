@@ -8,6 +8,13 @@ export const Connection = () => {
     >
       <h2>Connection</h2>
       <p>etc</p>
+          <TestConnection
+            loading={loading}
+            isValid={form.formState.isValid}
+            host={host}
+            port={port}
+            token={token}
+          />
     </SetupCard>
   );
 };
