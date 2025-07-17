@@ -16,9 +16,9 @@ export const FormSchema = z.object({
   }),
   fraction_count: z.coerce
     .number()
-    .nonnegative({ message: "Please provide a positive number of tokens." })
+    .nonnegative({ message: "The number of tokens must be at least 1." })
     .min(1, {
-      message: "Please ensure the number of tokens is at least 1.",
+      message: "The number of tokens must be at least 1.",
     }),
 });
 
