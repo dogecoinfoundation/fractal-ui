@@ -17,13 +17,13 @@ import {
   ComboboxTrigger,
 } from "@/components/ui/kibo-ui/combobox";
 import { Paper } from "@/components/ui/surfaces/Paper";
-import { type Config, ConfigKey } from "@/generated/prisma";
+import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { StepContext } from "../setup-wizard";
 import { CallToAction } from "./call-to-action";
 
 export const General = () => {
-  const { data, mutate, error } = useAPI<Config>(
+  const { data, mutate, error } = useAPI<Config[]>(
     "/api/config?configKey=timezone",
   );
   const { loading, setLoading } = useContext(StepContext);
@@ -38,8 +38,8 @@ export const General = () => {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    if (data && !timezone) {
-      setTimezone(parseTimezone(data.value));
+    if (data && data.length > 0 && !timezone) {
+      setTimezone(parseTimezone(data[0].value));
     }
   }, [data, timezone, parseTimezone]);
 
@@ -50,7 +50,7 @@ export const General = () => {
       await fetch("/api/config", {
         method: "POST",
         body: JSON.stringify({
-          key: ConfigKey.TIMEZONE,
+          key: "timezone",
           value: timezone?.value,
         }),
       });

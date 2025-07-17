@@ -18,9 +18,9 @@ model Mint {
   created_at       DateTime @default(now())
   metadata         Json
   fraction_count   Int
-  hash             String
+  hash             String?
   feed_url         String
-  block_height     Int
+  block_height     Int?
   transaction_hash String?
 }
 
@@ -32,11 +32,7 @@ model Balance {
 }
 
 model Config {
-  id    String    @id @default(uuid())
-  key   ConfigKey @unique
+  id    String @id @default(uuid())
+  key   String @unique
   value String
-}
-
-enum ConfigKey {
-  TIMEZONE
 }
