@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { type ConfigKey, PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
@@ -9,11 +9,11 @@ export async function GET(request: NextRequest) {
     const configKey = searchParams.get("configKey");
 
     if (configKey) {
-      const row = await prisma.config.findUnique({
-        where: { key: configKey.toUpperCase() as ConfigKey },
+      const rows = await prisma.config.findMany({
+        where: { key: { startsWith: configKey } },
       });
 
-      return NextResponse.json(row);
+      return NextResponse.json(rows);
     } else {
       const rows = await prisma.config.findMany();
       return NextResponse.json(rows);

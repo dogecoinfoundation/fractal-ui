@@ -1,17 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { type Mint, PrismaClient, type Tag } from "@/generated/prisma";
+import { type Mint, PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
-
-export type MintWithTags = Mint & { tags: Tag[] };
-
 export async function GET() {
   try {
-    const mints = await prisma.mint.findMany({
-      include: { tags: true },
-    });
+    const mints = await prisma.mint.findMany();
 
-    return NextResponse.json<MintWithTags[]>(mints);
+    return NextResponse.json<Mint[]>(mints);
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
@@ -24,7 +19,9 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const newMint = await request.json();
-    const info = await prisma.mint.create(newMint);
+    const info = await prisma.mint.create({
+      data: newMint,
+    });
 
     return NextResponse.json({
       id: info.id,

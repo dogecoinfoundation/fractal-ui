@@ -11,77 +11,6 @@ function randomDate() {
   );
 }
 
-const tagNames: string[] = [
-  "aerospace",
-  "amazon",
-  "architecture",
-  "art",
-  "aviation",
-  "blue-origin",
-  "brazil",
-  "car",
-  "carbon",
-  "card",
-  "cern",
-  "cleanup",
-  "collectible",
-  "commodity",
-  "concert",
-  "conservation",
-  "crypto",
-  "cryptopunk",
-  "diamond",
-  "education",
-  "energy",
-  "entertainment",
-  "environment",
-  "ferrari",
-  "forest",
-  "gemstone",
-  "gold",
-  "hawaii",
-  "hospitality",
-  "industrial",
-  "instrument",
-  "jet",
-  "kenya",
-  "landmark",
-  "lhc",
-  "lunar",
-  "luxury",
-  "manuscript",
-  "masterpiece",
-  "media",
-  "movie-set",
-  "museum",
-  "music",
-  "netflix",
-  "nft",
-  "nz",
-  "ocean",
-  "painting",
-  "paris",
-  "post-impressionism",
-  "precious-metal",
-  "real-estate",
-  "reef",
-  "renewable",
-  "safari",
-  "science",
-  "skyscraper",
-  "space",
-  "sports",
-  "stark",
-  "streaming",
-  "switzerland",
-  "sydney",
-  "tourism",
-  "uae",
-  "vienna",
-  "watch",
-  "wind",
-];
-
 const mintData: Prisma.MintCreateInput[] = [
   {
     title: "Mona Lisa",
@@ -98,9 +27,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "550e8400-e29b-41d4-a716-446655440000",
     feed_url: "https://feed.tokenizedassets.example.com/asset_1",
     block_height: 1200001,
-    tags: {
-      connect: [{ name: "art" }, { name: "painting" }, { name: "masterpiece" }],
-    },
     transaction_hash: "76199f07-7c4b-4d38-9284-32a9fa410a0d",
   },
   {
@@ -119,14 +45,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "c9bf9e57-1685-4c89-bafb-ff5af830be8a",
     feed_url: "https://feed.tokenizedassets.example.com/asset_2",
     block_height: 1200002,
-    tags: {
-      connect: [
-        { name: "art" },
-        { name: "painting" },
-        { name: "post-impressionism" },
-      ],
-    },
-
     transaction_hash: "94c7e79a-68be-4630-a4fe-087866a180e7",
   },
   {
@@ -145,9 +63,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "1b4e28ba-2fa1-11d2-883f-0016d3cca427",
     feed_url: "https://feed.tokenizedassets.example.com/asset_3",
     block_height: 1200003,
-    tags: {
-      connect: [{ name: "industrial" }, { name: "stark" }, { name: "energy" }],
-    },
     transaction_hash: "6420d1b0-b5bf-4d5e-a2bd-d0f5739ed2ee",
   },
   {
@@ -166,14 +81,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "6fa459ea-ee8a-3ca4-894e-db77e160355e",
     feed_url: "https://feed.tokenizedassets.example.com/asset_4",
     block_height: 1200004,
-    tags: {
-      connect: [
-        { name: "real-estate" },
-        { name: "luxury" },
-        { name: "skyscraper" },
-      ],
-    },
-
     transaction_hash: "c0a851ba-8d6f-4e3d-bf7e-91d53feda1e4",
   },
   {
@@ -191,9 +98,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "e4eaaaf2-d142-11e1-b3e4-080027620cdd",
     feed_url: "https://feed.tokenizedassets.example.com/asset_5",
     block_height: 1200005,
-    tags: {
-      connect: [{ name: "sports" }, { name: "collectible" }, { name: "card" }],
-    },
     transaction_hash: "fa5c8b0e-45e8-4973-a4a9-c765970e7d32",
   },
   {
@@ -211,13 +115,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "2c1b9af3-29a8-4362-9fdc-56d83d0878b4",
     feed_url: "https://feed.tokenizedassets.example.com/asset_6",
     block_height: 1200006,
-    tags: {
-      connect: [
-        { name: "gold" },
-        { name: "commodity" },
-        { name: "precious-metal" },
-      ],
-    },
     transaction_hash: "da44c4d5-f89f-4fdd-869e-72c3c1de6f31",
   },
   {
@@ -235,9 +132,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "45c6a0de-66d3-4a55-bb5d-f83401a4e944",
     feed_url: "https://feed.tokenizedassets.example.com/asset_7",
     block_height: 1200007,
-    tags: {
-      connect: [{ name: "energy" }, { name: "wind" }, { name: "renewable" }],
-    },
     transaction_hash: "bf8973aa-31d0-4aa2-9e53-58e32e41ff1e",
   },
   {
@@ -255,13 +149,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "ed3b0d04-7c84-4e6b-aca2-ec6b6d5c38e0",
     feed_url: "https://feed.tokenizedassets.example.com/asset_8",
     block_height: 1200008,
-    tags: {
-      connect: [
-        { name: "diamond" },
-        { name: "gemstone" },
-        { name: "collectible" },
-      ],
-    },
     transaction_hash: "6c50b0b9-4fa1-4f4e-8c5c-d103f0718f2c",
   },
   {
@@ -279,9 +166,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
     feed_url: "https://feed.tokenizedassets.example.com/asset_9",
     block_height: 1200009,
-    tags: {
-      connect: [{ name: "car" }, { name: "ferrari" }, { name: "collectible" }],
-    },
     transaction_hash: "82c07121-2e52-4ac8-af4e-4df75f1a4bb7",
   },
   {
@@ -299,9 +183,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "9a2f4b6d-7e1e-47b2-9fcf-5f5e49f3c3ad",
     feed_url: "https://feed.tokenizedassets.example.com/asset_10",
     block_height: 1200010,
-    tags: {
-      connect: [{ name: "nft" }, { name: "art" }, { name: "crypto" }],
-    },
     transaction_hash: "e103b391-6904-45f8-bf88-b54aa0c16abf",
   },
   {
@@ -319,13 +200,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
     feed_url: "https://feed.tokenizedassets.example.com/asset_11",
     block_height: 1200011,
-    tags: {
-      connect: [
-        { name: "music" },
-        { name: "instrument" },
-        { name: "collectible" },
-      ],
-    },
     transaction_hash: "f2c2d537-cc3b-4610-8b98-e2ce42928f0b",
   },
   {
@@ -343,13 +217,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "20b482d3-e454-4d46-8db9-9d1d6e9072d9",
     feed_url: "https://feed.tokenizedassets.example.com/asset_12",
     block_height: 1200012,
-    tags: {
-      connect: [
-        { name: "conservation" },
-        { name: "forest" },
-        { name: "brazil" },
-      ],
-    },
     transaction_hash: "c1a4c964-fab4-4143-a7fe-6dce46c19269",
   },
   {
@@ -367,9 +234,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "1a79a4d6-0f87-4b82-8e76-9a44495b51bd",
     feed_url: "https://feed.tokenizedassets.example.com/asset_13",
     block_height: 1200013,
-    tags: {
-      connect: [{ name: "space" }, { name: "lunar" }, { name: "real-estate" }],
-    },
     transaction_hash: "33e20c12-fa3f-4a3d-a84d-0ad39bfe1af1",
   },
   {
@@ -387,9 +251,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "123e4567-e89b-12d3-a456-426655440000",
     feed_url: "https://feed.tokenizedassets.example.com/asset_14",
     block_height: 1200014,
-    tags: {
-      connect: [{ name: "nft" }, { name: "art" }, { name: "cryptopunk" }],
-    },
     transaction_hash: "96d7d640-6a1c-47fa-973a-a80be4a0943e",
   },
   {
@@ -407,9 +268,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "0f8fad5b-d9cb-469f-a165-70867728950e",
     feed_url: "https://feed.tokenizedassets.example.com/asset_15",
     block_height: 1200015,
-    tags: {
-      connect: [{ name: "tourism" }, { name: "landmark" }, { name: "paris" }],
-    },
     transaction_hash: "2972d9a7-486e-4b9c-a3e2-4f10a1e5a7ed",
   },
   {
@@ -427,13 +285,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "7d444840-9dc0-11d1-b245-5ffdce74fad2",
     feed_url: "https://feed.tokenizedassets.example.com/asset_16",
     block_height: 1200016,
-    tags: {
-      connect: [
-        { name: "entertainment" },
-        { name: "concert" },
-        { name: "sydney" },
-      ],
-    },
     transaction_hash: "f66af9ab-9636-4b3c-9403-78be6a3aefa4",
   },
   {
@@ -451,9 +302,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "e902893a-9d22-3c7e-a7b8-d6e313b71d9f",
     feed_url: "https://feed.tokenizedassets.example.com/asset_17",
     block_height: 1200017,
-    tags: {
-      connect: [{ name: "media" }, { name: "streaming" }, { name: "netflix" }],
-    },
     transaction_hash: "11e148c7-8424-49d4-962b-e98c7f4a9d64",
   },
   {
@@ -471,9 +319,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "980c3240-a4c3-11ed-a8fc-0242ac120002",
     feed_url: "https://feed.tokenizedassets.example.com/asset_18",
     block_height: 1200018,
-    tags: {
-      connect: [{ name: "hospitality" }, { name: "safari" }, { name: "kenya" }],
-    },
     transaction_hash: "cd59ad9a-b6d2-471c-a1db-2f3da399019f",
   },
   {
@@ -491,9 +336,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "86faa6e0-5fee-4aca-9faa-031b0213b3ba",
     feed_url: "https://feed.tokenizedassets.example.com/asset_19",
     block_height: 1200019,
-    tags: {
-      connect: [{ name: "music" }, { name: "concert" }, { name: "vienna" }],
-    },
     transaction_hash: "419addcf-4c9c-456e-b14c-3db8b66c1b9b",
   },
   {
@@ -511,9 +353,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "4f9ee3fd-dd22-49a4-b197-171a59f19ca8",
     feed_url: "https://feed.tokenizedassets.example.com/asset_20",
     block_height: 1200020,
-    tags: {
-      connect: [{ name: "conservation" }, { name: "reef" }, { name: "hawaii" }],
-    },
     transaction_hash: "47e810cd-ad7c-4dae-a590-963f3cdf6b8d",
   },
   {
@@ -531,9 +370,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "15c51c72-baea-4e66-983e-8c96b662e6d2",
     feed_url: "https://feed.tokenizedassets.example.com/asset_21",
     block_height: 1200021,
-    tags: {
-      connect: [{ name: "watch" }, { name: "luxury" }, { name: "collectible" }],
-    },
     transaction_hash: "2e1e9d04-b10b-4251-a587-86b98e65ce35",
   },
   {
@@ -551,13 +387,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "429b8e6c-60a3-4e06-8f16-0eeba6c19d1f",
     feed_url: "https://feed.tokenizedassets.example.com/asset_22",
     block_height: 1200022,
-    tags: {
-      connect: [
-        { name: "aerospace" },
-        { name: "space" },
-        { name: "blue-origin" },
-      ],
-    },
     transaction_hash: "666dd42f-4c2f-426b-9085-58c2c299c1a7",
   },
   {
@@ -575,9 +404,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "3957f0d4-773c-4af7-9ecc-94b3af3eec13",
     feed_url: "https://feed.tokenizedassets.example.com/asset_23",
     block_height: 1200023,
-    tags: {
-      connect: [{ name: "jet" }, { name: "aviation" }, { name: "luxury" }],
-    },
     transaction_hash: "74542b5a-f178-45e2-8783-9ac19aed41c7",
   },
   {
@@ -595,9 +421,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "b5f7c3e4-b998-4fb7-bbaa-1f5c803c176b",
     feed_url: "https://feed.tokenizedassets.example.com/asset_24",
     block_height: 1200024,
-    tags: {
-      connect: [{ name: "architecture" }, { name: "museum" }, { name: "uae" }],
-    },
     transaction_hash: "b363aaf2-ec9b-4fbc-820a-3b8dba9e4f74",
   },
   {
@@ -615,9 +438,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "214b9cd4-f4dc-4554-ad8b-30b39d1c6bf4",
     feed_url: "https://feed.tokenizedassets.example.com/asset_25",
     block_height: 1200025,
-    tags: {
-      connect: [{ name: "tourism" }, { name: "movie-set" }, { name: "nz" }],
-    },
     transaction_hash: "c5ed2f50-fbdd-46fa-841f-179e5d1584f2",
   },
   {
@@ -635,13 +455,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "f8ca1fc2-3a32-4e3c-a69f-6393a7be3c7d",
     feed_url: "https://feed.tokenizedassets.example.com/asset_26",
     block_height: 1200026,
-    tags: {
-      connect: [
-        { name: "carbon" },
-        { name: "environment" },
-        { name: "amazon" },
-      ],
-    },
     transaction_hash: "c7efdaee-4bf7-43fd-b8cb-1e0e21928b3c",
   },
   {
@@ -659,13 +472,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "0f64e4fe-90d3-4f3a-9c06-0d2632e5dc8b",
     feed_url: "https://feed.tokenizedassets.example.com/asset_27",
     block_height: 1200027,
-    tags: {
-      connect: [
-        { name: "real-estate" },
-        { name: "luxury" },
-        { name: "switzerland" },
-      ],
-    },
     transaction_hash: "d8eb2f82-b3f9-46c5-bcdf-95828fb5d489",
   },
   {
@@ -683,13 +489,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "5c9ea39d-56b6-4e6f-8bb3-7cf5d4a01b3d",
     feed_url: "https://feed.tokenizedassets.example.com/asset_28",
     block_height: 1200028,
-    tags: {
-      connect: [
-        { name: "manuscript" },
-        { name: "collectible" },
-        { name: "education" },
-      ],
-    },
     transaction_hash: "e1c0584d-9cd4-4a1c-927a-00725d9e740a",
   },
   {
@@ -707,13 +506,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "60a3b283-9d2e-4d4a-8eaa-bd2941ca5b02",
     feed_url: "https://feed.tokenizedassets.example.com/asset_29",
     block_height: 1200029,
-    tags: {
-      connect: [
-        { name: "environment" },
-        { name: "ocean" },
-        { name: "cleanup" },
-      ],
-    },
     transaction_hash: "fbab3cfd-5087-4d70-9667-205c9bd6c3dc",
   },
   {
@@ -731,9 +523,6 @@ const mintData: Prisma.MintCreateInput[] = [
     hash: "8ca1e8b3-d8d0-4ae8-a3d8-5ea608e2e6be",
     feed_url: "https://feed.tokenizedassets.example.com/asset_30",
     block_height: 1200030,
-    tags: {
-      connect: [{ name: "science" }, { name: "cern" }, { name: "lhc" }],
-    },
     transaction_hash: "d9a257af-5317-4227-96e3-d00f5a312dc2",
   },
 ];
@@ -747,11 +536,6 @@ const balanceData: Prisma.BalanceCreateInput[] = [
 ];
 
 export async function main() {
-  await prisma.tag.deleteMany();
-  for (const data of tagNames) {
-    await prisma.tag.create({ data: { name: data } });
-  }
-
   await prisma.mint.deleteMany();
   for (const data of mintData) {
     await prisma.mint.create({ data });

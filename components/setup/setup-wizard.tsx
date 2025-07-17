@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, type ReactNode, useCallback, useState } from "react";
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { Welcome } from "@/components/setup/steps/00-welcome";
 import { General } from "@/components/setup/steps/01-general";
 import { Connection } from "@/components/setup/steps/02-connection";
@@ -44,17 +50,20 @@ export const SetupWizard = () => {
     );
   }, []);
 
+  const contextValue = useMemo(
+    () => ({
+      totalSteps,
+      currentStep,
+      previousStep,
+      nextStep,
+      loading,
+      setLoading,
+    }),
+    [totalSteps, currentStep, previousStep, nextStep, loading],
+  );
+
   return (
-    <StepContext
-      value={{
-        totalSteps,
-        currentStep,
-        previousStep,
-        nextStep,
-        loading,
-        setLoading,
-      }}
-    >
+    <StepContext value={contextValue}>
       <div className="bg-black/80 w-full min-h-full flex items-center justify-center">
         {steps[currentStep]}
       </div>

@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { MintFormField } from "@/components/mints/new/mint-form-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { InputFormField } from "@/components/ui/forms/input-form-field";
 import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 
@@ -16,9 +16,9 @@ export const FormSchema = z.object({
   }),
   fraction_count: z.coerce
     .number()
-    .nonnegative({ message: "Please provide a positive number of tokens." })
+    .nonnegative({ message: "The number of tokens must be at least 1." })
     .min(1, {
-      message: "Please ensure the number of tokens is at least 1.",
+      message: "The number of tokens must be at least 1.",
     }),
 });
 
@@ -47,7 +47,6 @@ export const MintNewAssetForm = () => {
             category: "sample",
           },
           feed_url: "https://example.com",
-          tags: ["test"],
         }),
       });
       await mutate();
@@ -63,15 +62,19 @@ export const MintNewAssetForm = () => {
         className="min-w-xl h-xl flex-0 bg-white border-zinc-300 border-1 rounded-sm p-4 gap-4 flex flex-col z-1 shadow-sm shadow-zinc-300/50"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <MintFormField control={form.control} name="title" label="Asset Name" />
+        <InputFormField<typeof FormSchema>
+          control={form.control}
+          name="title"
+          label="Asset Name"
+        />
 
-        <MintFormField
+        <InputFormField<typeof FormSchema>
           control={form.control}
           name="description"
           label="Asset Description"
         />
 
-        <MintFormField
+        <InputFormField<typeof FormSchema>
           control={form.control}
           name="fraction_count"
           label="Tokens"

@@ -1,10 +1,11 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
 import { SetupWizard } from "@/components/setup/setup-wizard";
 import { SideBar } from "@/components/sidebar";
-import "./globals.css";
-import { ConfigKey, PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@/generated/prisma";
+import { CONFIG_KEYS } from "@/lib/definitions";
 
 export const metadata: Metadata = {
   title: "Fractal Admin",
@@ -23,7 +24,7 @@ export default async function RootLayout({
     <html lang="en" className="h-full">
       <body className="antialiased h-full">
         <div className="flex flex-row min-h-full" role="document">
-          {configData && configData.length < Object.values(ConfigKey).length ? (
+          {configData && configData.length < CONFIG_KEYS.length ? (
             <SetupWizard />
           ) : (
             <>
