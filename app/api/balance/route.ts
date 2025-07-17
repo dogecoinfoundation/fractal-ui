@@ -1,16 +1,11 @@
 import { NextResponse } from "next/server";
-import { getAllRows } from "@/app/database";
+import { type Balance, PrismaClient } from "@/generated/prisma";
 
-export type Balance = {
-  id: number;
-  currency: string;
-  symbol: string;
-  value: number;
-};
+const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const balance = getAllRows<Balance>("balance");
+    const balance = await prisma.balance.findMany();
     return NextResponse.json<Balance[]>(balance);
   } catch (error) {
     console.error("Database error:", error);

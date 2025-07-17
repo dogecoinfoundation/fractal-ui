@@ -1,34 +1,23 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getAllRows, getDatabase, getRowByColumnValue } from "@/app/database";
+import { type ConfigKey, PrismaClient } from "@/generated/prisma";
 
-export const ConfigKeys = ["timezone", "connection"] as const;
-
-export type ConfigRow = {
-  id: number;
-  key: (typeof ConfigKeys)[number];
-  value: string;
-};
-
-const db = getDatabase();
+const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
     const configKey = searchParams.get("configKey");
-    let config: ConfigRow | ConfigRow[];
 
     if (configKey) {
-      config =
-        (getRowByColumnValue<ConfigRow>(
-          "config",
-          "key",
-          configKey,
-        ) as ConfigRow) || [];
-    } else {
-      config = getAllRows<ConfigRow>("config");
-    }
+      const row = await prisma.config.findUnique({
+        where: { key: configKey.toUpperCase() as ConfigKey },
+      });
 
-    return NextResponse.json(config);
+      return NextResponse.json(row);
+    } else {
+      const rows = await prisma.config.findMany();
+      return NextResponse.json(rows);
+    }
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
@@ -43,17 +32,14 @@ export async function POST(request: NextRequest) {
     const configRow = await request.json();
     const { id, key, value } = configRow;
 
-    const statement = db.prepare(
-      `
-      INSERT INTO config (id, key, value)
-      VALUES (?, ?, ?) ON CONFLICT(key)
-      DO UPDATE SET value = excluded.value;
-      `,
-    );
-    const info = statement.run(id, key, value);
+    const info = await prisma.config.upsert({
+      where: { key },
+      update: { value },
+      create: { id, key, value },
+    });
 
     return NextResponse.json({
-      id: info.lastInsertRowid,
+      id: info.id,
     });
   } catch (error) {
     console.error("Database error:", error);

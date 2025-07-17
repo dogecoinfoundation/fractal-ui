@@ -2,9 +2,9 @@ import type { ReactNode } from "react";
 
 export const GridPaper = ({ children }: { children: ReactNode }) => {
   return (
-    <section className="relative overflow-y-auto flex flex-col flex-1 justify-start items-start rounded-sm p-4 border-1 border-blue-500/20 bg-linear-to-b from-blue-100/40">
+    <section className="relative overflow-y-auto flex flex-col flex-1 justify-start items-start rounded-sm p-4 border-1 border-blue-500/30 bg-blue-100/20">
       <svg
-        className="absolute inset-0 pointer-events-none z-[-1] size-full fill-blue-500 stroke-blue-500 opacity-30 [mask-image:linear-gradient(to_bottom,_#ffffffad,_#ffffff20)]"
+        className="absolute inset-0 pointer-events-none z-[-1] size-full fill-blue-300 stroke-blue-300 opacity-30"
         aria-hidden="true"
       >
         <defs>

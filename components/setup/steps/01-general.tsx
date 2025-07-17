@@ -4,7 +4,6 @@ import {
   type ITimezoneOption,
   useTimezoneSelect,
 } from "react-timezone-select";
-import type { ConfigRow } from "@/app/api/config/route";
 import { MintTimestamp } from "@/components/mints/mint-card";
 import { SetupCard } from "@/components/setup/setup-card";
 import {
@@ -18,12 +17,13 @@ import {
   ComboboxTrigger,
 } from "@/components/ui/kibo-ui/combobox";
 import { Paper } from "@/components/ui/surfaces/Paper";
+import { type Config, ConfigKey } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { StepContext } from "../setup-wizard";
 import { CallToAction } from "./call-to-action";
 
 export const General = () => {
-  const { data, mutate, error } = useAPI<ConfigRow>(
+  const { data, mutate, error } = useAPI<Config>(
     "/api/config?configKey=timezone",
   );
   const { loading, setLoading } = useContext(StepContext);
@@ -49,7 +49,10 @@ export const General = () => {
     try {
       await fetch("/api/config", {
         method: "POST",
-        body: JSON.stringify({ key: "timezone", value: timezone?.value }),
+        body: JSON.stringify({
+          key: ConfigKey.TIMEZONE,
+          value: timezone?.value,
+        }),
       });
       await mutate();
       setSaved(true);
@@ -106,7 +109,7 @@ export const General = () => {
               <Paper className="p-2">
                 <MintTimestamp
                   className="border-1 border-gray-300 rounded-sm bg-white p-2"
-                  createdAt={(Date.now() / 1000).toString()}
+                  createdAt={new Date()}
                   timezone={timezone.value}
                 />
               </Paper>

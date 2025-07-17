@@ -1,10 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import type { Mint } from "@/app/api/mints/route";
 import { MintFormField } from "@/components/mints/new/mint-form-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 
 export const FormSchema = z.object({
