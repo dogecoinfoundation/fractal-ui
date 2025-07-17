@@ -5,7 +5,7 @@ import z from "zod";
 import { SetupCard } from "@/components/setup/setup-card";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { ConnectionFormField } from "@/components/ui/forms/connection-form-field";
+import { InputFormField } from "@/components/ui/forms/input-form-field";
 import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { StepContext } from "../setup-wizard";
@@ -92,13 +92,13 @@ export const Connection = () => {
           className="grid grid-cols-3 w-full gap-4"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <ConnectionFormField
+          <InputFormField<typeof FormSchema>
             control={form.control}
             name="host"
             label="Host"
             className="grid col-span-2"
           />
-          <ConnectionFormField
+          <InputFormField<typeof FormSchema>
             control={form.control}
             name="port"
             label="Port"
@@ -106,7 +106,7 @@ export const Connection = () => {
             className="grid col-span-1"
           />
 
-          <ConnectionFormField
+          <InputFormField<typeof FormSchema>
             control={form.control}
             name="token"
             label="Token"

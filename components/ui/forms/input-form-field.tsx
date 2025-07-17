@@ -1,7 +1,6 @@
 import type { HTMLInputTypeAttribute } from "react";
-import type { Control } from "react-hook-form";
+import type { Control, Path } from "react-hook-form";
 import type z from "zod";
-import type { FormSchema } from "@/components/mints/new/mint-new-asset-form";
 import {
   FormControl,
   FormField,
@@ -10,33 +9,37 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
-interface MintFormFieldProps {
-  control: Control<z.infer<typeof FormSchema>>;
-  name: keyof z.infer<typeof FormSchema>;
+interface InputFormFieldProps<T extends z.ZodType> {
+  control: Control<z.infer<T>>;
+  name: Path<z.infer<T>>;
   label: string;
+  className?: string;
   inputType?: HTMLInputTypeAttribute;
   placeholder?: string;
 }
 
-export const MintFormField = ({
+export const InputFormField = <T extends z.ZodType>({
   control,
   name,
   label,
+  className,
   inputType = "text",
   placeholder = "",
-}: MintFormFieldProps) => {
+}: InputFormFieldProps<T>) => {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel htmlFor={name}>{label}</FormLabel>
+        <FormItem className={cn(className)}>
+          <FormLabel htmlFor={name}>
+            {label} <FormMessage />
+          </FormLabel>
           <FormControl>
             <Input placeholder={placeholder} type={inputType} {...field} />
           </FormControl>
-          <FormMessage />
         </FormItem>
       )}
     />
