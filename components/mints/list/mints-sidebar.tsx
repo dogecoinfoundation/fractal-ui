@@ -1,13 +1,13 @@
-import type { MintWithTags } from "@/app/api/mints/route";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { Mint } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
 
 interface MintsSidebarProps {
   isLoading: boolean;
   filterText: string;
-  activeMint: MintWithTags | null;
-  setActiveMint: (mint: MintWithTags) => void;
-  data?: MintWithTags[];
+  activeMint: Mint | null;
+  setActiveMint: (mint: Mint) => void;
+  data?: Mint[];
 }
 
 export const MintsSidebar = ({

@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { MintFormField } from "@/components/mints/new/mint-form-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
+import { MintFormField } from "@/components/ui/forms/mint-form-field";
 import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 
@@ -47,7 +47,6 @@ export const MintNewAssetForm = () => {
             category: "sample",
           },
           feed_url: "https://example.com",
-          tags: ["test"],
         }),
       });
       await mutate();

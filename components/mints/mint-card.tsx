@@ -1,10 +1,9 @@
 import { tz } from "@date-fns/tz";
 import { format } from "date-fns/format";
 
-import { ArrowUpRight, Cake, Tags } from "lucide-react";
-import type { MintWithTags } from "@/app/api/mints/route";
+import { ArrowUpRight, Cake } from "lucide-react";
 import { Separator } from "@/components/separator";
-import type { Tag } from "@/generated/prisma";
+import type { Mint } from "@/generated/prisma";
 import { cn } from "@/lib/utils";
 
 export const MintTimestamp = ({
@@ -26,7 +25,7 @@ export const MintTimestamp = ({
   );
 };
 
-export const MintCard = ({ mint }: { mint: MintWithTags }) => {
+export const MintCard = ({ mint }: { mint: Mint }) => {
   return (
     <article className="flex flex-col gap-2 bg-white border-1 border-gray-300 hover:border-gray-400/80 rounded-sm p-2 h-full justify-between">
       <header className="flex flex-col gap-2">
@@ -85,17 +84,6 @@ export const MintCard = ({ mint }: { mint: MintWithTags }) => {
             createdAt={mint.created_at}
             timezone="Australia/Sydney"
           />
-          <div className="flex flex-wrap gap-2 items-center">
-            {mint.tags.map((tag: Tag) => (
-              <span
-                key={tag.id}
-                className="inline-flex items-center justify-center rounded-xs border px-1.25 py-0.25 text-xs font-medium w-fit whitespace-nowrap shrink-0 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] overflow-hidden border-transparent bg-green-200 text-green-900"
-              >
-                {tag.name}
-              </span>
-            ))}
-            <Tags className="size-4 shrink-0 text-zinc-400" />
-          </div>
         </div>
       </footer>
     </article>

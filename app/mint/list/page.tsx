@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import type { MintWithTags } from "@/app/api/mints/route";
 import { MintsSidebar } from "@/components/mints/list/mints-sidebar";
 import { MintCard } from "@/components/mints/mint-card";
 import { Input } from "@/components/ui/input";
 import { Paper } from "@/components/ui/surfaces/Paper";
+import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";
 
 export default function ListMints() {
-  const [activeMint, setActiveMint] = useState<MintWithTags | null>(null);
+  const [activeMint, setActiveMint] = useState<Mint | null>(null);
   const [filterText, setFilterText] = useState("");
-  const { data, isLoading, error } = useAPI<MintWithTags[]>("/api/mints");
+  const { data, isLoading, error } = useAPI<Mint[]>("/api/mints");
 
   const getBodyText = () => {
     if (isLoading) return "Loading...";

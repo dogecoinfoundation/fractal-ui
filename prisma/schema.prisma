@@ -21,14 +21,7 @@ model Mint {
   hash             String
   feed_url         String
   block_height     Int
-  tags             Tag[]
   transaction_hash String?
-}
-
-model Tag {
-  id    String @id @default(uuid())
-  name  String @unique
-  mints Mint[]
 }
 
 model Balance {
