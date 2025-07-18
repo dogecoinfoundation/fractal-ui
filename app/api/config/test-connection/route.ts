@@ -14,11 +14,20 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(`http://${host}:${port}`, {
+    const response = await fetch(`http://${host}:${port}/health`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+
+    const health = await response.json();
+
+    if (health.wallets_enabled == false) {
+      return NextResponse.json({
+        status: 400,
+        message: "Wallets are not enabled",
+      });
+    }
 
     return NextResponse.json({
       status: response.status,

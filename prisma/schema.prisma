@@ -36,3 +36,11 @@ model Config {
   key   String @unique
   value String
 }
+
+model WalletConfig {
+  id   String @id @default(uuid())
+  private_key String
+  public_key String
+  address String
+  label String
+}
