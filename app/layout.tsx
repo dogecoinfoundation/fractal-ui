@@ -1,5 +1,4 @@
-export const dynamic = 'force-dynamic';
-
+"use client"
 
 import "./globals.css";
 import type { Metadata } from "next";
@@ -10,10 +9,10 @@ import { SideBar } from "@/components/sidebar";
 import { PrismaClient } from "@/generated/prisma";
 import { CONFIG_KEYS } from "@/lib/definitions";
 
-export const metadata: Metadata = {
-  title: "Fractal Admin",
-  description: "Administration UI for the Fractal Engine",
-};
+// export const metadata: Metadata = {
+//   title: "Fractal Admin",
+//   description: "Administration UI for the Fractal Engine",
+// };
 
 export default async function RootLayout({
   children,
