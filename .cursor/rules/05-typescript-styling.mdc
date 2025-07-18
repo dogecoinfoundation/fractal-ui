@@ -27,35 +27,6 @@ description: "TypeScript and styling guidelines for fractal-ui"
 
 ## Tailwind CSS Guidelines
 
-### Class Organization
-Maintain consistent order of Tailwind utility classes:
-1. Layout (flex, grid, block, etc.)
-2. Positioning (relative, absolute, etc.)
-3. Sizing (w-, h-, etc.)
-4. Spacing (m-, p-, etc.)
-5. Typography (text-, font-, etc.)
-6. Colors (bg-, text-, border-, etc.)
-7. Effects (shadow-, opacity-, etc.)
-
-### Custom Styling
-- Prefer Tailwind utilities over custom CSS
-- Use CSS variables defined in [app/globals.css](mdc:app/globals.css) for custom colors
-- Utilize the `cn()` utility for conditional classes
-- Follow the color scheme: primary, secondary, creative, muted, etc.
-
-### Color Scheme
-Reference [app/globals.css](mdc:app/globals.css) for available CSS variables:
-- `--primary` - Main brand color
-- `--secondary` - Secondary actions
-- `--creative` - Special accent color (green)
-- `--destructive` - Error/warning states
-- `--muted` - Subtle text and backgrounds
-
-### Responsive Design
-- Use responsive prefixes (sm:, md:, lg:, xl:)
-- Design mobile-first approach
-- Test across different screen sizes
-
 ### Component-Specific Styling
 - Use consistent patterns established in existing components
 - Reference [components/ui/](mdc:components/ui/) for base component styles
