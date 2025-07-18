@@ -1,0 +1,68 @@
+---
+globs: "*.tsx,components/**/*.tsx"
+description: "Guidelines for React component development in fractal-ui"
+---
+
+# Component Development Guidelines
+
+## Component Structure
+
+Use functional components with TypeScript interfaces:
+
+```tsx
+interface ComponentProps {
+  title: string;
+  optional?: boolean;
+}
+
+export const Component = ({ title, optional = false }: ComponentProps) => {
+  // Component logic
+  return (
+    <div className="...">
+      {/* Component JSX */}
+    </div>
+  );
+};
+```
+
+## Naming Conventions
+
+- **Components**: PascalCase (e.g., `MintCard`, `StatusWidget`)
+- **Files**: kebab-case matching component name (e.g., `mint-card.tsx`)
+- **Event Handlers**: Prefix with "handle" (e.g., `handleSubmit`, `handleClick`)
+- **Props Interfaces**: ComponentNameProps (e.g., `MintCardProps`)
+
+## Component Guidelines
+
+- **Export**: Use named exports for components
+- **Props**: Always define TypeScript interfaces for props
+- **Default Values**: Use default parameters, not defaultProps
+- **Styling**: Use Tailwind classes, maintain consistent class order
+- **State**: Use hooks appropriately, prefer useCallback/useMemo for optimization
+- **Error Handling**: Include proper error boundaries and loading states
+
+## Shadcn UI Integration
+
+- Import UI components from `@/components/ui/`
+- Follow Shadcn patterns for component composition
+- Use `cn()` utility from [lib/utils.ts](mdc:lib/utils.ts) for conditional classes
+- Leverage Radix UI primitives through Shadcn components
+
+## Form Components
+
+- Use React Hook Form with Zod validation
+- Import form utilities from `@/components/ui/form`
+- Follow pattern established in [components/mints/new/mint-new-asset-form.tsx](mdc:components/mints/new/mint-new-asset-form.tsx)
+
+## Icon Usage
+
+- Use Lucide React icons consistently
+- Import specific icons: `import { IconName } from "lucide-react"`
+- Apply consistent sizing with `size-4` or `className="size-4"`
+
+## Data Fetching
+
+- Use SWR for client-side data fetching
+- Include proper loading and error states
+- Mutate cache after successful operations
+- Reference [hooks/useAPI.ts](mdc:hooks/useAPI.ts) for API patterns

@@ -1,0 +1,74 @@
+---
+globs: "app/api/**/route.ts"
+description: "Guidelines for API route development in fractal-ui"
+---
+
+# API Route Development Guidelines
+
+## Route Structure
+
+API routes should follow Next.js App Router patterns in [app/api/](mdc:app/api/):
+
+```typescript
+import { NextRequest, NextResponse } from "next/server";
+import { PrismaClient } from "@/generated/prisma";
+
+export async function GET(request: NextRequest) {
+  try {
+    const prisma = new PrismaClient();
+    // Implementation
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Error message" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request: NextRequest) {
+  // Implementation
+}
+```
+
+## Database Operations
+
+- **ORM**: Use Prisma Client from `@/generated/prisma`
+- **Models**: Leverage Prisma-generated types (Mint, Balance, Config, etc.)
+- **Queries**: Use Prisma's query methods (findMany, findUnique, create, update)
+- **Relations**: Include relations when needed (e.g., `include: { tags: true }`)
+
+## Error Handling
+
+- Always wrap database operations in try-catch blocks
+- Return appropriate HTTP status codes
+- Provide meaningful error messages
+- Log errors for debugging purposes
+
+## Request Validation
+
+- Validate request bodies using Zod schemas
+- Sanitize and validate route parameters
+- Return 400 for validation errors
+
+## Response Format
+
+- Use consistent JSON response format
+- Include proper HTTP status codes
+- Handle CORS if needed for external access
+
+## Examples
+
+Reference existing API routes:
+- [app/api/mints/route.ts](mdc:app/api/mints/route.ts) - Asset operations
+- [app/api/balance/route.ts](mdc:app/api/balance/route.ts) - Balance operations
+- [app/api/config/route.ts](mdc:app/api/config/route.ts) - Configuration management
+- [app/api/health/route.ts](mdc:app/api/health/route.ts) - Health checks
+
+## Database Schema
+
+Reference [prisma/schema.prisma](mdc:prisma/schema.prisma) for data models:
+- `Mint` - Asset information with tags relationship
+- `Balance` - Balance tracking
+- `Config` - Application configuration
+- `Tag` - Asset categorization

@@ -1,0 +1,59 @@
+---
+alwaysApply: true
+description: "Project structure and organization guidelines for fractal-ui"
+---
+
+# Fractal UI Project Structure
+
+This is the organization structure for the fractal-ui codebase:
+
+## Main Directories
+
+- [app/](mdc:app/) - Next.js App Router pages and API routes
+- [components/](mdc:components/) - React components organized by feature
+- [lib/](mdc:lib/) - Utility functions and definitions
+- [hooks/](mdc:hooks/) - Custom React hooks
+- [prisma/](mdc:prisma/) - Database schema and migrations
+- [generated/](mdc:generated/) - Auto-generated files (Prisma client)
+
+## Key Files
+
+- [app/layout.tsx](mdc:app/layout.tsx) - Root layout with conditional setup wizard
+- [components.json](mdc:components.json) - Shadcn UI configuration  
+- [biome.json](mdc:biome.json) - Biome linting and formatting config
+- [lib/definitions.ts](mdc:lib/definitions.ts) - Type definitions and constants
+- [prisma/schema.prisma](mdc:prisma/schema.prisma) - Database schema
+
+## Component Organization
+
+Components are organized by feature area:
+- `components/balance/` - Balance management components
+- `components/mints/` - Asset minting components  
+- `components/setup/` - Initial setup wizard
+- `components/status/` - System status monitoring
+- `components/ui/` - Reusable UI components (Shadcn)
+
+## API Routes
+
+API endpoints follow RESTful patterns:
+- `/api/balance` - Balance operations
+- `/api/mints` - Asset minting operations
+- `/api/config` - Configuration management
+- `/api/health` - Health checks
+
+## Aliases Configuration
+
+Path aliases are configured in [components.json](mdc:components.json):
+- `@/components` → `components/`
+- `@/lib` → `lib/`
+- `@/hooks` → `hooks/`
+- `@/generated/prisma` → `generated/prisma/`
+
+## Application Features
+
+The fractal-ui application provides:
+- **Asset Minting**: Create and manage digital assets
+- **Balance Management**: Add and track balances
+- **System Status**: Monitor Fractal Engine and dogecoin-core health
+- **Setup Wizard**: Initial configuration and connection setup
+- **Administration**: Configuration management for Fractal Engine

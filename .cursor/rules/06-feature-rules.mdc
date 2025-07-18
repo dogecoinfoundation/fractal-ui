@@ -1,0 +1,95 @@
+---
+description: "Feature-specific development guidelines for fractal-ui modules"
+---
+
+# Feature-Specific Development Guidelines
+
+## Asset Minting (`components/mints/`)
+
+### Form Handling
+- Use React Hook Form with Zod validation
+- Reference [components/mints/new/mint-new-asset-form.tsx](mdc:components/mints/new/mint-new-asset-form.tsx)
+- Include proper error handling and loading states
+- Mutate SWR cache after successful operations
+
+### Data Display
+- Use `MintCard` component for individual asset display
+- Implement proper loading skeletons
+- Handle tags and metadata display consistently
+- Reference [components/mints/mint-card.tsx](mdc:components/mints/mint-card.tsx)
+
+## Balance Management (`components/balance/`)
+
+### Widget Components
+- Follow pattern in [components/balance/balance-widget.tsx](mdc:components/balance/balance-widget.tsx)
+- Use SWR for data fetching with proper error handling
+- Display balance information clearly with appropriate formatting
+
+## Status Monitoring (`components/status/`)
+
+### Status Components
+- Use consistent status indicators (connected, healthy, etc.)
+- Reference [components/status/status-widget.tsx](mdc:components/status/status-widget.tsx)
+- Implement real-time status updates where appropriate
+- Use proper icons and color coding for status states
+
+### Health Checks
+- Implement proper health check endpoints
+- Display connection status for external services (Fractal Engine, dogecoin-core)
+- Show version information and system metrics
+- Reference [components/status/fractal-engine/fractal-engine-status.tsx](mdc:components/status/fractal-engine/fractal-engine-status.tsx)
+
+## Setup Wizard (`components/setup/`)
+
+### Multi-Step Forms
+- Follow the pattern in [components/setup/setup-wizard.tsx](mdc:components/setup/setup-wizard.tsx)
+- Use React Context for step management
+- Implement proper step validation and navigation
+- Handle loading states during setup processes
+
+### Configuration Management
+- Store configuration in Prisma database using Config model
+- Validate configuration before saving
+- Provide clear setup instructions and error messages
+- Reference setup steps in [components/setup/steps/](mdc:components/setup/steps/)
+
+## Database Operations
+
+### Prisma Integration
+- Use types from `@/generated/prisma`
+- Implement proper error handling for database operations
+- Use transactions for complex operations
+- Follow migration patterns established in [prisma/migrations/](mdc:prisma/migrations/)
+
+### Data Models
+- Reference [prisma/schema.prisma](mdc:prisma/schema.prisma) for model definitions
+- Maintain relationships between models (Mint, Balance, Config)
+- Use proper validation and constraints
+
+## Navigation and Routing
+
+### Route Management
+- Follow patterns in [app/route-map.ts](mdc:app/route-map.ts)
+- Use descriptive route names
+- Implement proper navigation in [components/sidebar.tsx](mdc:components/sidebar.tsx)
+- Handle active states and navigation feedback
+
+### Layout Structure
+- Reference [app/layout.tsx](mdc:app/layout.tsx) for layout patterns
+- Implement conditional rendering (setup wizard vs. main app)
+- Maintain consistent header and sidebar structure
+- Use proper loading states and error boundaries
+
+## API Integration
+
+### External Services
+- Connect to Fractal Engine for asset operations
+- Monitor dogecoin-core connection status
+- Handle service unavailability gracefully
+- Implement proper retry logic and error handling
+
+### Data Fetching Patterns
+- Use SWR for client-side data fetching
+- Reference [hooks/useAPI.ts](mdc:hooks/useAPI.ts) for API patterns
+- Implement proper caching and revalidation strategies
+- Handle loading and error states consistently
