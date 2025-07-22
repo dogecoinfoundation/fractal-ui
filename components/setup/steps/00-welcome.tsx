@@ -1,5 +1,3 @@
-import { SetupCard } from "@/components/setup/setup-card";
-
 export const Welcome = () => {
   return (
     <>

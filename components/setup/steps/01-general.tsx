@@ -18,7 +18,7 @@ import {
 import { Paper } from "@/components/ui/surfaces/Paper";
 import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
-import { StepContext } from "../setup-wizard";
+import { StepContext } from "../wizard/setup-wizard";
 import { CallToAction } from "./call-to-action";
 
 export const General = () => {
