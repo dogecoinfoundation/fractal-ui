@@ -5,7 +5,8 @@ import {
   useTimezoneSelect,
 } from "react-timezone-select";
 import { MintTimestamp } from "@/components/mints/mint-card";
-import { StepContext } from "@/components/setup/wizard/setup-context";
+import { SetupContext } from "@/components/setup/wizard/setup-context";
+import { CallToAction } from "@/components/setup/wizard/steps/call-to-action";
 import {
   Combobox,
   ComboboxContent,
@@ -20,13 +21,11 @@ import { Paper } from "@/components/ui/surfaces/Paper";
 import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 
-import { CallToAction } from "./call-to-action";
-
 export const General = () => {
   const { data, mutate, error } = useAPI<Config[]>(
     "/api/config?configKey=timezone",
   );
-  const { loading, setLoading, refreshConfigData } = useContext(StepContext);
+  const { loading, setLoading, refreshConfigData } = useContext(SetupContext);
 
   const timezones = { ...allTimezones, "Australia/Melbourne": "Melbourne" };
   const { options, parseTimezone } = useTimezoneSelect({

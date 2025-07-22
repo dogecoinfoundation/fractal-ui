@@ -1,8 +1,8 @@
 import { Check, Loader2, Save } from "lucide-react";
 import { type ReactNode, useContext } from "react";
+import { SetupContext } from "@/components/setup/wizard/setup-context";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { StepContext } from "../setup-wizard";
 
 type CallToActionProps = {
   handleSave: () => void;
@@ -25,7 +25,7 @@ export const CallToAction = ({
   error,
   isLastStep = false,
 }: CallToActionProps) => {
-  const { loading } = useContext(StepContext);
+  const { loading } = useContext(SetupContext);
 
   const getState = (): CallToActionState => {
     if (error)

@@ -1,18 +1,14 @@
 "use client";
 
-import {
-  createContext,
-  type ReactNode,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Separator } from "@/components/separator";
-import { getConfigDataState } from "@/components/setup/config-context";
-import { Welcome } from "@/components/setup/wizard/steps/00-welcome";
-import { General } from "@/components/setup/wizard/steps/01-general";
-import { Connection } from "@/components/setup/wizard/steps/02-connection";
-import { WizardProgress } from "@/components/setup/wizard-progress";
+import {
+  type ConfigStateWithLoading,
+  getConfigState,
+} from "@/components/setup/wizard/config-state";
+import { WizardProgress } from "@/components/setup/wizard/progress/wizard-progress";
+import { SetupContext, steps } from "@/components/setup/wizard/setup-context";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -24,76 +20,29 @@ import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";
 
-type StepContextType = {
-  stepTitles: string[];
-  totalSteps: number;
-  currentStep: number;
-  previousStep: () => void;
-  nextStep: () => void;
-  setStep: (stepIndex: number) => void;
-  disableNextStep?: boolean;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-};
-
-export const StepContext = createContext<StepContextType>({
-  stepTitles: [],
-  totalSteps: 0,
-  currentStep: 0,
-  previousStep: () => {},
-  nextStep: () => {},
-  setStep: () => {},
-  disableNextStep: false,
-  loading: false,
-  setLoading: () => {},
-});
-
-type ConfigState = {
-  group: string;
-  valid: boolean;
-};
-
-type Step = {
-  title: string;
-  description: string;
-  component: ReactNode;
-};
-
-const steps: Step[] = [
-  {
-    title: "Welcome",
-    description:
-      "Welcome to the Fractal Engine Administration UI setup wizard!",
-    component: <Welcome key="welcome" />,
-  },
-  {
-    title: "General",
-    description: "General",
-    component: <General key="general" />,
-  },
-  {
-    title: "Connection",
-    description: "Connection",
-    component: <Connection key="connection" />,
-  },
-];
-
 export const SetupWizard = () => {
   const {
     mutate: refreshConfigData,
     data: configData,
     isLoading,
-    error,
   } = useAPI<Config[]>("/api/config");
 
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [configState, setConfigState] = useState<ConfigState[]>([]);
+  const [configState, setConfigState] = useState<ConfigStateWithLoading>({
+    configState: getConfigState(configData || []),
+    isLoading: true,
+  });
+
   const totalSteps = steps.length;
 
   useMemo(
-    () => setConfigState(getConfigDataState(configData || [])),
-    [configData],
+    () =>
+      setConfigState({
+        configState: getConfigState(configData || []),
+        isLoading,
+      }),
+    [configData, isLoading],
   );
 
   const previousStep = useCallback(() => {
@@ -114,7 +63,10 @@ export const SetupWizard = () => {
 
   const stepContextValue = useMemo(
     () => ({
-      stepTitles: steps.map((step) => step.title),
+      steps: steps.map((step) => ({
+        key: step.key,
+        title: step.title,
+      })),
       totalSteps,
       currentStep,
       previousStep,
@@ -122,27 +74,33 @@ export const SetupWizard = () => {
       setStep,
       loading,
       setLoading,
+      refreshConfigData,
     }),
-    [totalSteps, currentStep, previousStep, nextStep, setStep, loading],
+    [
+      totalSteps,
+      currentStep,
+      previousStep,
+      nextStep,
+      setStep,
+      loading,
+      refreshConfigData,
+    ],
   );
 
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === totalSteps - 1;
 
   return (
-    <StepContext value={stepContextValue}>
+    <SetupContext value={stepContextValue}>
       <div className="bg-black/80 w-full min-h-full flex items-center justify-center">
         <Card className="m-2 w-1/2 min-h-3/4 justify-between">
           <CardHeader className="gap-3">
             <CardTitle>First Time Setup</CardTitle>
-            <WizardProgress />
+            <WizardProgress configState={configState} />
           </CardHeader>
           <Separator />
 
           <CardContent className="flex flex-col flex-1 gap-4 items-start">
-            <pre className="text-xs font-normal">
-              <code>{JSON.stringify(configState, null, 2)}</code>
-            </pre>
             {steps[currentStep].component}
           </CardContent>
 
@@ -159,7 +117,7 @@ export const SetupWizard = () => {
               </Button>
             )}
             <Button
-              onClick={isLastStep ? window.location.reload : nextStep}
+              onClick={isLastStep ? () => window.location.reload() : nextStep}
               disabled={loading}
             >
               {isLastStep ? "Complete" : "Next"}
@@ -167,6 +125,6 @@ export const SetupWizard = () => {
           </CardFooter>
         </Card>
       </div>
-    </StepContext>
+    </SetupContext>
   );
 };
