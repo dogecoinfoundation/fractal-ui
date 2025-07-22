@@ -1,10 +1,10 @@
 import { useContext } from "react";
+import { SetupContext } from "@/components/setup/setup-context";
 import type {
   ConfigState,
   ConfigStateWithLoading,
 } from "@/components/setup/wizard/config-state";
 import { StepButton } from "@/components/setup/wizard/progress/step-button";
-import { SetupContext } from "@/components/setup/wizard/setup-context";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 

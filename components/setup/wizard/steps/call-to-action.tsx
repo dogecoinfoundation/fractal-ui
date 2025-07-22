@@ -1,6 +1,6 @@
 import { Check, Loader2, Save } from "lucide-react";
 import { type ReactNode, useContext } from "react";
-import { SetupContext } from "@/components/setup/wizard/setup-context";
+import { SetupContext } from "@/components/setup/setup-context";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

@@ -5,7 +5,7 @@ import {
   useTimezoneSelect,
 } from "react-timezone-select";
 import { MintTimestamp } from "@/components/mints/mint-card";
-import { SetupContext } from "@/components/setup/wizard/setup-context";
+import { SetupContext } from "@/components/setup/setup-context";
 import { CallToAction } from "@/components/setup/wizard/steps/call-to-action";
 import {
   Combobox,

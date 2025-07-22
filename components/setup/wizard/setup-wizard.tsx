@@ -2,12 +2,12 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { Separator } from "@/components/separator";
+import { SetupContext, steps } from "@/components/setup/setup-context";
 import {
   type ConfigStateWithLoading,
   getConfigState,
 } from "@/components/setup/wizard/config-state";
 import { WizardProgress } from "@/components/setup/wizard/progress/wizard-progress";
-import { SetupContext, steps } from "@/components/setup/wizard/setup-context";
 import { Button } from "@/components/ui/button";
 import {
   Card,

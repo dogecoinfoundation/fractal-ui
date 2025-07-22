@@ -1,6 +1,6 @@
 import { type ReactNode, useContext } from "react";
 import { Separator } from "@/components/separator";
-import { SetupContext } from "@/components/setup/wizard/setup-context";
+import { SetupContext } from "@/components/setup/setup-context";
 import { Button } from "@/components/ui/button";
 import {
   Card,
