@@ -7,9 +7,9 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Welcome } from "@/components/setup/steps/00-welcome";
-import { General } from "@/components/setup/steps/01-general";
-import { Connection } from "@/components/setup/steps/02-connection";
+import { Welcome } from "@/components/setup/wizard/steps/00-welcome";
+import { General } from "@/components/setup/wizard/steps/01-general";
+import { Connection } from "@/components/setup/wizard/steps/02-connection";
 import { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";
