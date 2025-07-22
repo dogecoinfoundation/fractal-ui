@@ -7,23 +7,22 @@ import {
   useMemo,
   useState,
 } from "react";
+import { Separator } from "@/components/separator";
+import { getConfigDataState } from "@/components/setup/config-context";
 import { Welcome } from "@/components/setup/wizard/steps/00-welcome";
 import { General } from "@/components/setup/wizard/steps/01-general";
 import { Connection } from "@/components/setup/wizard/steps/02-connection";
-import { Config } from "@/generated/prisma";
-import { useAPI } from "@/hooks/useAPI";
-import { cn } from "@/lib/utils";
-import { Separator } from "../separator";
-import { Button } from "../ui/button";
+import { WizardProgress } from "@/components/setup/wizard-progress";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { WizardProgress } from "../wizard-progress";
-import { getConfigDataState } from "./config-context";
+} from "@/components/ui/card";
+import type { Config } from "@/generated/prisma";
+import { useAPI } from "@/hooks/useAPI";
+import { cn } from "@/lib/utils";
 
 type StepContextType = {
   stepTitles: string[];
