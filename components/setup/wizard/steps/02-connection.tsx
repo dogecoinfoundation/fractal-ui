@@ -2,14 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { SetupCard } from "@/components/setup/setup-card";
+import { SetupContext } from "@/components/setup/wizard/setup-context";
+import { CallToAction } from "@/components/setup/wizard/steps/call-to-action";
+import { TestConnection } from "@/components/setup/wizard/steps/test-connection";
 import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
 import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
-import { StepContext } from "../setup-wizard";
-import { CallToAction } from "./call-to-action";
-import { TestConnection } from "./test-connection";
 
 export const ConnectionFormSchema = z.object({
   host: z.string().nonempty({
@@ -28,7 +27,7 @@ export const Connection = () => {
   const { data: configData } = useAPI<Config[]>(
     "/api/config?configKey=connection_",
   );
-  const { loading, setLoading } = useContext(StepContext);
+  const { loading, setLoading, refreshConfigData } = useContext(SetupContext);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<unknown>(null);
 
@@ -80,6 +79,7 @@ export const Connection = () => {
 
       setSaved(true);
       setLoading(false);
+      refreshConfigData();
     } catch (e) {
       console.error(e);
       setError(e);
@@ -88,47 +88,47 @@ export const Connection = () => {
   };
 
   return (
-    <SetupCard
-      cardDescription="Connection"
-      onComplete={() => window.location.reload()}
-    >
-      <h2 className="text-lg font-semibold">
-        Let's connect to your Fractal Engine instance.
-      </h2>
+    <div className="flex flex-col justify-between h-full w-full flex-1">
       <Form {...form}>
         <form
           className="flex flex-col flex-1 justify-between w-full"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <div className="grid grid-cols-3 w-full gap-4">
-            <InputFormField<typeof ConnectionFormSchema>
-              control={form.control}
-              name="host"
-              label="Host"
-              className="grid col-span-2"
-            />
-            <InputFormField<typeof ConnectionFormSchema>
-              control={form.control}
-              name="port"
-              label="Port"
-              inputType="number"
-              className="grid col-span-1"
-            />
+          <div className="flex flex-col gap-4">
+            <h2 className="text-lg font-semibold">
+              Let's connect to your Fractal Engine instance.
+            </h2>
+            <div className="grid grid-cols-3 w-full gap-4">
+              <InputFormField<typeof ConnectionFormSchema>
+                control={form.control}
+                name="host"
+                label="Host"
+                className="grid col-span-2"
+              />
+              <InputFormField<typeof ConnectionFormSchema>
+                control={form.control}
+                name="port"
+                label="Port"
+                inputType="number"
+                className="grid col-span-1"
+              />
 
-            <InputFormField<typeof ConnectionFormSchema>
-              control={form.control}
-              name="token"
-              label="Token"
-              className="grid col-span-3"
-            />
-            <TestConnection
-              loading={loading}
-              isValid={form.formState.isValid}
-              host={host}
-              port={port}
-              token={token}
-            />
+              <InputFormField<typeof ConnectionFormSchema>
+                control={form.control}
+                name="token"
+                label="Token"
+                className="grid col-span-3"
+              />
+              <TestConnection
+                loading={loading}
+                isValid={form.formState.isValid}
+                host={host}
+                port={port}
+                token={token}
+              />
+            </div>
           </div>
+
           <CallToAction
             handleSave={form.handleSubmit(onSubmit)}
             saved={saved}
@@ -137,6 +137,6 @@ export const Connection = () => {
           />
         </form>
       </Form>
-    </SetupCard>
+    </div>
   );
 };
