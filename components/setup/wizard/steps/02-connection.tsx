@@ -24,7 +24,7 @@ export const ConnectionFormSchema = z.object({
 });
 
 export const Connection = () => {
-  const { data: configData } = useAPI<Config[]>(
+  const { data: configData, mutate } = useAPI<Config[]>(
     "/api/config?configKey=connection_",
   );
   const { loading, setLoading, refreshConfigData } = useContext(SetupContext);
@@ -77,6 +77,7 @@ export const Connection = () => {
         }),
       });
 
+      await mutate();
       setSaved(true);
       setLoading(false);
       refreshConfigData();
@@ -117,6 +118,7 @@ export const Connection = () => {
                 control={form.control}
                 name="token"
                 label="Token"
+                inputType="password"
                 className="grid col-span-3"
               />
               <TestConnection
@@ -133,6 +135,8 @@ export const Connection = () => {
             handleSave={form.handleSubmit(onSubmit)}
             saved={saved}
             error={error}
+            isDirty={form.formState.isDirty}
+            isEmpty={!host && !port && !token}
             isLastStep
           />
         </form>

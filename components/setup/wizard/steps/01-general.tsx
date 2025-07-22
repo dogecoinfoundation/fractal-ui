@@ -35,6 +35,7 @@ export const General = () => {
 
   const [timezone, setTimezone] = useState<ITimezoneOption>();
   const [saved, setSaved] = useState(false);
+  const dirty = timezone !== undefined && timezone?.value !== data?.[0]?.value;
 
   useEffect(() => {
     if (data && data.length > 0 && !timezone) {
@@ -112,7 +113,13 @@ export const General = () => {
         ) : null}
       </div>
 
-      <CallToAction handleSave={handleSave} saved={saved} error={error} />
+      <CallToAction
+        handleSave={handleSave}
+        saved={saved}
+        error={error}
+        isDirty={dirty}
+        isEmpty={!timezone}
+      />
     </div>
   );
 };
