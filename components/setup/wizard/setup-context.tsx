@@ -7,26 +7,28 @@ type SetupContextType = {
   steps: Pick<Step, "key" | "title">[];
   totalSteps: number;
   currentStep: number;
+  progress: number;
   previousStep: () => void;
   nextStep: () => void;
   setStep: (stepIndex: number) => void;
-  disableNextStep?: boolean;
   loading: boolean;
   setLoading: (loading: boolean) => void;
   refreshConfigData: () => void;
+  disableNextStep?: boolean;
 };
 
 export const SetupContext = createContext<SetupContextType>({
   steps: [],
   totalSteps: 0,
   currentStep: 0,
+  progress: 0,
   previousStep: () => {},
   nextStep: () => {},
   setStep: () => {},
-  disableNextStep: false,
   loading: false,
   setLoading: () => {},
   refreshConfigData: () => {},
+  disableNextStep: false,
 });
 
 type Step = {

@@ -70,6 +70,7 @@ export const SetupWizard = () => {
       totalSteps,
       currentStep,
       previousStep,
+      progress: (currentStep / (totalSteps - 1)) * 100,
       nextStep,
       setStep,
       loading,
