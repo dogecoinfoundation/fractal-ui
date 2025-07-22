@@ -2,7 +2,7 @@ import { SetupCard } from "@/components/setup/setup-card";
 
 export const Welcome = () => {
   return (
-    <SetupCard cardDescription="Welcome">
+    <>
       <h2 className="text-lg font-semibold">
         Welcome to the Fractal Engine Administration UI setup wizard!
       </h2>
@@ -13,6 +13,6 @@ export const Welcome = () => {
       <p>
         Please click <span className="font-semibold">Next</span> to continue.
       </p>
-    </SetupCard>
+    </>
   );
 };

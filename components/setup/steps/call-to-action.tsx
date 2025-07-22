@@ -8,10 +8,11 @@ type CallToActionProps = {
   handleSave: () => void;
   saved: boolean;
   error: unknown;
+  isLastStep?: boolean;
 };
 
 type CallToActionState = {
-  status: "error" | "saved" | "loading" | "idle";
+  status: "error" | "saved" | "unsaved" | "loading" | "idle";
   message: string;
   buttonIcon: ReactNode;
   buttonText: string;
@@ -22,6 +23,7 @@ export const CallToAction = ({
   handleSave,
   saved,
   error,
+  isLastStep = false,
 }: CallToActionProps) => {
   const { loading } = useContext(StepContext);
 
@@ -35,10 +37,21 @@ export const CallToAction = ({
         styling: "border-red-500/50 bg-red-50 text-red-700",
       };
 
+    if (!saved)
+      return {
+        status: "unsaved",
+        message: "You have unsaved changes.",
+        buttonIcon: <Save />,
+        buttonText: "Save",
+        styling: "border-amber-500/50 bg-amber-50 text-amber-700",
+      };
+
     if (saved && !loading)
       return {
         status: "saved",
-        message: "Saved! Click Next to continue.",
+        message: isLastStep
+          ? "Saved! Click Complete to finish the setup process."
+          : "Saved! Click Next to continue.",
         buttonIcon: <Check />,
         buttonText: "Saved",
         styling: "border-emerald-500/50 bg-emerald-50 text-emerald-700",
@@ -50,12 +63,14 @@ export const CallToAction = ({
         message: "Saving...",
         buttonIcon: <Loader2 className="animate-spin" />,
         buttonText: "Saving",
-        styling: "border-amber-500/50 bg-amber-50 text-amber-700",
+        styling: "border-orange-500/50 bg-orange-50 text-orange-700",
       };
 
     return {
       status: "idle",
-      message: "If this looks okay, click Save, and then Next.",
+      message: `If this looks okay, click Save, and then ${
+        isLastStep ? "Complete" : "Next"
+      }.`,
       buttonIcon: <Save />,
       buttonText: "Save",
       styling: "border-indigo-500/50 bg-indigo-50 text-indigo-700",
@@ -65,14 +80,19 @@ export const CallToAction = ({
   const state = getState();
 
   return (
-    <div
-      className={cn(
-        "flex flex-row gap-2 p-1 justify-between items-center border-1 rounded-lg",
-        state.styling,
-      )}
-    >
-      <p className="pl-2 text-sm">{state.message}</p>
+    <div className="flex flex-row justify-between items-center">
+      <div
+        className={cn(
+          "flex flex-1 self-stretch items-center border-1 rounded-lg rounded-r-none border-r-0",
+          state.styling,
+        )}
+      >
+        <p className="pl-2 text-sm font-medium leading-loose">
+          {state.message}
+        </p>
+      </div>
       <Button
+        className="rounded-l-none"
         variant={error ? "destructive" : "creative"}
         onClick={handleSave}
         disabled={loading}
