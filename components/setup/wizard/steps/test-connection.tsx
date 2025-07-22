@@ -31,12 +31,6 @@ export const TestConnection = ({
     message: string | ReactNode;
     classes: string;
   } => {
-    if (error) {
-      return {
-        message: error,
-        classes: "border-red-300 bg-red-50 text-red-800",
-      };
-    }
     if (testLoading) {
       return {
         message: "Testing...",
@@ -45,10 +39,12 @@ export const TestConnection = ({
     }
     if (!result) {
       return {
-        message: (
+        message: isValid ? (
           <span>
             Click <span className="font-semibold">Test</span> to begin.
           </span>
+        ) : (
+          <span>Fill out the information above to continue.</span>
         ),
         classes: "border-indigo-300 bg-indigo-50 text-indigo-700",
       };
@@ -60,7 +56,10 @@ export const TestConnection = ({
       };
     }
 
-    return { message: "Connection failed", classes: "border-red-500" };
+    return {
+      message: error ? error : "Connection failed",
+      classes: "border-red-300 bg-red-50 text-red-800",
+    };
   };
 
   const resultState = getResultState();
