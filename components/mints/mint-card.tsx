@@ -30,8 +30,6 @@ export const MintCard = ({ mint }: { mint: Mint }) => {
   const { data: timezoneConfig } = useAPI<Config[]>(
     "/api/config?configKey=timezone",
   );
-
-  // Use configured timezone or fallback to UTC
   const timezone = timezoneConfig?.[0]?.value || "UTC";
 
   return (
