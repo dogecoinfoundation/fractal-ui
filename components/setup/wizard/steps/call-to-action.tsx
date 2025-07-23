@@ -1,4 +1,4 @@
-import { AlertCircle, Check, Loader2, Save } from "lucide-react";
+import { Check, Loader2, Save } from "lucide-react";
 import { type ReactNode, useContext } from "react";
 import { SetupContext } from "@/components/setup/setup-context";
 import { Button } from "@/components/ui/button";

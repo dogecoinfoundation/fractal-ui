@@ -34,7 +34,6 @@ export const SetupContext = createContext<SetupContextType>({
 type Step = {
   key: string;
   title: string;
-  description: string;
   component: ReactNode;
 };
 
@@ -42,20 +41,16 @@ export const steps: Step[] = [
   {
     key: "welcome",
     title: "Welcome",
-    description:
-      "Welcome to the Fractal Engine Administration UI setup wizard!",
     component: <Welcome key="welcome" />,
   },
   {
     key: "general",
     title: "General",
-    description: "General",
     component: <General key="general" />,
   },
   {
     key: "connection",
     title: "Connection",
-    description: "Connection",
     component: <Connection key="connection" />,
   },
 ];
