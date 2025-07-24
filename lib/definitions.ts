@@ -6,6 +6,6 @@ export const CONFIG_KEYS = [
 ] as const;
 
 export const CONFIG_GROUPS: Record<string, (typeof CONFIG_KEYS)[number][]> = {
-  general: ["timezone"],
+  timezone: ["timezone"],
   connection: ["connection_host", "connection_port", "connection_token"],
 };

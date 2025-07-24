@@ -1,6 +1,6 @@
 import { type ComponentType, createContext } from "react";
 import { Welcome } from "@/components/setup/wizard/steps/00-welcome";
-import { General } from "@/components/setup/wizard/steps/01-general";
+import { Timezone } from "@/components/setup/wizard/steps/01-timezone";
 import { Connection } from "@/components/setup/wizard/steps/02-connection";
 
 type SetupContextType = {
@@ -44,9 +44,9 @@ export const steps: Step[] = [
     component: Welcome,
   },
   {
-    key: "general",
-    title: "General",
-    component: General,
+    key: "timezone",
+    title: "Timezone",
+    component: Timezone,
   },
   {
     key: "connection",

@@ -21,7 +21,7 @@ import { Paper } from "@/components/ui/surfaces/Paper";
 import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 
-export const General = () => {
+export const Timezone = () => {
   const { data, mutate, error } = useAPI<Config[]>(
     "/api/config?configKey=timezone",
   );
