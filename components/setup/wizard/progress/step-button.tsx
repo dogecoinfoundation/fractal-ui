@@ -1,3 +1,4 @@
+import { cva } from "class-variance-authority";
 import { Check, LoaderPinwheel, TriangleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -9,22 +10,27 @@ type StepButtonProps = {
   isValid: boolean;
 };
 
-const getButtonStyles = (isActive: boolean, isValid: boolean) => {
-  const activeInvalid = isActive && !isValid;
-  const activeValid = isActive && isValid;
-  const inactive = !isActive;
+const buttonVariants = cva(
+  "flex flex-row items-center z-10 transition-colors duration-300 cursor-pointer border-1 rounded-xs border-zinc-200 text-zinc-500 disabled:cursor-not-allowed",
+  {
+    variants: {
+      status: {
+        activeInvalid:
+          "border-yellow-400 bg-yellow-50 text-yellow-600 [&>#status-icon]:bg-yellow-400 [&>#status-icon]:text-white",
+        activeValid:
+          "border-emerald-500 bg-emerald-50 text-emerald-600 [&>#status-icon]:bg-emerald-500 [&>#status-icon]:text-emerald-50",
+        inactive:
+          "border-zinc-300 bg-zinc-50 text-zinc-500 [&>#status-icon]:bg-zinc-200 [&>#status-icon]:text-zinc-400",
+      },
+    },
+  },
+);
 
-  return cn(
-    activeInvalid
-      ? "border-yellow-400 bg-yellow-50 text-yellow-600 [&>#status-icon]:bg-yellow-400 [&>#status-icon]:text-white"
-      : null,
-    activeValid
-      ? "border-emerald-500 bg-emerald-50 text-emerald-600 [&>#status-icon]:bg-emerald-500 [&>#status-icon]:text-emerald-50"
-      : null,
-    inactive
-      ? "border-zinc-300 bg-zinc-50 text-zinc-500 [&>#status-icon]:bg-zinc-200 [&>#status-icon]:text-zinc-400"
-      : null,
-  );
+const getButtonState = (isActive: boolean, isValid: boolean) => {
+  if (isActive && !isValid) return "activeInvalid";
+  if (isActive && isValid) return "activeValid";
+
+  return "inactive";
 };
 
 export const StepButton = ({
@@ -40,8 +46,7 @@ export const StepButton = ({
       onClick={onClick}
       disabled={isLoading}
       className={cn(
-        "flex flex-row items-center z-10 transition-colors duration-300 cursor-pointer border-1 rounded-xs border-zinc-200 text-zinc-500 disabled:cursor-not-allowed",
-        getButtonStyles(isActive, isValid),
+        buttonVariants({ status: getButtonState(isActive, isValid) }),
       )}
     >
       <div id="status-icon" className="self-stretch px-1 py-0.5 [&>svg]:size-4">
