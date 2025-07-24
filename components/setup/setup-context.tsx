@@ -1,4 +1,4 @@
-import { createContext, type ReactNode } from "react";
+import { type ComponentType, createContext } from "react";
 import { Welcome } from "@/components/setup/wizard/steps/00-welcome";
 import { General } from "@/components/setup/wizard/steps/01-general";
 import { Connection } from "@/components/setup/wizard/steps/02-connection";
@@ -34,23 +34,23 @@ export const SetupContext = createContext<SetupContextType>({
 type Step = {
   key: string;
   title: string;
-  component: ReactNode;
+  component: ComponentType;
 };
 
 export const steps: Step[] = [
   {
     key: "welcome",
     title: "Welcome",
-    component: <Welcome key="welcome" />,
+    component: Welcome,
   },
   {
     key: "general",
     title: "General",
-    component: <General key="general" />,
+    component: General,
   },
   {
     key: "connection",
     title: "Connection",
-    component: <Connection key="connection" />,
+    component: Connection,
   },
 ];

@@ -90,6 +90,7 @@ export const SetupWizard = () => {
 
   const isFirstStep = currentStep === 0;
   const isLastStep = currentStep === totalSteps - 1;
+  const StepComponent = steps[currentStep].component;
 
   return (
     <SetupContext value={stepContextValue}>
@@ -102,7 +103,7 @@ export const SetupWizard = () => {
           <Separator />
 
           <CardContent className="flex flex-col flex-1 gap-4 items-start">
-            {steps[currentStep].component}
+            <StepComponent />
           </CardContent>
 
           <Separator />
