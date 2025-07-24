@@ -57,9 +57,13 @@ export const SetupWizard = () => {
     );
   }, [refreshConfigData]);
 
-  const setStep = useCallback((stepIndex: number) => {
-    setCurrentStep(stepIndex);
-  }, []);
+  const setStep = useCallback(
+    (stepIndex: number) => {
+      refreshConfigData();
+      setCurrentStep(stepIndex);
+    },
+    [refreshConfigData],
+  );
 
   const stepContextValue = useMemo(
     () => ({
