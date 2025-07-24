@@ -29,17 +29,25 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const configRow = await request.json();
-    const { id, key, value } = configRow;
+    const result = await request.json();
+    const configRows = Array.isArray(result) ? result : [result];
 
-    const info = await prisma.config.upsert({
-      where: { key },
-      update: { value },
-      create: { id, key, value },
-    });
+    const promises = [];
+
+    for (const row of configRows) {
+      const { id, key, value } = row;
+      promises.push(
+        prisma.config.upsert({
+          where: { key },
+          update: { value },
+          create: { id, key, value },
+        }),
+      );
+    }
+    await Promise.all(promises);
 
     return NextResponse.json({
-      id: info.id,
+      success: true,
     });
   } catch (error) {
     console.error("Database error:", error);
