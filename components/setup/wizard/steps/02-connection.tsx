@@ -10,14 +10,22 @@ import { InputFormField } from "@/components/ui/forms/input-form-field";
 import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 
+const MINIMUM_PORT = 0;
+const MAXIMUM_PORT = 65535;
+const PORT_VALIDATION_MESSAGE = `Must be a number between ${MINIMUM_PORT} and ${MAXIMUM_PORT}.`;
+
 export const ConnectionFormSchema = z.object({
   host: z.string().nonempty({
     message: "Must not be empty.",
   }),
   port: z.coerce
     .number()
-    .min(0, { message: "Must be between 0 and 65535." })
-    .max(65535, { message: "Must be between 0 and 65535." }),
+    .min(MINIMUM_PORT, {
+      message: PORT_VALIDATION_MESSAGE,
+    })
+    .max(MAXIMUM_PORT, {
+      message: PORT_VALIDATION_MESSAGE,
+    }),
   token: z.string().nonempty({
     message: "Must not be empty.",
   }),
@@ -84,19 +92,19 @@ export const Connection = () => {
             <h2 className="text-lg font-semibold">
               Let's connect to your Fractal Engine instance.
             </h2>
-            <div className="grid grid-cols-3 w-full gap-4">
+            <div className="grid grid-cols-12 w-full gap-4">
               <InputFormField<typeof ConnectionFormSchema>
                 control={form.control}
                 name="host"
                 label="Host"
-                className="grid col-span-2"
+                className="grid col-span-7"
               />
               <InputFormField<typeof ConnectionFormSchema>
                 control={form.control}
                 name="port"
                 label="Port"
                 inputType="number"
-                className="grid col-span-1"
+                className="grid col-span-5"
               />
 
               <InputFormField<typeof ConnectionFormSchema>
@@ -104,7 +112,7 @@ export const Connection = () => {
                 name="token"
                 label="Token"
                 inputType="password"
-                className="grid col-span-3"
+                className="grid col-span-full"
               />
               <TestConnection
                 loading={loading}

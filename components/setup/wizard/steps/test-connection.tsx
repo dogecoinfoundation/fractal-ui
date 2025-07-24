@@ -65,7 +65,7 @@ export const TestConnection = ({
   const resultState = getResultState();
 
   return (
-    <div className="grid col-span-3">
+    <div className="grid col-span-full">
       <div className="grid grid-cols-2 gap-4 min-h-12">
         <Button
           type="button"
