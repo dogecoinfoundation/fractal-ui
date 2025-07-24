@@ -21,18 +21,33 @@ const buttonVariants = cva(
   "flex flex-row items-center z-10 transition-colors cursor-pointer border-1 rounded-xs border-zinc-200 text-zinc-500 disabled:cursor-not-allowed",
   {
     variants: {
-      variant: {
-        loading: "border-zinc-300 bg-zinc-50 text-zinc-500",
-        activeInvalid:
-          "border-yellow-400 bg-yellow-50 text-yellow-600 hover:bg-yellow-400 hover:text-yellow-50",
-        activeValid:
-          "border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-emerald-50",
-        inactiveInvalid:
-          "border-zinc-300 bg-zinc-50 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-500",
-        inactiveValid:
+      isActive: {
+        true: null,
+        false:
           "border-zinc-300 bg-zinc-50 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-500",
       },
+      isValid: {
+        true: "border-emerald-500 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-emerald-50",
+        false:
+          "border-yellow-400 bg-yellow-50 text-yellow-600 hover:bg-yellow-400 hover:text-yellow-50",
+      },
     },
+    compoundVariants: [
+      // Inactive and Valid
+      {
+        isActive: false,
+        isValid: true,
+        className:
+          "border-zinc-300 bg-zinc-50 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-500",
+      },
+      // Inactive and Invalid
+      {
+        isActive: false,
+        isValid: false,
+        className:
+          "border-zinc-300 bg-zinc-50 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-500",
+      },
+    ],
   },
 );
 
@@ -40,14 +55,49 @@ const iconVariants = cva(
   "flex flex-row items-center self-stretch px-1 py-0.75 [&>svg]:size-4",
   {
     variants: {
-      variant: {
-        loading: "bg-zinc-200 text-zinc-400 [&>svg]:animate-spin",
-        activeInvalid: "bg-yellow-400 text-white",
-        activeValid: "bg-emerald-500 text-emerald-50",
-        inactiveInvalid: "bg-zinc-200 text-zinc-400",
-        inactiveValid: "bg-zinc-200 text-zinc-400",
+      isLoading: {
+        true: "[&>svg]:animate-spin",
+        false: null,
+      },
+      isActive: {
+        true: null,
+        false: "bg-zinc-200 text-zinc-400",
+      },
+      isValid: {
+        true: "bg-emerald-500 text-emerald-50",
+        false: "bg-yellow-400 text-white",
       },
     },
+    compoundVariants: [
+      // Inactive and Valid
+      {
+        isLoading: false,
+        isActive: false,
+        isValid: true,
+        className: "bg-zinc-200 text-zinc-400",
+      },
+      // Inactive and Invalid
+      {
+        isLoading: false,
+        isActive: false,
+        isValid: false,
+        className: "bg-zinc-200 text-zinc-400",
+      },
+      // Loading, inactive, and valid
+      {
+        isLoading: true,
+        isActive: false,
+        isValid: true,
+        className: "bg-zinc-200 text-zinc-400",
+      },
+      // Loading, inactive, and invalid
+      {
+        isLoading: true,
+        isActive: false,
+        isValid: false,
+        className: "bg-zinc-200 text-zinc-400",
+      },
+    ],
   },
 );
 
@@ -103,9 +153,17 @@ export const StepButton = ({
       type="button"
       onClick={onClick}
       disabled={isLoading}
-      className={cn(buttonVariants({ variant }))}
+      className={cn(
+        buttonVariants({
+          isActive,
+          isValid,
+        }),
+      )}
     >
-      <StatusIcon variant={variant} className={cn(iconVariants({ variant }))} />
+      <StatusIcon
+        variant={variant}
+        className={cn(iconVariants({ isLoading, isActive, isValid }))}
+      />
       <div className="flex flex-row items-center text-xs px-1.5 py-0.5">
         <p className="leading-tight">{label} </p>
       </div>
