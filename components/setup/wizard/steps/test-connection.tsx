@@ -57,7 +57,7 @@ export const TestConnection = ({
     }
 
     return {
-      message: error ? error : "Connection failed",
+      message: error ?? "Connection failed",
       classes: "border-red-300 bg-red-50 text-red-800",
     };
   };
