@@ -48,8 +48,6 @@ export const Connection = () => {
   const [host, port, token] = form.watch(["host", "port", "token"]);
 
   const onSubmit = async (data: z.infer<typeof ConnectionFormSchema>) => {
-    console.log({ state: form.formState });
-
     try {
       setLoading(true);
       setError(null);
@@ -57,24 +55,11 @@ export const Connection = () => {
 
       await fetch("/api/config", {
         method: "POST",
-        body: JSON.stringify({
-          key: "connection_host",
-          value: data.host,
-        }),
-      });
-      await fetch("/api/config", {
-        method: "POST",
-        body: JSON.stringify({
-          key: "connection_port",
-          value: data.port.toString(),
-        }),
-      });
-      await fetch("/api/config", {
-        method: "POST",
-        body: JSON.stringify({
-          key: "connection_token",
-          value: data.token,
-        }),
+        body: JSON.stringify([
+          { key: "connection_host", value: data.host },
+          { key: "connection_port", value: data.port.toString() },
+          { key: "connection_token", value: data.token },
+        ]),
       });
 
       await mutate();
