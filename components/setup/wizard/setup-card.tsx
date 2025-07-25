@@ -1,6 +1,6 @@
 import { type ReactNode, useContext } from "react";
 import { Separator } from "@/components/separator";
-import { StepContext } from "@/components/setup/setup-wizard";
+import { SetupContext } from "@/components/setup/setup-context";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,7 +25,7 @@ export const SetupCard = ({
   onComplete,
 }: SetupCardProps) => {
   const { totalSteps, currentStep, previousStep, nextStep, loading } =
-    useContext(StepContext);
+    useContext(SetupContext);
 
   const isFirstStep = currentStep === 0;
   const setupProgress = `Step ${currentStep + 1} of ${totalSteps}`;

@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
-import { SetupWizard } from "@/components/setup/setup-wizard";
+import { SetupWizard } from "@/components/setup/wizard/setup-wizard";
 import { SideBar } from "@/components/sidebar";
 import { PrismaClient } from "@/generated/prisma";
 import { CONFIG_KEYS } from "@/lib/definitions";

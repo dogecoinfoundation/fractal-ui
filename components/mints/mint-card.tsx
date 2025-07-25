@@ -3,7 +3,8 @@ import { format } from "date-fns/format";
 
 import { ArrowUpRight, Cake } from "lucide-react";
 import { Separator } from "@/components/separator";
-import type { Mint } from "@/generated/prisma";
+import type { Config, Mint } from "@/generated/prisma";
+import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";
 
 export const MintTimestamp = ({
@@ -26,6 +27,11 @@ export const MintTimestamp = ({
 };
 
 export const MintCard = ({ mint }: { mint: Mint }) => {
+  const { data: timezoneConfig } = useAPI<Config[]>(
+    "/api/config?configKey=timezone",
+  );
+  const timezone = timezoneConfig?.[0]?.value || "UTC";
+
   return (
     <article className="flex flex-col gap-2 bg-white border-1 border-gray-300 hover:border-gray-400/80 rounded-sm p-2 h-full justify-between">
       <header className="flex flex-col gap-2">
@@ -80,10 +86,7 @@ export const MintCard = ({ mint }: { mint: Mint }) => {
       <footer className="flex flex-col gap-2">
         <Separator />
         <div className="flex flex-row gap-2 justify-between">
-          <MintTimestamp
-            createdAt={mint.created_at}
-            timezone="Australia/Sydney"
-          />
+          <MintTimestamp createdAt={mint.created_at} timezone={timezone} />
         </div>
       </footer>
     </article>
