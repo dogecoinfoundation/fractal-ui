@@ -1,7 +1,6 @@
 import { cva } from "class-variance-authority";
 import { Check, Loader2, Save } from "lucide-react";
-import { type ReactNode, useContext } from "react";
-import { SetupContext } from "@/components/setup/setup-context";
+import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +10,7 @@ type CallToActionProps = {
   error: unknown;
   isDirty: boolean;
   isEmpty: boolean;
-  isLastStep?: boolean;
+  isLoading: boolean;
 };
 
 type CallToActionState = {
@@ -29,7 +28,7 @@ type CallToActionState = {
 };
 
 const messageVariants = cva(
-  "flex flex-1 self-stretch items-center gap-2 px-2 border-1 rounded-lg rounded-r-none border-r-0 transition-colors",
+  "flex flex-1 self-stretch items-center gap-2 px-2 border-1 rounded-l-sm rounded-r-none border-r-0 transition-colors",
   {
     variants: {
       status: {
@@ -39,7 +38,7 @@ const messageVariants = cva(
         loading: "border-orange-500/50 bg-orange-50 text-orange-700",
         dirty: "border-amber-400 bg-amber-50 text-amber-700",
         empty: "border-blue-500/50 bg-blue-50 text-blue-600",
-        idle: "border-zinc-400 bg-zinc-50 text-zinc-600",
+        idle: "border-zinc-300 bg-zinc-50 text-zinc-400",
       },
     },
     defaultVariants: {
@@ -48,22 +47,25 @@ const messageVariants = cva(
   },
 );
 
-const buttonVariants = cva("rounded-l-none min-w-24 transition-colors", {
-  variants: {
-    status: {
-      error: "bg-red-500 hover:bg-red-700",
-      saved: "",
-      unsaved: "",
-      loading: "bg-orange-500",
-      dirty: "bg-amber-500 hover:bg-amber-400",
-      empty: "bg-blue-500 hover:bg-blue-400",
-      idle: "bg-zinc-400 hover:bg-zinc-400 disabled:bg-zinc-400 disabled:opacity-100",
+const buttonVariants = cva(
+  "rounded-l-none rounded-r-sm min-w-24 transition-colors",
+  {
+    variants: {
+      status: {
+        error: "bg-red-500 hover:bg-red-700",
+        saved: "",
+        unsaved: "",
+        loading: "bg-orange-500",
+        dirty: "bg-amber-500 hover:bg-amber-400",
+        empty: "bg-blue-500 hover:bg-blue-400",
+        idle: "bg-zinc-300 hover:bg-zinc-300 disabled:bg-zinc-300 disabled:opacity-100",
+      },
+    },
+    defaultVariants: {
+      status: "idle",
     },
   },
-  defaultVariants: {
-    status: "idle",
-  },
-});
+);
 
 export const CallToAction = ({
   handleSave,
@@ -71,11 +73,17 @@ export const CallToAction = ({
   error,
   isDirty,
   isEmpty,
-  isLastStep = false,
+  isLoading,
 }: CallToActionProps) => {
-  const { loading } = useContext(SetupContext);
-
   const getState = (): CallToActionState => {
+    if (isLoading)
+      return {
+        status: "loading",
+        message: "Loading...",
+        buttonIcon: <Loader2 className="animate-spin" />,
+        buttonText: "Saving",
+      };
+
     if (error)
       return {
         status: "error",
@@ -101,22 +109,12 @@ export const CallToAction = ({
       };
     }
 
-    if (saved && !loading)
+    if (saved && !isLoading)
       return {
         status: "saved",
-        message: isLastStep
-          ? "Saved! Click Complete to finish the setup process."
-          : "Saved! Click Next to continue.",
+        message: "Saved successfully!",
         buttonIcon: <Check />,
         buttonText: "Saved",
-      };
-
-    if (loading)
-      return {
-        status: "loading",
-        message: "Saving...",
-        buttonIcon: <Loader2 className="animate-spin" />,
-        buttonText: "Saving",
       };
 
     return {
@@ -138,7 +136,7 @@ export const CallToAction = ({
         className={cn(buttonVariants({ status }))}
         variant={error ? "destructive" : "creative"}
         onClick={handleSave}
-        disabled={loading}
+        disabled={isLoading}
       >
         {buttonIcon}
         {buttonText}

@@ -66,7 +66,7 @@ export const TestConnection = ({
 
   return (
     <div className="grid col-span-full">
-      <div className="grid grid-cols-2 gap-4 min-h-12">
+      <div className="grid grid-cols-4 gap-4 min-h-10">
         <Button
           type="button"
           className="grid col-span-1 flex-1 h-full"
@@ -77,7 +77,7 @@ export const TestConnection = ({
         </Button>
         <div
           className={cn(
-            "flex flex-col justify-center items-center text-xs leading-none border-1 rounded-sm transition-colors",
+            "flex flex-col justify-center items-center col-span-3 text-xs leading-none border-1 rounded-sm transition-colors",
             resultState.classes,
           )}
         >
