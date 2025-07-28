@@ -10,6 +10,9 @@ import metadata from "@/package.json";
 
 export const SideBar = () => {
   const pathname = usePathname();
+  const activeGroupName = navGroups.find((group) =>
+    group.items.some((item) => item.url === pathname),
+  );
 
   return (
     <nav className="flex flex-col justify-between gap-2 h-screen min-w-55 sticky top-0 overflow-y-auto select-none border-r-1 border-r-gray-300 bg-gray-50 p-3">
@@ -34,7 +37,14 @@ export const SideBar = () => {
         <div className="flex flex-col gap-2">
           {navGroups.map((group) => (
             <section key={group.name} className="text-sm">
-              <h2 className="font-semibold text-gray-500 mb-1">{group.name}</h2>
+              <h2
+                className={cn(
+                  "font-semibold text-gray-500 mb-1 transition-colors",
+                  activeGroupName?.name === group.name && "text-blue-800",
+                )}
+              >
+                {group.name}
+              </h2>
               <ul className="text-md">
                 {group.items.map((item) => {
                   const isActive = pathname === item.url;
@@ -59,7 +69,6 @@ export const SideBar = () => {
           ))}
         </div>
       </div>
-
       <div className="flex flex-col gap-2">
         <BalanceWidget />
         <StatusWidget />
