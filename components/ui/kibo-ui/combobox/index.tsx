@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-type ComboboxData = {
+export type ComboboxData = {
   label: string;
   value: string;
 };
