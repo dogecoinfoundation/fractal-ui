@@ -4,4 +4,5 @@ export const routeMap: Record<string, string> = {
   "/mint/list": "Minted Assets",
   "/mint/new": "Mint an Asset",
   "/status": "Status",
+  "/settings": "Settings",
 };

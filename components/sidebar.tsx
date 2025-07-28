@@ -6,6 +6,7 @@ import {
   type LucideIcon,
   PackagePlus,
   ScrollText,
+  Settings,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -58,6 +59,11 @@ const navGroups: NavGroup[] = [
         label: "Status",
         icon: Activity,
         url: "/status",
+      },
+      {
+        label: "Settings",
+        icon: Settings,
+        url: "/settings",
       },
     ],
   },
