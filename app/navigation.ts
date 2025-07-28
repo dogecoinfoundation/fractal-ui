@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 type NavGroup = {
-  name: string;
+  name: "Assets" | "Manage" | "System";
   items: NavItem[];
 };
 
