@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { Separator } from "@/components/separator";
-import { SetupContext, steps } from "@/components/setup/setup-context";
 import {
   type ConfigStateWithLoading,
   getConfigState,
@@ -16,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { SetupContext, steps } from "@/context/setup-context";
 import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";

@@ -1,6 +1,5 @@
 import { type ReactNode, useContext } from "react";
 import { Separator } from "@/components/separator";
-import { SetupContext } from "@/components/setup/setup-context";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { SetupContext } from "@/context/setup-context";
 import { cn } from "@/lib/utils";
 
 type SetupCardProps = {
