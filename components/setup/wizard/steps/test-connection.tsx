@@ -65,16 +65,6 @@ export const TestConnection = ({
   const resultState = getResultState();
 
   return (
-    <div className="grid col-span-full">
-      <div className="grid grid-cols-4 gap-4 min-h-10">
-        <Button
-          type="button"
-          className="grid col-span-1 flex-1 h-full"
-          disabled={testLoading || loading || !isValid}
-          onClick={() => testConnection(host, port, token)}
-        >
-          Test
-        </Button>
         <div
           className={cn(
             "flex flex-col justify-center items-center col-span-3 text-xs leading-none border-1 rounded-sm transition-colors",
@@ -83,6 +73,15 @@ export const TestConnection = ({
         >
           {resultState.message}
         </div>
+    <div className="grid grid-cols-[220px_1fr] gap-2">
+      <Button
+        type="button"
+        className="h-full"
+        disabled={testLoading || loading || !isValid}
+        onClick={() => testConnection(host, port, token)}
+      >
+        Test
+      </Button>
       </div>
     </div>
   );
