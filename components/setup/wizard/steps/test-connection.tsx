@@ -1,5 +1,6 @@
 "use client";
 
+import { cva } from "class-variance-authority";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { useTestConnection } from "@/hooks/useTestConnection";
@@ -12,6 +13,23 @@ type TestConnectionProps = {
   port: number;
   token: string;
 };
+
+const statusVariants = cva(
+  "flex flex-col justify-center items-center text-xs leading-none border-1 rounded-sm transition-colors",
+  {
+    variants: {
+      status: {
+        loading: "border-yellow-500 bg-yellow-50 text-yellow-700 animate-pulse",
+        success: "border-emerald-700/30 bg-emerald-50 text-emerald-800",
+        error: "border-red-300 bg-red-50 text-red-800",
+        idle: "border-blue-400 bg-blue-50 text-blue-600",
+      },
+    },
+    defaultVariants: {
+      status: "idle",
+    },
+  },
+);
 
 export const TestConnection = ({
   loading,
@@ -28,17 +46,18 @@ export const TestConnection = ({
   } = useTestConnection();
 
   const getResultState = (): {
+    status: "loading" | "idle" | "success" | "error";
     message: string | ReactNode;
-    classes: string;
   } => {
     if (testLoading) {
       return {
+        status: "loading",
         message: "Testing...",
-        classes: "border-amber-500 bg-amber-50 text-amber-800",
       };
     }
     if (!result) {
       return {
+        status: "idle",
         message: isValid ? (
           <span>
             Click <span className="font-semibold">Test</span> to begin.
@@ -46,33 +65,24 @@ export const TestConnection = ({
         ) : (
           <span>Fill out the information above to continue.</span>
         ),
-        classes: "border-indigo-300 bg-indigo-50 text-indigo-700",
       };
     }
     if (result?.status === 200) {
       return {
+        status: "success",
         message: "Connection successful!",
-        classes: "border-emerald-700/30 bg-emerald-50 text-emerald-800",
       };
     }
 
     return {
+      status: "error",
       message: error ?? "Connection failed",
-      classes: "border-red-300 bg-red-50 text-red-800",
     };
   };
 
   const resultState = getResultState();
 
   return (
-        <div
-          className={cn(
-            "flex flex-col justify-center items-center col-span-3 text-xs leading-none border-1 rounded-sm transition-colors",
-            resultState.classes,
-          )}
-        >
-          {resultState.message}
-        </div>
     <div className="grid grid-cols-[220px_1fr] gap-2">
       <Button
         type="button"
@@ -82,6 +92,8 @@ export const TestConnection = ({
       >
         Test
       </Button>
+      <div className={cn(statusVariants({ status: resultState.status }))}>
+        {resultState.message}
       </div>
     </div>
   );
