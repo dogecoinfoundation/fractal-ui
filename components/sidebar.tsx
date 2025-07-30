@@ -1,12 +1,13 @@
 "use client";
 
+import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navGroups } from "@/app/navigation";
 import { BalanceWidget } from "@/components/balance/balance-widget";
 import { StatusWidget } from "@/components/status/status-widget";
 import { cn } from "@/lib/utils";
-import metadata from "@/package.json";
+import { Separator } from "./separator";
 
 export const SideBar = () => {
   const pathname = usePathname();
@@ -15,23 +16,18 @@ export const SideBar = () => {
   );
 
   return (
-    <nav className="flex flex-col justify-between gap-2 h-screen min-w-55 sticky top-0 overflow-y-auto select-none border-r-1 border-r-gray-300 bg-gray-50 p-3">
-      <div>
+    <nav className="flex flex-col justify-between gap-3 p-4 h-screen min-w-55 sticky top-0 overflow-y-auto select-none border-r-1 border-r-gray-300 bg-gray-50">
+      <div className="flex flex-col">
         <Link
           href="/"
-          className="flex flex-col items-center mb-3 select-none rounded-md hover:text-gray-500"
+          className="flex flex-col items-center select-none rounded-md hover:text-gray-500"
         >
-          <h1
-            className={cn(
-              "text-md font-semibold",
-              pathname === "/" && "text-indigo-900",
-            )}
-          >
-            Fractal Administration
-          </h1>
-          <h2 className="font-mono text-xs font-normal border-1 border-blue-600/25 bg-blue-200 text-blue-700 px-1 py-0.25 rounded-sm">
-            {metadata.version}
-          </h2>
+          <h1 className="text-md font-semibold">Fractal Administration</h1>
+          <div className="flex flex-row flex-1 w-full items-center justify-between gap-2">
+            <Separator className="w-full" />
+            <LoaderPinwheel className="size-8 text-zinc-400" />
+            <Separator className="w-full" />
+          </div>
         </Link>
 
         <div className="flex flex-col gap-2">
