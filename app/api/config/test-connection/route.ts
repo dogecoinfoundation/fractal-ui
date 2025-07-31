@@ -4,7 +4,7 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const host = searchParams.get("host");
   const port = searchParams.get("port");
-  const authenticationToken = searchParams.get("authenticationToken");
+  const authenticationToken = searchParams.get("authenticationToken") ?? "";
 
   if (!host || !port) {
     return NextResponse.json(
@@ -14,14 +14,13 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const options =
-      authenticationToken && authenticationToken !== ""
-        ? {
-            headers: {
-              Authorization: `Bearer ${authenticationToken}`,
-            },
-          }
-        : {};
+    const options = authenticationToken
+      ? {
+          headers: {
+            Authorization: `Bearer ${authenticationToken}`,
+          },
+        }
+      : {};
     const response = await fetch(`http://${host}:${port}`, options);
 
     return NextResponse.json({
