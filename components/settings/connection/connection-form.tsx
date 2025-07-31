@@ -107,6 +107,7 @@ export const ConnectionForm = () => {
                 name="host"
                 label="Host"
                 className="grid col-span-7"
+                required
               />
               <InputFormField<typeof ConnectionFormSchema>
                 control={form.control}
@@ -114,6 +115,7 @@ export const ConnectionForm = () => {
                 label="Port"
                 inputType="number"
                 className="grid col-span-5"
+                required
               />
 
               <InputFormField<typeof ConnectionFormSchema>
@@ -122,7 +124,6 @@ export const ConnectionForm = () => {
                 label="Authentication Token"
                 inputType="password"
                 className="grid col-span-full"
-                isOptional={ConnectionFormSchema.shape.authenticationToken.isOptional()}
               />
             </div>
           </div>
