@@ -4,12 +4,20 @@ import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
 import { SetupWizard } from "@/components/setup/wizard/setup-wizard";
 import { SideBar } from "@/components/sidebar";
-import { PrismaClient } from "@/generated/prisma";
+import { type Config, PrismaClient } from "@/generated/prisma";
 import { CONFIG_KEYS } from "@/lib/definitions";
 
 export const metadata: Metadata = {
-  title: "Fractal Admin",
+  title: "Fractal Administration",
   description: "Administration UI for the Fractal Engine",
+};
+
+const validateConfigRows = (configData: Config[]): boolean => {
+  if (configData.length !== CONFIG_KEYS.length) return false;
+
+  return configData.every((config) =>
+    CONFIG_KEYS.includes(config.key as (typeof CONFIG_KEYS)[number]),
+  );
 };
 
 export default async function RootLayout({
@@ -19,12 +27,13 @@ export default async function RootLayout({
 }>) {
   const prisma = new PrismaClient();
   const configData = await prisma.config.findMany();
+  const configDataIsValid = validateConfigRows(configData);
 
   return (
     <html lang="en" className="h-full">
       <body className="antialiased h-full">
         <div className="flex flex-row min-h-full" role="document">
-          {configData && configData.length < CONFIG_KEYS.length ? (
+          {!configDataIsValid ? (
             <SetupWizard />
           ) : (
             <>
