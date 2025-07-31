@@ -24,9 +24,7 @@ export const ConnectionFormSchema = z.object({
     .max(MAXIMUM_PORT, {
       message: PORT_VALIDATION_MESSAGE,
     }),
-  token: z.string().nonempty({
-    message: "Must not be empty.",
-  }),
+  authenticationToken: z.string().optional(),
 });
 
 export const ConnectionForm = () => {
@@ -43,7 +41,10 @@ export const ConnectionForm = () => {
   const configRows = {
     host: getConfigRowByKey(configData, "connection_host"),
     port: getConfigRowByKey(configData, "connection_port"),
-    token: getConfigRowByKey(configData, "connection_token"),
+    authenticationToken: getConfigRowByKey(
+      configData,
+      "connection_authentication_token",
+    ),
   };
 
   const form = useForm<z.infer<typeof ConnectionFormSchema>>({
@@ -51,16 +52,20 @@ export const ConnectionForm = () => {
     defaultValues: {
       host: "",
       port: 0,
-      token: "",
+      authenticationToken: "",
     },
     values: {
       host: configRows.host?.value ?? "",
       port: parseInt(configRows.port?.value ?? "0"),
-      token: configRows.token?.value ?? "",
+      authenticationToken: configRows.authenticationToken?.value ?? "",
     },
   });
 
-  const [host, port, token] = form.watch(["host", "port", "token"]);
+  const [host, port, authenticationToken] = form.watch([
+    "host",
+    "port",
+    "authenticationToken",
+  ]);
 
   const onSubmit = async (data: z.infer<typeof ConnectionFormSchema>) => {
     try {
@@ -72,7 +77,10 @@ export const ConnectionForm = () => {
         body: JSON.stringify([
           { key: "connection_host", value: data.host },
           { key: "connection_port", value: data.port.toString() },
-          { key: "connection_token", value: data.token },
+          {
+            key: "connection_authentication_token",
+            value: data.authenticationToken,
+          },
         ]),
       });
 
@@ -110,8 +118,8 @@ export const ConnectionForm = () => {
 
               <InputFormField<typeof ConnectionFormSchema>
                 control={form.control}
-                name="token"
-                label="Token"
+                name="authenticationToken"
+                label="Authentication Token"
                 inputType="password"
                 className="grid col-span-full"
               />
@@ -124,7 +132,7 @@ export const ConnectionForm = () => {
               isValid={form.formState.isValid}
               host={host}
               port={port}
-              token={token}
+              authenticationToken={authenticationToken}
             />
           </div>
 
@@ -133,7 +141,7 @@ export const ConnectionForm = () => {
             saved={saved}
             error={error}
             isDirty={form.formState.isDirty}
-            isEmpty={!host && !port && !token}
+            isEmpty={!host && !port && !authenticationToken}
             isLoading={configLoading}
           />
         </form>
