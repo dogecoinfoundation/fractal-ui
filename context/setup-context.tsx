@@ -11,9 +11,6 @@ type SetupContextType = {
   previousStep: () => void;
   nextStep: () => void;
   setStep: (stepIndex: number) => void;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
-  refreshConfigData: () => void;
   disableNextStep?: boolean;
 };
 
@@ -25,9 +22,6 @@ export const SetupContext = createContext<SetupContextType>({
   previousStep: () => {},
   nextStep: () => {},
   setStep: () => {},
-  loading: false,
-  setLoading: () => {},
-  refreshConfigData: () => {},
   disableNextStep: false,
 });
 

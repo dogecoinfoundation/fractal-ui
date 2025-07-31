@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { Separator } from "@/components/separator";
-import { SetupContext, steps } from "@/components/setup/setup-context";
 import {
   type ConfigStateWithLoading,
   getConfigState,
@@ -16,6 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ConfigProvider } from "@/context/config-context";
+import { SetupContext, steps } from "@/context/setup-context";
 import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";
@@ -97,40 +98,42 @@ export const SetupWizard = () => {
   const StepComponent = steps[currentStep].component;
 
   return (
-    <SetupContext value={stepContextValue}>
-      <div className="bg-black/80 w-full min-h-full flex items-center justify-center">
-        <Card className="m-2 w-1/2 min-h-3/4 justify-between">
-          <CardHeader className="gap-3">
-            <CardTitle>First Time Setup</CardTitle>
-            <WizardProgress configState={configState} />
-          </CardHeader>
-          <Separator />
+    <ConfigProvider>
+      <SetupContext value={stepContextValue}>
+        <div className="bg-black/80 w-full min-h-full flex items-center justify-center">
+          <Card className="m-2 w-1/2 min-h-3/4 justify-between">
+            <CardHeader className="gap-3">
+              <CardTitle>First Time Setup</CardTitle>
+              <WizardProgress configState={configState} />
+            </CardHeader>
+            <Separator />
 
-          <CardContent className="flex flex-col flex-1 gap-4 items-start">
-            <StepComponent />
-          </CardContent>
+            <CardContent className="flex flex-col flex-1 gap-4 items-start">
+              <StepComponent />
+            </CardContent>
 
-          <Separator />
-          <CardFooter
-            className={cn(
-              "flex",
-              !isFirstStep ? "justify-between" : "justify-end",
-            )}
-          >
-            {!isFirstStep && (
-              <Button onClick={previousStep} disabled={loading}>
-                Previous
-              </Button>
-            )}
-            <Button
-              onClick={isLastStep ? () => window.location.reload() : nextStep}
-              disabled={loading}
+            <Separator />
+            <CardFooter
+              className={cn(
+                "flex",
+                !isFirstStep ? "justify-between" : "justify-end",
+              )}
             >
-              {isLastStep ? "Complete" : "Next"}
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
-    </SetupContext>
+              {!isFirstStep && (
+                <Button onClick={previousStep} disabled={loading}>
+                  Previous
+                </Button>
+              )}
+              <Button
+                onClick={isLastStep ? () => window.location.reload() : nextStep}
+                disabled={loading}
+              >
+                {isLastStep ? "Complete" : "Next"}
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </SetupContext>
+    </ConfigProvider>
   );
 };

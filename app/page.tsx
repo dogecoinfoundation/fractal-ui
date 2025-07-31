@@ -1,3 +1,11 @@
+"use client";
+
+import { RedirectType, redirect, usePathname } from "next/navigation";
+
 export default function Home() {
-  return <section>Placeholder</section>;
+  const pathname = usePathname();
+
+  if (pathname === "/") redirect("/mint/list", RedirectType.replace);
+
+  return null;
 }

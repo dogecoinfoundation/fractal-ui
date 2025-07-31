@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { routeMap } from "@/app/route-map";
+import { routeMap } from "@/app/navigation";
 
 export const Header = () => {
   const pathname = usePathname();
