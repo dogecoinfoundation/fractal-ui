@@ -9,7 +9,7 @@ import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import { cn } from "@/lib/utils";
 
-export default function ListMints() {
+export default function AllKnownMints() {
   const [activeMint, setActiveMint] = useState<Mint | null>(null);
   const [filterText, setFilterText] = useState("");
   const { data, isLoading, error } = useAPI<Mint[]>("/api/mints");

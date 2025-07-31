@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { type Mint, PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
+
 export async function GET() {
   try {
     const mints = await prisma.mint.findMany();

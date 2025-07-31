@@ -1,14 +1,20 @@
 import {
   Activity,
   Coins,
+  CreditCard,
+  FileText,
+  Fingerprint,
+  List,
   type LucideIcon,
   PackagePlus,
+  PiggyBank,
+  Receipt,
   ScrollText,
   Settings,
 } from "lucide-react";
 
 type NavGroup = {
-  name: "Assets" | "Manage" | "System";
+  name: "Assets" | "Tokens" | "Invoices" | "Manage" | "System";
   items: NavItem[];
 };
 
@@ -25,12 +31,47 @@ export const navGroups: NavGroup[] = [
       {
         label: "Mint an Asset",
         icon: PackagePlus,
-        url: "/mint/new",
+        url: "/mints/new",
       },
       {
-        label: "List Minted Assets",
+        label: "My Mints",
+        icon: Fingerprint,
+        url: "/mints/my",
+      },
+      {
+        label: "All Known Mints",
         icon: ScrollText,
-        url: "/mint/list",
+        url: "/mints/all",
+      },
+    ],
+  },
+  {
+    name: "Tokens",
+    items: [
+      {
+        label: "My Tokens",
+        icon: PiggyBank,
+        url: "/tokens/my",
+      },
+    ],
+  },
+  {
+    name: "Invoices",
+    items: [
+      {
+        label: "Create an Invoice",
+        icon: FileText,
+        url: "/invoices/new",
+      },
+      {
+        label: "List My Invoices",
+        icon: List,
+        url: "/invoices/my",
+      },
+      {
+        label: "Pay for an Invoice",
+        icon: CreditCard,
+        url: "/invoices/pay",
       },
     ],
   },
