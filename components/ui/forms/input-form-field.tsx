@@ -18,7 +18,7 @@ interface InputFormFieldProps<T extends z.ZodType> {
   className?: string;
   inputType?: HTMLInputTypeAttribute;
   placeholder?: string;
-  isOptional?: boolean;
+  required?: boolean;
 }
 
 export const InputFormField = <T extends z.ZodType>({
@@ -28,7 +28,7 @@ export const InputFormField = <T extends z.ZodType>({
   className,
   inputType = "text",
   placeholder = "",
-  isOptional,
+  required,
 }: InputFormFieldProps<T>) => {
   return (
     <FormField
@@ -39,7 +39,7 @@ export const InputFormField = <T extends z.ZodType>({
           <FormLabel htmlFor={name}>
             <span className="flex gap-1">
               {label}
-              {isOptional ? null : <span className="text-rose-400">*</span>}
+              {required ? <span className="text-rose-400">*</span> : null}
             </span>
             <FormMessage />
           </FormLabel>

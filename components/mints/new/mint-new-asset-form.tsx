@@ -66,12 +66,14 @@ export const MintNewAssetForm = () => {
           control={form.control}
           name="title"
           label="Asset Name"
+          required
         />
 
         <InputFormField<typeof FormSchema>
           control={form.control}
           name="description"
           label="Asset Description"
+          required
         />
 
         <InputFormField<typeof FormSchema>
@@ -79,6 +81,7 @@ export const MintNewAssetForm = () => {
           name="fraction_count"
           label="Tokens"
           inputType="number"
+          required
         />
 
         <Button type="submit" variant="creative" className="cursor-pointer">
