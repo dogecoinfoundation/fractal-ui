@@ -4,20 +4,12 @@ import { Header } from "@/components/header";
 import { Separator } from "@/components/separator";
 import { SetupWizard } from "@/components/setup/wizard/setup-wizard";
 import { SideBar } from "@/components/sidebar";
-import { type Config, PrismaClient } from "@/generated/prisma";
-import { CONFIG_KEYS } from "@/lib/definitions";
+import { PrismaClient } from "@/generated/prisma";
+import { validateConfigRows } from "@/lib/validation";
 
 export const metadata: Metadata = {
   title: "Fractal Administration",
   description: "Administration UI for the Fractal Engine",
-};
-
-const validateConfigRows = (configData: Config[]): boolean => {
-  if (configData.length !== CONFIG_KEYS.length) return false;
-
-  return configData.every((config) =>
-    CONFIG_KEYS.includes(config.key as (typeof CONFIG_KEYS)[number]),
-  );
 };
 
 export default async function RootLayout({
