@@ -122,6 +122,7 @@ export const ConnectionForm = () => {
                 label="Authentication Token"
                 inputType="password"
                 className="grid col-span-full"
+                isOptional={ConnectionFormSchema.shape.authenticationToken.isOptional()}
               />
             </div>
           </div>
