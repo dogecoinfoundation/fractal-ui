@@ -36,9 +36,11 @@ export const InputFormField = <T extends z.ZodType>({
       name={name}
       render={({ field }) => (
         <FormItem className={cn(className)}>
-          <FormLabel htmlFor={name} className="gap-1">
-            {label}
-            {isOptional ? null : <span className="text-rose-400">*</span>}
+          <FormLabel htmlFor={name}>
+            <span className="flex gap-1">
+              {label}
+              {isOptional ? null : <span className="text-rose-400">*</span>}
+            </span>
             <FormMessage />
           </FormLabel>
           <FormControl>
