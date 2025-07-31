@@ -124,7 +124,6 @@ export const ConnectionForm = () => {
                 label="Authentication Token"
                 inputType="password"
                 className="grid col-span-full"
-                required={false}
               />
             </div>
           </div>

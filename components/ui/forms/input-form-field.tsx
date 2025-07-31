@@ -28,7 +28,7 @@ export const InputFormField = <T extends z.ZodType>({
   className,
   inputType = "text",
   placeholder = "",
-  required,
+  required = false,
 }: InputFormFieldProps<T>) => {
   return (
     <FormField
