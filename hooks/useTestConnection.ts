@@ -10,18 +10,25 @@ export const useTestConnection = () => {
   const [error, setError] = useState<string | undefined>();
   const [loading, setLoading] = useState(false);
 
-  const testConnection = async (host: string, port: number, token: string) => {
+  const testConnection = async (
+    host: string,
+    port: number,
+    authenticationToken?: string,
+  ) => {
     setError(undefined);
     setResult(undefined);
     setLoading(true);
 
+    const params: Record<string, string> = {
+      host,
+      port: port.toString(),
+    };
+
+    if (authenticationToken && authenticationToken !== "")
+      params.authenticationToken = authenticationToken;
+
     fetch(
-      "/api/config/test-connection?" +
-        new URLSearchParams({
-          host,
-          port: port.toString(),
-          token,
-        }).toString(),
+      `/api/config/test-connection?${new URLSearchParams(params).toString()}`,
     )
       .then((res) => res.json())
       .then((data) => setResult(data))

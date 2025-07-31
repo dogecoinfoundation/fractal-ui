@@ -11,7 +11,7 @@ type TestConnectionProps = {
   isValid: boolean;
   host: string;
   port: number;
-  token: string;
+  authenticationToken?: string;
 };
 
 const statusVariants = cva(
@@ -36,7 +36,7 @@ export const TestConnection = ({
   isValid,
   host,
   port,
-  token,
+  authenticationToken,
 }: TestConnectionProps) => {
   const {
     result,
@@ -88,7 +88,7 @@ export const TestConnection = ({
         type="button"
         className="h-full"
         disabled={testLoading || loading || !isValid}
-        onClick={() => testConnection(host, port, token)}
+        onClick={() => testConnection(host, port, authenticationToken)}
       >
         Test
       </Button>

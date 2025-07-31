@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "dev": "next dev --turbopack",
+    "fix": "biome check --fix",
     "lint": "biome check",
-    "fix": "biome check --fix"
+    "start": "next start",
+    "test": "vitest"
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
@@ -35,15 +36,20 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.0.6",
+    "@faker-js/faker": "^9.9.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.7.0",
+    "jsdom": "^26.1.0",
     "prisma": "^6.11.1",
     "tailwindcss": "^4",
     "tsx": "^4.20.3",
     "tw-animate-css": "^1.3.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

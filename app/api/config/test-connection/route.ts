@@ -4,9 +4,9 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const host = searchParams.get("host");
   const port = searchParams.get("port");
-  const token = searchParams.get("token");
+  const authenticationToken = searchParams.get("authenticationToken");
 
-  if (!host || !port || !token) {
+  if (!host || !port) {
     return NextResponse.json(
       { message: "Missing required parameters" },
       { status: 400 },
@@ -14,11 +14,15 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await fetch(`http://${host}:${port}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const options =
+      authenticationToken && authenticationToken !== ""
+        ? {
+            headers: {
+              Authorization: `Bearer ${authenticationToken}`,
+            },
+          }
+        : {};
+    const response = await fetch(`http://${host}:${port}`, options);
 
     return NextResponse.json({
       status: response.status,

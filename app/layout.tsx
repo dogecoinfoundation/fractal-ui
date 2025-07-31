@@ -5,10 +5,10 @@ import { Separator } from "@/components/separator";
 import { SetupWizard } from "@/components/setup/wizard/setup-wizard";
 import { SideBar } from "@/components/sidebar";
 import { PrismaClient } from "@/generated/prisma";
-import { CONFIG_KEYS } from "@/lib/definitions";
+import { validateConfigRows } from "@/lib/validation";
 
 export const metadata: Metadata = {
-  title: "Fractal Admin",
+  title: "Fractal Administration",
   description: "Administration UI for the Fractal Engine",
 };
 
@@ -19,12 +19,13 @@ export default async function RootLayout({
 }>) {
   const prisma = new PrismaClient();
   const configData = await prisma.config.findMany();
+  const configDataIsValid = validateConfigRows(configData);
 
   return (
     <html lang="en" className="h-full">
       <body className="antialiased h-full">
         <div className="flex flex-row min-h-full" role="document">
-          {configData && configData.length < CONFIG_KEYS.length ? (
+          {!configDataIsValid ? (
             <SetupWizard />
           ) : (
             <>
