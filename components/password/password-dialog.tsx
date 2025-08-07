@@ -42,7 +42,12 @@ export const PasswordDialog = () => {
               label="Password"
               inputType="password"
             />
-            <Button type="submit" variant="creative" className="cursor-pointer">
+            <Button
+              type="submit"
+              variant="creative"
+              className="cursor-pointer"
+              disabled={!form.formState.isValid}
+            >
               Login
             </Button>
           </Paper>
