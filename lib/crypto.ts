@@ -3,12 +3,6 @@
 import crypto from "node:crypto";
 
 const algorithm = "aes-256-cbc";
-// const secretKey = process.env.SECRET_KEY;
-const secretKey = "1234567890";
-
-if (!secretKey) {
-  throw new Error("SECRET_KEY environment variable is required");
-}
 
 const iv = crypto.randomBytes(16);
 
