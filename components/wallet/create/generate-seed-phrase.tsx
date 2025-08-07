@@ -24,8 +24,8 @@ export const GenerateSeedPhrase = () => {
     return (
       <WalletSection>
         <p>
-          Click <span className="font-semibold">Generate</span> to begin the
-          wallet creation process and generate your wallet's seed phrase.
+          Click <strong>Generate</strong> to begin the wallet creation process
+          and generate your wallet's seed phrase.
         </p>
         <Button variant="creative" onClick={() => generate()}>
           Generate
