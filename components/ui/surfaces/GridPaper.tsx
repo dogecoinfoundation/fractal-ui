@@ -1,10 +1,22 @@
 import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
-export const GridPaper = ({ children }: { children: ReactNode }) => {
+export const GridPaper = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   return (
-    <section className="relative overflow-y-auto flex flex-col flex-1 justify-start items-start rounded-sm p-4 border-1 border-blue-500/30 bg-blue-100/20">
+    <section
+      className={cn(
+        "relative overflow-y-auto flex flex-col flex-1 justify-start items-start rounded-sm p-4 border-1 border-blue-200 bg-blue-25",
+        className,
+      )}
+    >
       <svg
-        className="absolute inset-0 pointer-events-none z-[-1] size-full fill-blue-300 stroke-blue-300 opacity-30"
+        className="absolute inset-0 pointer-events-none size-full stroke-blue-200 opacity-30"
         aria-hidden="true"
       >
         <defs>
