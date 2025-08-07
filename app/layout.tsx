@@ -1,9 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Header } from "@/components/header";
-import { Separator } from "@/components/separator";
+import { Main } from "@/components/main";
 import { SetupWizard } from "@/components/setup/wizard/setup-wizard";
-import { SideBar } from "@/components/sidebar";
 import { PrismaClient } from "@/generated/prisma";
 import { validateConfigRows } from "@/lib/validation";
 
@@ -25,20 +23,7 @@ export default async function RootLayout({
     <html lang="en" className="h-full">
       <body className="antialiased h-full">
         <div className="flex flex-row min-h-full" role="document">
-          {!configDataIsValid ? (
-            <SetupWizard />
-          ) : (
-            <>
-              <SideBar />
-              <main className="flex flex-col flex-1">
-                <div className="flex flex-col h-screen gap-3 p-4">
-                  <Header />
-                  <Separator />
-                  {children}
-                </div>
-              </main>
-            </>
-          )}
+          {!configDataIsValid ? <SetupWizard /> : <Main>{children}</Main>}
         </div>
       </body>
     </html>

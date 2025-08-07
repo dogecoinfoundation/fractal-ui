@@ -97,7 +97,7 @@ function FormLabel({
       data-slot="form-label"
       data-error={!!error}
       className={cn(
-        "data-[error=true]:text-destructive flex flex-row items-center",
+        "data-[error=true]:text-destructive flex flex-row items-center text-xs",
         error ? "justify-between" : "justify-start",
         className,
       )}
@@ -151,10 +151,7 @@ function FormMessage({ className, ...props }: ComponentProps<"p">) {
     <p
       data-slot="form-message"
       id={formMessageId}
-      className={cn(
-        "text-destructive/60 text-xs font-normal italic",
-        className,
-      )}
+      className={cn("text-destructive/60 font-normal italic", className)}
       {...props}
     >
       {body}

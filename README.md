@@ -30,3 +30,12 @@ pnpm prisma db seed
 ```shell
 pnpm run dev
 ```
+
+### Making Database Schema Changes
+
+#### Adding a new table
+
+1. Add your model to `./prisma/schema.prisma`
+2. Run `pnpm run prisma generate`
+3. Run `pnpm run prisma migrate dev`
+4. Enter a name for the migration, ideally something that describes the nature of the change.

@@ -8,9 +8,9 @@ import {
   type LucideIcon,
   PackagePlus,
   PiggyBank,
-  Receipt,
   ScrollText,
   Settings,
+  Wallet,
 } from "lucide-react";
 
 type NavGroup = {
@@ -22,9 +22,11 @@ type NavItem = {
   label: string;
   icon: LucideIcon;
   url: string;
+  parent?: string;
+  hideInSidebar?: boolean;
 };
 
-export const navGroups: NavGroup[] = [
+const navGroups: NavGroup[] = [
   {
     name: "Assets",
     items: [
@@ -79,6 +81,25 @@ export const navGroups: NavGroup[] = [
     name: "Manage",
     items: [
       {
+        label: "Wallet",
+        icon: Wallet,
+        url: "/wallet",
+      },
+      {
+        label: "Import Wallet",
+        icon: Wallet,
+        url: "/wallet/import",
+        parent: "Wallet",
+        hideInSidebar: true,
+      },
+      {
+        label: "Create Wallet",
+        icon: Wallet,
+        url: "/wallet/create",
+        parent: "Wallet",
+        hideInSidebar: true,
+      },
+      {
         label: "Add Balance",
         icon: Coins,
         url: "/balance/add",
@@ -102,11 +123,24 @@ export const navGroups: NavGroup[] = [
   },
 ];
 
-export const routeMap: Record<string, string> = {
-  "/": "Home",
+export const sidebarNavGroups = navGroups.map((group) => {
+  const items = group.items.filter((item) => !item.hideInSidebar);
+  return {
+    ...group,
+    items,
+  };
+});
+
+type RouteMeta = {
+  label: string;
+  parent?: string;
+};
+
+export const routeMap: Record<string, RouteMeta> = {
+  "/": { label: "Home" },
   ...Object.fromEntries(
     navGroups
       .flatMap((group) => group.items)
-      .map((item) => [item.url, item.label]),
+      .map((item) => [item.url, { label: item.label, parent: item.parent }]),
   ),
 };

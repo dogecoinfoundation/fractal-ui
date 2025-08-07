@@ -1,6 +1,5 @@
 import type { HTMLInputTypeAttribute } from "react";
-import type { Control, Path } from "react-hook-form";
-import type z from "zod";
+import type { Control, FieldPath, FieldValues } from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -11,9 +10,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-interface InputFormFieldProps<T extends z.ZodType> {
-  control: Control<z.infer<T>>;
-  name: Path<z.infer<T>>;
+interface InputFormFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> {
+  control: Control<TFieldValues>;
+  name: TName;
   label: string;
   className?: string;
   inputType?: HTMLInputTypeAttribute;
@@ -21,7 +23,10 @@ interface InputFormFieldProps<T extends z.ZodType> {
   required?: boolean;
 }
 
-export const InputFormField = <T extends z.ZodType>({
+export const InputFormField = <
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({
   control,
   name,
   label,
@@ -29,7 +34,7 @@ export const InputFormField = <T extends z.ZodType>({
   inputType = "text",
   placeholder = "",
   required,
-}: InputFormFieldProps<T>) => {
+}: InputFormFieldProps<TFieldValues, TName>) => {
   return (
     <FormField
       control={control}

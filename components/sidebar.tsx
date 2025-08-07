@@ -3,15 +3,15 @@
 import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { navGroups } from "@/app/navigation";
-import { BalanceWidget } from "@/components/balance/balance-widget";
+import { sidebarNavGroups } from "@/app/navigation";
 import { StatusWidget } from "@/components/status/status-widget";
+import { WalletWidget } from "@/components/wallet/wallet-widget";
 import { cn } from "@/lib/utils";
 import { Separator } from "./separator";
 
 export const SideBar = () => {
   const pathname = usePathname();
-  const activeGroupName = navGroups.find((group) =>
+  const activeGroupName = sidebarNavGroups.find((group) =>
     group.items.some((item) => item.url === pathname),
   );
 
@@ -31,7 +31,7 @@ export const SideBar = () => {
         </Link>
 
         <div className="flex flex-col gap-2">
-          {navGroups.map((group) => (
+          {sidebarNavGroups.map((group) => (
             <section key={group.name} className="text-sm">
               <h2
                 className={cn(
@@ -66,7 +66,8 @@ export const SideBar = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <BalanceWidget />
+        {/* <BalanceWidget /> */}
+        <WalletWidget />
         <StatusWidget />
       </div>
     </nav>
