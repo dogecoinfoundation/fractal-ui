@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import z from "zod";
+import z from "zod/v4";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
@@ -9,16 +9,16 @@ import { useAPI } from "@/hooks/useAPI";
 
 export const FormSchema = z.object({
   title: z.string().nonempty({
-    message: "Please provide a name of the asset you wish to mint.",
+    error: "Please provide a name of the asset you wish to mint.",
   }),
   description: z.string().nonempty({
-    message: "Please provide a description of the asset you wish to mint.",
+    error: "Please provide a description of the asset you wish to mint.",
   }),
-  fraction_count: z.coerce
+  fraction_count: z
     .number()
-    .nonnegative({ message: "The number of tokens must be at least 1." })
+    .nonnegative({ error: "The number of tokens must be at least 1." })
     .min(1, {
-      message: "The number of tokens must be at least 1.",
+      error: "The number of tokens must be at least 1.",
     }),
 });
 
@@ -62,21 +62,21 @@ export const MintNewAssetForm = () => {
         className="min-w-xl h-xl flex-0 bg-white border-zinc-300 border-1 rounded-sm p-4 gap-4 flex flex-col z-1 shadow-sm shadow-zinc-300/50"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <InputFormField<typeof FormSchema>
+        <InputFormField
           control={form.control}
           name="title"
           label="Asset Name"
           required
         />
 
-        <InputFormField<typeof FormSchema>
+        <InputFormField
           control={form.control}
           name="description"
           label="Asset Description"
           required
         />
 
-        <InputFormField<typeof FormSchema>
+        <InputFormField
           control={form.control}
           name="fraction_count"
           label="Tokens"
