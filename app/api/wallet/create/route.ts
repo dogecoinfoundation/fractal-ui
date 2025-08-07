@@ -1,7 +1,7 @@
 import DogecoinJS from "@mydogeofficial/dogecoin-js";
 import { type NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
-import { decrypt, encrypt } from "@/lib/crypto";
+import { encrypt } from "@/lib/crypto";
 
 export async function POST(request: NextRequest) {
   try {
