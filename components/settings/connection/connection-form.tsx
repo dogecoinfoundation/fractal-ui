@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import z from "zod/v4";
+import { z } from "zod";
 import { CallToAction } from "@/components/setup/wizard/steps/call-to-action";
 import { TestConnection } from "@/components/setup/wizard/steps/test-connection";
 import { Form } from "@/components/ui/form";
