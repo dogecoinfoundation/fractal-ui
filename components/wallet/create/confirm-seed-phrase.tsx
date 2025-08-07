@@ -18,12 +18,6 @@ export const ConfirmSeedPhrase = () => {
     useContext(SeedPhraseContext);
   const { password } = useContext(AuthContext);
 
-  const words = [
-    candidates[0].word,
-    candidates[1].word,
-    candidates[2].word,
-  ] as const;
-
   const SeedPhraseSchema = z.object({
     word1: z
       .string()
@@ -31,12 +25,18 @@ export const ConfirmSeedPhrase = () => {
       .refine((value) => value === candidates[0].word, {
         error: `Word ${candidates[0].position} is incorrect.`,
       }),
-    word2: z.enum(words).extract([candidates[1].word], {
-      error: `Word ${candidates[1].position} is incorrect.`,
-    }),
-    word3: z.enum(words).extract([candidates[2].word], {
-      error: `Word ${candidates[2].position} is incorrect.`,
-    }),
+    word2: z
+      .string()
+      .toLowerCase()
+      .refine((value) => value === candidates[1].word, {
+        error: `Word ${candidates[1].position} is incorrect.`,
+      }),
+    word3: z
+      .string()
+      .toLowerCase()
+      .refine((value) => value === candidates[2].word, {
+        error: `Word ${candidates[2].position} is incorrect.`,
+      }),
   });
 
   const form = useForm<z.infer<typeof SeedPhraseSchema>>({
