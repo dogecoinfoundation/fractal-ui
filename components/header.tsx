@@ -11,11 +11,11 @@ export const Header = () => {
   return (
     <header className="text-xl font-medium transition-colors [&_svg]:size-4 [&_svg]:shrink-0 select-none">
       {route.parent ? (
-        <div className="flex flex-row gap-2 items-center">
-          <h1>{route.parent}</h1>
+        <h1 className="flex flex-row gap-2 items-center">
+          {route.parent}
           <ChevronRight className="size-4 text-zinc-500" />
-          <h1>{route.label}</h1>
-        </div>
+          {route.label}
+        </h1>
       ) : (
         <h1>{route.label}</h1>
       )}
