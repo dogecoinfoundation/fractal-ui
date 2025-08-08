@@ -123,7 +123,7 @@ export const SeedPhraseTile = ({
 }: SeedPhraseTileProps) => {
   return (
     <div
-      className="flex flex-row items-center font-mono border-0 rounded-sm animate-swing-in text-sm transition-colors shadow-crisp shadow-zinc-200/40"
+      className="flex flex-row items-center font-mono border-0 rounded-sm animate-swing-in text-sm transition-colors shadow-crisp shadow-zinc-200/40 select-none"
       style={{
         animationDelay: `${position * 40}ms`,
       }}
