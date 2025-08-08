@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { GridPaper } from "@/components/ui/surfaces/GridPaper";
 import { SeedPhraseTile } from "@/components/wallet/create/seed-phrase/seed-phrase-tile";
 import { cn } from "@/lib/utils";
@@ -45,10 +46,14 @@ export const SeedPhraseWords = ({
   allFields,
   className,
 }: SeedPhraseWordsProps) => {
-  const combined = candidates?.map((c, index) => ({
-    ...c,
-    input: allFields?.[`word${index + 1}`]?.toLowerCase(),
-  }));
+  const combined = useMemo(
+    () =>
+      candidates?.map((c, index) => ({
+        ...c,
+        input: allFields?.[`word${index + 1}`]?.toLowerCase(),
+      })),
+    [candidates, allFields],
+  );
 
   return (
     <GridPaper className={cn(className)}>
