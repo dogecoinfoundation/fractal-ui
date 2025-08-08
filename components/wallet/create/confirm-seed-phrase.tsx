@@ -18,25 +18,18 @@ export const ConfirmSeedPhrase = () => {
     useContext(SeedPhraseContext);
   const { password } = useContext(AuthContext);
 
+  const getRefiner = (index: number) =>
+    z
+      .string()
+      .toLowerCase()
+      .refine((value) => value === candidates[index].word, {
+        error: `Word ${candidates[index].position} is incorrect.`,
+      });
+
   const SeedPhraseSchema = z.object({
-    word1: z
-      .string()
-      .toLowerCase()
-      .refine((value) => value === candidates[0].word, {
-        error: `Word ${candidates[0].position} is incorrect.`,
-      }),
-    word2: z
-      .string()
-      .toLowerCase()
-      .refine((value) => value === candidates[1].word, {
-        error: `Word ${candidates[1].position} is incorrect.`,
-      }),
-    word3: z
-      .string()
-      .toLowerCase()
-      .refine((value) => value === candidates[2].word, {
-        error: `Word ${candidates[2].position} is incorrect.`,
-      }),
+    word1: getRefiner(0),
+    word2: getRefiner(1),
+    word3: getRefiner(2),
   });
 
   const form = useForm<z.infer<typeof SeedPhraseSchema>>({
@@ -75,9 +68,9 @@ export const ConfirmSeedPhrase = () => {
               <p>
                 To confirm you've securely saved your seed phrase, please enter
                 words
-                <strong> {candidates[0].position}</strong>,
-                <strong> {candidates[1].position}</strong>, and
-                <strong> {candidates[2].position} </strong>
+                <code> {candidates[0].position}</code>,
+                <code> {candidates[1].position}</code>, and
+                <code> {candidates[2].position} </code>
                 in the text boxes below:
               </p>
             </AlertDescription>
