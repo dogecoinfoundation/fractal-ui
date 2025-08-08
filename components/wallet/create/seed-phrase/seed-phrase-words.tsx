@@ -21,16 +21,19 @@ const maskWord = (
 ) => {
   const maskShape = "************";
 
-  if (candidate) {
-    if (candidate.input === "") return maskShape;
+  // Return just the input string if it matches the word
+  if (candidate && candidate.input === candidate.word) return candidate.input;
 
-    if (candidate.input === candidate.word) return candidate.input;
+  if (candidate?.input) {
+    // Return the mask if the input is empty
+    if (candidate.input === "") return maskShape;
 
     const maskedCharacters = Array.from(
       { length: maskShape.length - (candidate.input?.length || 0) },
       () => "*",
     ).join("");
 
+    // Return the input with the remaining characters masked with an asterisk
     return `${candidate.input}${maskedCharacters}`;
   }
 
