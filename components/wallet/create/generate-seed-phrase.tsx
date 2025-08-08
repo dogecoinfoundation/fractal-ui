@@ -14,9 +14,8 @@ export const GenerateSeedPhrase = () => {
 
   useEffect(() => {
     if (copied) {
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
+      const timeout = setTimeout(() => setCopied(false), 10000);
+      return () => clearTimeout(timeout);
     }
   }, [copied]);
 
