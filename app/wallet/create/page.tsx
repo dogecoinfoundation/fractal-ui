@@ -12,6 +12,9 @@ import {
 } from "@/context/seedphrase-context";
 import { useAPI } from "@/hooks/useAPI";
 
+// Implementation of the 'Fisher-Yates' shuffle algorithm
+// https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+// Ensures unbiased randomisation of the supplied array
 function fisherYatesShuffle(array: Array<{ position: number; word: string }>) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -43,6 +46,10 @@ export default function CreateWallet() {
       const seedPhraseWords: string[] = data.seedPhrase.split(" ");
       setSeedPhrase(seedPhraseWords);
 
+      // Determine the 3 random words for confirmation of the seed phrase by:
+      // Shuffling the list of seed phrase words
+      // Grabbing the first 3 items
+      // Sorting said items by their position
       const candidates = fisherYatesShuffle(
         seedPhraseWords.map((c, index) => ({
           position: index + 1,
