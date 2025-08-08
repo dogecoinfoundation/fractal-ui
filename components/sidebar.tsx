@@ -4,8 +4,8 @@ import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { sidebarNavGroups } from "@/app/navigation";
+import { BalanceWidget } from "@/components/balance/balance-widget";
 import { StatusWidget } from "@/components/status/status-widget";
-import { WalletWidget } from "@/components/wallet/wallet-widget";
 import { cn } from "@/lib/utils";
 import { Separator } from "./separator";
 
@@ -66,8 +66,7 @@ export const SideBar = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {/* <BalanceWidget /> */}
-        <WalletWidget />
+        <BalanceWidget />
         <StatusWidget />
       </div>
     </nav>
