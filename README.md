@@ -31,9 +31,15 @@ pnpm prisma db seed
 pnpm run dev
 ```
 
-### Making Database Schema Changes
+### Database
 
-#### Adding a new table
+#### Seeding your Database with Mock Data
+
+`pnpm run seed`
+
+#### Making Database Schema Changes
+
+##### Adding a new table
 
 1. Add your model to `./prisma/schema.prisma`
 2. Run `pnpm run prisma generate`
