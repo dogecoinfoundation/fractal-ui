@@ -7,6 +7,7 @@ import { Paper } from "@/components/ui/surfaces/Paper";
 import { ConfirmSeedPhrase } from "@/components/wallet/create/confirm-seed-phrase";
 import { GenerateSeedPhrase } from "@/components/wallet/create/generate-seed-phrase";
 import {
+  type Candidate,
   SeedPhraseContext,
   type SeedPhraseStatus,
 } from "@/context/seedphrase-context";
@@ -17,9 +18,7 @@ export default function CreateWallet() {
   const { data } = useAPI<{ walletExists: boolean }>("/api/wallet");
 
   const [seedPhrase, setSeedPhrase] = useState<string[]>([]);
-  const [candidates, setCandidates] = useState<
-    { position: number; word: string }[]
-  >([]);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [status, setStatus] = useState<SeedPhraseStatus>("IDLE");
 
   if (data?.walletExists) return redirect("/wallet");

@@ -7,12 +7,21 @@ export type SeedPhraseStatus =
   | "UNCONFIRMED"
   | "CONFIRMED";
 
+export type Candidate = {
+  position: number;
+  word: string;
+  key: `word${number}`;
+};
+
 type SeedPhraseContextType = {
   status: SeedPhraseStatus;
   setStatus: (status: SeedPhraseStatus) => void;
+
   seedPhrase: string[];
   setSeedPhrase: (seedPhrase: string[]) => void;
-  candidates: { position: number; word: string }[];
+
+  candidates: Candidate[];
+
   generate: () => Promise<void>;
 };
 
