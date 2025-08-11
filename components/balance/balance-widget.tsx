@@ -10,13 +10,7 @@ export const BalanceWidget = () => {
   } = useAPI<{ walletExists: boolean }>("/api/wallet");
 
   if (!walletData?.walletExists) {
-    return (
-      <WalletContent
-        data={walletData}
-        isLoading={isWalletLoading}
-        error={walletError}
-      />
-    );
+    return <WalletContent isLoading={isWalletLoading} error={walletError} />;
   }
 
   return <BalanceContent />;

@@ -18,7 +18,6 @@ const maskWord = (word: string, input: string) => {
   if (input === word) return input;
 
   if (input) {
-    // Return the mask if the input is empty
     if (input === "") return MASK;
 
     const maskedCharacters = Array.from(
