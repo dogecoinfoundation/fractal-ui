@@ -11,18 +11,7 @@ import {
   type SeedPhraseStatus,
 } from "@/context/seedphrase-context";
 import { useAPI } from "@/hooks/useAPI";
-
-// Implementation of the 'Fisher-Yates' shuffle algorithm
-// https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-// Ensures unbiased randomisation of the supplied array
-function fisherYatesShuffle(array: Array<{ position: number; word: string }>) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-
-  return array;
-}
+import { fisherYatesShuffle } from "@/lib/utils";
 
 export default function CreateWallet() {
   const { data } = useAPI<{ walletExists: boolean }>("/api/wallet");
