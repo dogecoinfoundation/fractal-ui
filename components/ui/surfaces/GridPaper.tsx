@@ -11,7 +11,7 @@ export const GridPaper = ({
   return (
     <section
       className={cn(
-        "relative overflow-y-auto flex flex-col flex-1 justify-start items-start rounded-sm p-4 border-1 border-blue-200 bg-blue-25",
+        "relative overflow-y-auto flex flex-col flex-1 w-full items-start rounded-sm p-4 border-1 border-blue-200 bg-blue-25",
         className,
       )}
     >
