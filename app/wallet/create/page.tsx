@@ -35,20 +35,22 @@ export default function CreateWallet() {
       setSeedPhrase(seedPhraseWords);
 
       // Determine the 3 random words for confirmation of the seed phrase by:
-      // Shuffling the list of seed phrase words
-      // Grabbing the first 3 items
-      // Sorting said items by their position
-      const candidates = fisherYatesShuffle(
-        seedPhraseWords.map((c, index) => ({
-          position: index + 1,
-          word: c,
-        })),
-      )
+      // Shuffling the list of seed phrase words (with their initial position included)
+      // Grabbing the first 3 words
+      // Sorting said words by their position value
+      // Finally, mapping the result and adding a key to relate it to the form fields
+      const candidates = fisherYatesShuffle<{
+        word: string;
+        position: number;
+      }>(seedPhraseWords.map((word, index) => ({ word, position: index + 1 })))
         .slice(0, 3)
-        .sort((a, b) => a.position - b.position);
+        .sort((a, b) => a.position - b.position)
+        .map((word, index) => ({
+          ...word,
+          key: `word${index + 1}` as `word${number}`,
+        }));
 
       setCandidates(candidates);
-
       setStatus("GENERATED");
     } catch (error) {
       console.error(error);
