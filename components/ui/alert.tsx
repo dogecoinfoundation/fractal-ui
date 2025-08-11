@@ -13,6 +13,8 @@ const alertVariants = cva(
           "bg-yellow-50 *:data-[slot=alert-description]:text-yellow-600 border-yellow-800/20",
         error:
           "border-red-800/20 bg-red-100 text-destructive [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90",
+        success:
+          "border-green-800/20 bg-green-100 text-green-700 [&>svg]:text-current *:data-[slot=alert-description]:text-green-700",
       },
     },
     defaultVariants: {
