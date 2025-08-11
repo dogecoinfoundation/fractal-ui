@@ -1,14 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
-import { SeedPhraseWords } from "@/components/wallet/create/seed-phrase/seed-phrase-words";
+import { ValidateSeedPhrase } from "@/components/wallet/create/seed-phrase/seed-phrase-words";
 import { WalletSection } from "@/components/wallet/wallet-section";
 import { AuthContext } from "@/context/auth-context";
 import { SeedPhraseContext } from "@/context/seedphrase-context";
@@ -59,6 +59,11 @@ export const ConfirmSeedPhrase = () => {
     }
   };
 
+  const candidatesMap = useMemo(
+    () => new Map(candidates.map((c) => [c.word, c])),
+    [candidates],
+  );
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -68,9 +73,9 @@ export const ConfirmSeedPhrase = () => {
               <p>
                 To confirm you've securely saved your seed phrase, please enter
                 words
-                <code> {candidates[0].position}</code>,
-                <code> {candidates[1].position}</code>, and
-                <code> {candidates[2].position} </code>
+                <strong> {candidates[0].position}</strong>,
+                <strong> {candidates[1].position}</strong>, and
+                <strong> {candidates[2].position} </strong>
                 in the text boxes below:
               </p>
             </AlertDescription>
@@ -101,13 +106,10 @@ export const ConfirmSeedPhrase = () => {
               />
             </div>
 
-            <SeedPhraseWords
-              mask
+            <ValidateSeedPhrase
               seedPhrase={seedPhrase}
-              candidates={candidates}
-              allFields={allFields}
-              confirming
-              className="grid grid-cols-3 col-span-3"
+              candidatesMap={candidatesMap}
+              fields={allFields}
             />
           </div>
 

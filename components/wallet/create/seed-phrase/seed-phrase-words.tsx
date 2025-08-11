@@ -1,89 +1,97 @@
-"use client";
-
-import { useMemo } from "react";
 import { GridPaper } from "@/components/ui/surfaces/GridPaper";
-import { SeedPhraseTile } from "@/components/wallet/create/seed-phrase/seed-phrase-tile";
-import { cn } from "@/lib/utils";
+import {
+  MASK,
+  StaticWordTile,
+  ValidateWordTile,
+  type ValidateWordTileProps,
+} from "@/components/wallet/create/seed-phrase/seed-phrase-tile";
+import type { Candidate } from "@/context/seedphrase-context";
 
-type SeedPhraseWordsProps = {
+type ValidateSeedPhraseProps = {
   seedPhrase: string[];
-  confirming?: boolean;
-  mask?: boolean;
-  candidates?: { position: number; word: string }[];
-  allFields?: Record<string, string>;
-  className?: string;
+  candidatesMap: Map<string, Candidate>;
+  fields: Record<`word${number}`, string>;
 };
 
-const maskWord = (
-  word: string,
-  candidate?: { input?: string; position: number; word: string },
-  mask?: boolean,
-) => {
-  const maskShape = "************";
-
+const maskWord = (word: string, input: string) => {
   // Return just the input string if it matches the word
-  if (candidate && candidate.input === candidate.word) return candidate.input;
+  if (input === word) return input;
 
-  if (candidate?.input) {
+  if (input) {
     // Return the mask if the input is empty
-    if (candidate.input === "") return maskShape;
+    if (input === "") return MASK;
 
     const maskedCharacters = Array.from(
-      { length: maskShape.length - (candidate.input?.length || 0) },
+      { length: MASK.length - (input?.length || 0) },
       () => "*",
     ).join("");
 
     // Return the input with the remaining characters masked with an asterisk
-    return `${candidate.input}${maskedCharacters}`;
+    return `${input}${maskedCharacters}`;
   }
 
-  if (mask) return maskShape;
-
-  return word;
+  return MASK;
 };
 
-export const SeedPhraseWords = ({
+export const StaticSeedPhrase = ({
   seedPhrase,
   mask,
-  candidates,
-  allFields,
-  className,
-}: SeedPhraseWordsProps) => {
-  const combined = useMemo(
-    () =>
-      candidates?.map((c, index) => ({
-        ...c,
-        input: allFields?.[`word${index + 1}`]?.toLowerCase(),
-      })),
-    [candidates, allFields],
-  );
-
+}: {
+  seedPhrase: string[];
+  mask?: boolean;
+}) => {
   return (
-    <GridPaper className={cn(className)}>
-      <div className="grid col-span-3 grid-cols-4 grid-flow-col gap-2 grid-rows-6 bg-blue-50/50 z-10">
+    <GridPaper>
+      <div className="grid grid-cols-4 grid-flow-col gap-2 grid-rows-6 w-full bg-blue-50/50 z-10">
         {seedPhrase.map((word, index) => {
           const position = index + 1;
-          const candidate = combined?.find((c) => c.position === position);
 
-          let valid = false;
-          let invalid = false;
-          let dirty = false;
+          return (
+            <StaticWordTile
+              key={`${position}-${word}`}
+              word={mask ? MASK : word}
+              position={position}
+            />
+          );
+        })}
+      </div>
+    </GridPaper>
+  );
+};
+
+export const ValidateSeedPhrase = ({
+  seedPhrase,
+  candidatesMap,
+  fields,
+}: ValidateSeedPhraseProps) => {
+  return (
+    <GridPaper className="col-span-3 w-full">
+      <div className="grid col-span-3 grid-cols-4 grid-flow-col gap-2 grid-rows-6 w-full bg-blue-50/50 z-10">
+        {seedPhrase.map((word, index) => {
+          const position = index + 1;
+          const candidate = candidatesMap.get(word);
 
           if (candidate) {
-            valid = candidate.word === candidate.input;
-            invalid = candidate.word !== candidate.input;
-            dirty = candidate.input !== "";
+            const field = fields[candidate.key as keyof typeof fields];
+            let status: ValidateWordTileProps["status"] = "idle";
+            if (candidate.word === field) status = "valid";
+            if (field && candidate.word !== field) status = "invalid";
+
+            return (
+              <ValidateWordTile
+                key={`${position}-${word}`}
+                word={maskWord(candidate.word, field)}
+                position={position}
+                status={status}
+              />
+            );
           }
 
           return (
-            <SeedPhraseTile
+            <StaticWordTile
               key={`${position}-${word}`}
-              word={maskWord(word, candidate, mask)}
+              word={MASK}
               position={position}
-              isCandidate={Boolean(candidate)}
-              valid={valid}
-              invalid={invalid}
-              dirty={dirty}
             />
           );
         })}

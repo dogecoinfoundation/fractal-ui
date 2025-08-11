@@ -2,13 +2,14 @@ import { Check, ClipboardCopy, Eye, EyeOff } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { SeedPhraseWords } from "@/components/wallet/create/seed-phrase/seed-phrase-words";
+import { StaticSeedPhrase } from "@/components/wallet/create/seed-phrase/seed-phrase-words";
 import { WalletSection } from "@/components/wallet/wallet-section";
 import { SeedPhraseContext } from "@/context/seedphrase-context";
 
 export const GenerateSeedPhrase = () => {
   const [copied, setCopied] = useState(false);
-  const [hideSeedPhrase, setHideSeedPhrase] = useState(false);
+  const [mask, setMask] = useState(false);
+  const toggleMask = () => setMask((p) => !p);
 
   const { seedPhrase, generate, setStatus } = useContext(SeedPhraseContext);
 
@@ -54,20 +55,12 @@ export const GenerateSeedPhrase = () => {
           </Button>
         </Alert>
         <div className="flex flex-col justify-between gap-6 h-full">
-          <SeedPhraseWords
-            className="grid grid-cols-3"
-            seedPhrase={seedPhrase}
-            mask={hideSeedPhrase}
-          />
+          <StaticSeedPhrase seedPhrase={seedPhrase} mask={mask} />
 
           <div className="flex flex-row gap-2 justify-between">
-            <Button
-              className="flex-1"
-              variant="outline"
-              onClick={() => setHideSeedPhrase((p) => !p)}
-            >
-              {hideSeedPhrase ? <Eye /> : <EyeOff />}
-              {hideSeedPhrase ? "Show" : "Hide"}
+            <Button className="flex-1" variant="outline" onClick={toggleMask}>
+              {mask ? <Eye /> : <EyeOff />}
+              {mask ? "Show" : "Hide"}
             </Button>
             <Button className="flex-1" onClick={() => setStatus("UNCONFIRMED")}>
               Next
