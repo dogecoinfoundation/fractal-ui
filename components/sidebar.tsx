@@ -3,7 +3,7 @@
 import { LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { sidebarNavGroups } from "@/app/navigation";
+import { navGroups, sidebarNavGroups } from "@/app/navigation";
 import { BalanceWidget } from "@/components/balance/balance-widget";
 import { StatusWidget } from "@/components/status/status-widget";
 import { cn } from "@/lib/utils";
@@ -11,7 +11,7 @@ import { Separator } from "./separator";
 
 export const SideBar = () => {
   const pathname = usePathname();
-  const activeGroupName = sidebarNavGroups.find((group) =>
+  const activeGroupName = navGroups.find((group) =>
     group.items.some((item) => item.url === pathname),
   );
 
@@ -43,7 +43,7 @@ export const SideBar = () => {
               </h2>
               <ul className="text-md">
                 {group.items.map((item) => {
-                  const isActive = pathname === item.url;
+                  const isActive = pathname.startsWith(item.url);
                   return (
                     <li key={item.label} className="group/menu-item relative">
                       <Link
