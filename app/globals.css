@@ -3,6 +3,39 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-blue-25: oklch(98.426% 0.00749 260.893);
+
+  --shadow-crisp: 2px 2px 0 0 var(--tw-shadow-color);
+
+  --animate-swing-in: swing-in 160ms ease-in-out 1 both;
+  
+  @keyframes swing-in {
+    0% {
+      opacity:0;
+      transform: rotateX(90deg);
+      transform-origin: top;
+    }
+    40% {
+      transform: rotateX(-20deg);
+      transform-origin: top;
+    }
+    60% {
+      opacity:1;
+      transform: rotateX(10deg);
+      transform-origin: top;
+    }
+    80% {
+      transform: rotateX(-5deg);
+      transform-origin: top;
+    }
+    100% {
+      transform: rotateX(0deg);
+      transform-origin: top;
+    }
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

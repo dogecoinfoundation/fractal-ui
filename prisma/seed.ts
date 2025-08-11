@@ -531,7 +531,7 @@ const balanceData: Prisma.BalanceCreateInput[] = [
   {
     currency: "Dogecoin",
     symbol: "Ð",
-    value: 0,
+    value: 1337,
   },
 ];
 

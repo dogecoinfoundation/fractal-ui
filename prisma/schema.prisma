@@ -36,3 +36,7 @@ model Config {
   key   String @unique
   value String
 }
+
+model Wallet {
+  privateKey String @id
+}

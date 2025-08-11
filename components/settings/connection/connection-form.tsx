@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import z from "zod";
+import { z } from "zod";
 import { CallToAction } from "@/components/setup/wizard/steps/call-to-action";
 import { TestConnection } from "@/components/setup/wizard/steps/test-connection";
 import { Form } from "@/components/ui/form";
@@ -14,15 +14,15 @@ const PORT_VALIDATION_MESSAGE = `Must be a number between ${MINIMUM_PORT} and ${
 
 export const ConnectionFormSchema = z.object({
   host: z.string().nonempty({
-    message: "Must not be empty.",
+    error: "Must not be empty.",
   }),
-  port: z.coerce
+  port: z
     .number()
     .min(MINIMUM_PORT, {
-      message: PORT_VALIDATION_MESSAGE,
+      error: PORT_VALIDATION_MESSAGE,
     })
     .max(MAXIMUM_PORT, {
-      message: PORT_VALIDATION_MESSAGE,
+      error: PORT_VALIDATION_MESSAGE,
     }),
   authenticationToken: z.string().optional(),
 });
@@ -102,14 +102,14 @@ export const ConnectionForm = () => {
         >
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-12 w-full gap-4">
-              <InputFormField<typeof ConnectionFormSchema>
+              <InputFormField
                 control={form.control}
                 name="host"
                 label="Host"
                 className="grid col-span-7"
                 required
               />
-              <InputFormField<typeof ConnectionFormSchema>
+              <InputFormField
                 control={form.control}
                 name="port"
                 label="Port"
@@ -118,7 +118,7 @@ export const ConnectionForm = () => {
                 required
               />
 
-              <InputFormField<typeof ConnectionFormSchema>
+              <InputFormField
                 control={form.control}
                 name="authenticationToken"
                 label="Authentication Token"
