@@ -26,7 +26,7 @@ type NavItem = {
   hideInSidebar?: boolean;
 };
 
-const navGroups: NavGroup[] = [
+export const navGroups: NavGroup[] = [
   {
     name: "Assets",
     items: [

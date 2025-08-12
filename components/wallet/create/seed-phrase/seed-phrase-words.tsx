@@ -35,12 +35,14 @@ const maskWord = (word: string, input: string) => {
 export const StaticSeedPhrase = ({
   seedPhrase,
   mask,
+  className,
 }: {
   seedPhrase: string[];
   mask?: boolean;
+  className?: string;
 }) => {
   return (
-    <GridPaper>
+    <GridPaper className={className}>
       <div className="grid grid-cols-4 grid-flow-col gap-2 grid-rows-6 w-full bg-blue-50/50 z-10">
         {seedPhrase.map((word, index) => {
           const position = index + 1;

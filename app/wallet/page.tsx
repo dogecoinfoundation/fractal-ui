@@ -1,8 +1,7 @@
 "use client";
 
-import { BadgeCheck, LoaderPinwheel } from "lucide-react";
+import { BadgeCheck, CircleX, LoaderPinwheel } from "lucide-react";
 import Link from "next/link";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Paper } from "@/components/ui/surfaces/Paper";
 import { useAPI } from "@/hooks/useAPI";
@@ -15,10 +14,12 @@ export default function Wallet() {
   const getPageContent = () => {
     if (error) {
       return (
-        <Alert variant="error">
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>Error fetching wallet.</AlertDescription>
-        </Alert>
+        <div className="flex flex-col h-full gap-2 items-center justify-center text-2xl">
+          <CircleX className="size-10 text-red-400" />
+          <p className="text-red-700">
+            Error fetching wallet. Please reload the page and try again.
+          </p>
+        </div>
       );
     }
 
