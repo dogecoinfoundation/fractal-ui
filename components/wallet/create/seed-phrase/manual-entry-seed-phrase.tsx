@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileUp, TriangleAlert } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -15,68 +15,32 @@ type ManualEntrySeedPhraseProps = {
   setWalletCreated: (walletCreated: boolean) => void;
 };
 
-const defaultValues = {
-  word01: "",
-  word02: "",
-  word03: "",
-  word04: "",
-  word05: "",
-  word06: "",
-  word07: "",
-  word08: "",
-  word09: "",
-  word10: "",
-  word11: "",
-  word12: "",
-  word13: "",
-  word14: "",
-  word15: "",
-  word16: "",
-  word17: "",
-  word18: "",
-  word19: "",
-  word20: "",
-  word21: "",
-  word22: "",
-  word23: "",
-  word24: "",
-};
+const defaultValues = Object.fromEntries(
+  Array.from({ length: 24 }, (_, index) => [
+    `word${String(index + 1).padStart(2, "0")}`,
+    "",
+  ]),
+);
 
 const wordSchema = (index: number) =>
   z.string().nonempty({ error: `Word ${index} is required.` });
 
-const ManualEntrySeedPhraseSchema = z.object({
-  word01: wordSchema(1),
-  word02: wordSchema(2),
-  word03: wordSchema(3),
-  word04: wordSchema(4),
-  word05: wordSchema(5),
-  word06: wordSchema(6),
-  word07: wordSchema(7),
-  word08: wordSchema(8),
-  word09: wordSchema(9),
-  word10: wordSchema(10),
-  word11: wordSchema(11),
-  word12: wordSchema(12),
-  word13: wordSchema(13),
-  word14: wordSchema(14),
-  word15: wordSchema(15),
-  word16: wordSchema(16),
-  word17: wordSchema(17),
-  word18: wordSchema(18),
-  word19: wordSchema(19),
-  word20: wordSchema(20),
-  word21: wordSchema(21),
-  word22: wordSchema(22),
-  word23: wordSchema(23),
-  word24: wordSchema(24),
-});
+const ManualEntrySeedPhraseSchema = z.object(
+  Object.fromEntries(
+    Array.from({ length: 24 }, (_, index) => [
+      `word${String(index + 1).padStart(2, "0")}`,
+      wordSchema(index + 1),
+    ]),
+  ),
+);
 
 const getValidationComponent = (
   isValid: boolean,
-  isDirty: boolean,
+  allFieldsHaveValues: boolean,
   error?: string,
 ) => {
+  if (!allFieldsHaveValues) return null;
+
   if (error)
     return (
       <Alert variant="error">
@@ -91,8 +55,6 @@ const getValidationComponent = (
         </AlertDescription>
       </Alert>
     );
-
-  if (!isDirty) return null;
 
   if (!isValid)
     return (
@@ -156,11 +118,32 @@ export const ManualEntrySeedPhrase = ({
     if (pastedValues.length === 24) {
       pastedValues.forEach((value, index) => {
         const key = getPaddedKey(index);
-        form.setValue(key, value, { shouldDirty: true });
+        form.setValue(key, value, { shouldDirty: true, shouldTouch: true });
       });
       form.trigger();
     }
   }, [pastedValues, form.setValue, form.trigger]);
+
+  const inputFields = useMemo(
+    () =>
+      Array.from({ length: 24 }).map((_, index) => {
+        const key = getPaddedKey(index);
+        return (
+          <InputFormField
+            key={key}
+            control={form.control}
+            name={key}
+            label={`Word ${index + 1}`}
+            required
+          />
+        );
+      }),
+    [form.control],
+  );
+
+  const allFieldsHaveValues =
+    Object.keys(form.formState.touchedFields).length ===
+    Object.keys(defaultValues).length;
 
   return (
     <Form {...form}>
@@ -170,24 +153,13 @@ export const ManualEntrySeedPhrase = ({
       >
         <GridPaper>
           <div className="grid grid-cols-4 grid-flow-col gap-4 grid-rows-6 w-full border-1 rounded-sm border-blue-100 bg-blue-50 z-10 backdrop-blur-xs p-4">
-            {Array.from({ length: 24 }).map((_, index) => {
-              const key = getPaddedKey(index);
-              return (
-                <InputFormField
-                  key={key}
-                  control={form.control}
-                  name={key}
-                  label={`Word ${index + 1}`}
-                  required
-                />
-              );
-            })}
+            {inputFields}
           </div>
         </GridPaper>
 
         {getValidationComponent(
           form.formState.isValid,
-          form.formState.isDirty,
+          allFieldsHaveValues,
           errorMessage,
         )}
 
