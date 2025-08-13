@@ -4,6 +4,7 @@ import {
   CreditCard,
   FileText,
   Fingerprint,
+  Home,
   List,
   type LucideIcon,
   PackagePlus,
@@ -133,14 +134,18 @@ export const sidebarNavGroups = navGroups.map((group) => {
 
 type RouteMeta = {
   label: string;
+  icon: LucideIcon;
   parent?: string;
 };
 
 export const routeMap: Record<string, RouteMeta> = {
-  "/": { label: "Home" },
+  "/": { label: "Home", icon: Home },
   ...Object.fromEntries(
     navGroups
       .flatMap((group) => group.items)
-      .map((item) => [item.url, { label: item.label, parent: item.parent }]),
+      .map((item) => [
+        item.url,
+        { label: item.label, icon: item.icon, parent: item.parent },
+      ]),
   ),
 };
