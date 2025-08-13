@@ -61,8 +61,6 @@ export default function CreateNewInvoice() {
   const [quantity, pricePer] = form.watch(["quantity", "pricePer"]);
   const total = Number(quantity) * Number(pricePer);
 
-  console.log(typeof quantity, typeof pricePer);
-
   return (
     <GridPaper>
       <Form {...form}>
