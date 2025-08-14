@@ -47,7 +47,7 @@ export default function CreateNewInvoice() {
 
   const onSubmit = async (data: z.infer<typeof NewInvoiceSchema>) => {
     try {
-      await fetch("/api/invoice", {
+      await fetch("/api/invoice/create", {
         method: "POST",
         body: JSON.stringify(data),
       });
