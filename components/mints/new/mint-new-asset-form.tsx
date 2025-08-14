@@ -4,6 +4,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
+import { FormPaper } from "@/components/ui/surfaces/FormPaper";
 import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 
@@ -58,10 +59,7 @@ export const MintNewAssetForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        className="min-w-xl h-xl flex-0 bg-white border-zinc-300 border-1 rounded-sm p-4 gap-4 flex flex-col z-1 shadow-sm shadow-zinc-300/50"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <FormPaper className="min-w-xl" onSubmit={form.handleSubmit(onSubmit)}>
         <InputFormField
           control={form.control}
           name="title"
@@ -87,7 +85,7 @@ export const MintNewAssetForm = () => {
         <Button type="submit" variant="creative" className="cursor-pointer">
           Mint
         </Button>
-      </form>
+      </FormPaper>
     </Form>
   );
 };
