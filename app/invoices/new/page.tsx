@@ -8,19 +8,10 @@ import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
 import { FormPaper } from "@/components/ui/surfaces/FormPaper";
 import { GridPaper } from "@/components/ui/surfaces/GridPaper";
+import { NumberSchema } from "@/lib/form-validation";
+import { mainNetRegex } from "@/lib/hash-validation";
 
-// Mainnet: P2PKH (D) or P2SH (A)
-const mainNetRegex = /^(D|A)[1-9A-HJ-NP-Za-km-z]{25,34}$/;
-
-// Testnet/Regtest: P2PKH (m or n) or P2SH (2)
-const testNetRegex = /^([mn2])[1-9A-HJ-NP-Za-km-z]{25,34}$/;
-
-const NumberInput = z
-  .string()
-  .nonempty({ error: "Must be a number and cannot be empty." })
-  .refine((value) => Number(value) >= 1, {
-    error: "Must be greater than 0.",
-  });
+const NumberInput = NumberSchema(1);
 
 const NewInvoiceSchema = z.object({
   buyerAddress: z
@@ -95,7 +86,7 @@ export default function CreateNewInvoice() {
               </div>
             </div>
           </div>
-          <Button type="submit" variant="creative" className="cursor-pointer">
+          <Button type="submit" variant="creative">
             Create Invoice
           </Button>
         </FormPaper>
