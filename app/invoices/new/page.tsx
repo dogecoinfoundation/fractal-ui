@@ -8,25 +8,18 @@ import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
 import { FormPaper } from "@/components/ui/surfaces/FormPaper";
 import { GridPaper } from "@/components/ui/surfaces/GridPaper";
+import { NumberSchema } from "@/lib/form-validation";
+import { HASH_REGEX } from "@/lib/hash-validation";
 
-// Mainnet: P2PKH (D) or P2SH (A)
-const mainNetRegex = /^(D|A)[1-9A-HJ-NP-Za-km-z]{25,34}$/;
+const { mainNet } = HASH_REGEX;
 
-// Testnet/Regtest: P2PKH (m or n) or P2SH (2)
-const testNetRegex = /^([mn2])[1-9A-HJ-NP-Za-km-z]{25,34}$/;
-
-const NumberInput = z
-  .string()
-  .nonempty({ error: "Must be a number and cannot be empty." })
-  .refine((value) => Number(value) >= 1, {
-    error: "Must be greater than 0.",
-  });
+const NumberInput = NumberSchema(1);
 
 const NewInvoiceSchema = z.object({
   buyerAddress: z
     .string()
     .nonempty({ error: "Please enter a buyer address." })
-    .regex(mainNetRegex, {
+    .regex(mainNet, {
       error: "Please enter a valid mainnet address.",
     }),
   quantity: NumberInput,
@@ -47,7 +40,7 @@ export default function CreateNewInvoice() {
 
   const onSubmit = async (data: z.infer<typeof NewInvoiceSchema>) => {
     try {
-      await fetch("/api/invoice", {
+      await fetch("/api/invoice/create", {
         method: "POST",
         body: JSON.stringify(data),
       });
@@ -95,7 +88,7 @@ export default function CreateNewInvoice() {
               </div>
             </div>
           </div>
-          <Button type="submit" variant="creative" className="cursor-pointer">
+          <Button type="submit" variant="creative">
             Create Invoice
           </Button>
         </FormPaper>
