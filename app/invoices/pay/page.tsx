@@ -6,11 +6,12 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
-import { Input } from "@/components/ui/input";
 import { FormPaper } from "@/components/ui/surfaces/FormPaper";
 import { GridPaper } from "@/components/ui/surfaces/GridPaper";
 import { NumberSchema } from "@/lib/form-validation";
-import { hexRegex, mainNetRegex } from "@/lib/hash-validation";
+import { HASH_REGEX } from "@/lib/hash-validation";
+
+const { hex, mainNet } = HASH_REGEX;
 
 const NumberInput = NumberSchema(1);
 
@@ -18,13 +19,13 @@ const PayInvoiceSchema = z.object({
   hash: z
     .string()
     .nonempty({ error: "Please enter an invoice hash." })
-    .regex(hexRegex, {
+    .regex(hex, {
       error: "Please enter a valid invoice hash.",
     }),
   sellerAddress: z
     .string()
     .nonempty({ error: "Please enter a seller address." })
-    .regex(mainNetRegex, {
+    .regex(mainNet, {
       error: "Please enter a valid mainnet address.",
     }),
   total: NumberInput,

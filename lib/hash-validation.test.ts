@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { hexRegex, mainNetRegex, testNetRegex } from "./hash-validation";
+import { HASH_REGEX } from "@/lib/hash-validation";
 
-describe("mainNetRegex", () => {
+const { mainNet, testNet, hex } = HASH_REGEX;
+
+describe("mainNet", () => {
   describe("valid addresses", () => {
     it("accepts valid P2PKH addresses starting with D", () => {
       const validAddresses = [
@@ -12,7 +14,7 @@ describe("mainNetRegex", () => {
       ];
 
       for (const address of validAddresses) {
-        expect(mainNetRegex.test(address)).toBe(true);
+        expect(mainNet.test(address)).toBe(true);
       }
     });
 
@@ -25,22 +27,18 @@ describe("mainNetRegex", () => {
       ];
 
       for (const address of validAddresses) {
-        expect(mainNetRegex.test(address)).toBe(true);
+        expect(mainNet.test(address)).toBe(true);
       }
     });
 
     it("accepts addresses with minimum length (26 characters)", () => {
-      expect(mainNetRegex.test("D123456789ABCDEFGHJKMNPQRs")).toBe(true);
-      expect(mainNetRegex.test("A123456789ABCDEFGHJKMNPQRs")).toBe(true);
+      expect(mainNet.test("D123456789ABCDEFGHJKMNPQRs")).toBe(true);
+      expect(mainNet.test("A123456789ABCDEFGHJKMNPQRs")).toBe(true);
     });
 
     it("accepts addresses with maximum length (35 characters)", () => {
-      expect(mainNetRegex.test("D123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(
-        true,
-      );
-      expect(mainNetRegex.test("A123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(
-        true,
-      );
+      expect(mainNet.test("D123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(true);
+      expect(mainNet.test("A123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(true);
     });
   });
 
@@ -56,7 +54,7 @@ describe("mainNetRegex", () => {
       ];
 
       for (const address of invalidAddresses) {
-        expect(mainNetRegex.test(address)).toBe(false);
+        expect(mainNet.test(address)).toBe(false);
       }
     });
 
@@ -71,7 +69,7 @@ describe("mainNetRegex", () => {
       ];
 
       for (const address of invalidAddresses) {
-        expect(mainNetRegex.test(address)).toBe(false);
+        expect(mainNet.test(address)).toBe(false);
       }
     });
 
@@ -85,7 +83,7 @@ describe("mainNetRegex", () => {
       ];
 
       for (const address of shortAddresses) {
-        expect(mainNetRegex.test(address)).toBe(false);
+        expect(mainNet.test(address)).toBe(false);
       }
     });
 
@@ -96,12 +94,12 @@ describe("mainNetRegex", () => {
       ];
 
       for (const address of longAddresses) {
-        expect(mainNetRegex.test(address)).toBe(false);
+        expect(mainNet.test(address)).toBe(false);
       }
     });
 
     it("rejects empty string and undefined", () => {
-      expect(mainNetRegex.test("")).toBe(false);
+      expect(mainNet.test("")).toBe(false);
     });
 
     it("rejects addresses with whitespace", () => {
@@ -114,13 +112,13 @@ describe("mainNetRegex", () => {
       ];
 
       for (const address of addressesWithWhitespace) {
-        expect(mainNetRegex.test(address)).toBe(false);
+        expect(mainNet.test(address)).toBe(false);
       }
     });
   });
 });
 
-describe("testNetRegex", () => {
+describe("testNet", () => {
   describe("valid addresses", () => {
     it("accepts valid P2PKH addresses starting with m", () => {
       const validAddresses = [
@@ -131,7 +129,7 @@ describe("testNetRegex", () => {
       ];
 
       for (const address of validAddresses) {
-        expect(testNetRegex.test(address)).toBe(true);
+        expect(testNet.test(address)).toBe(true);
       }
     });
 
@@ -144,7 +142,7 @@ describe("testNetRegex", () => {
       ];
 
       for (const address of validAddresses) {
-        expect(testNetRegex.test(address)).toBe(true);
+        expect(testNet.test(address)).toBe(true);
       }
     });
 
@@ -157,26 +155,20 @@ describe("testNetRegex", () => {
       ];
 
       for (const address of validAddresses) {
-        expect(testNetRegex.test(address)).toBe(true);
+        expect(testNet.test(address)).toBe(true);
       }
     });
 
     it("accepts addresses with minimum length (26 characters)", () => {
-      expect(testNetRegex.test("m123456789ABCDEFGHJKMNPQRs")).toBe(true);
-      expect(testNetRegex.test("n123456789ABCDEFGHJKMNPQRs")).toBe(true);
-      expect(testNetRegex.test("2123456789ABCDEFGHJKMNPQRs")).toBe(true);
+      expect(testNet.test("m123456789ABCDEFGHJKMNPQRs")).toBe(true);
+      expect(testNet.test("n123456789ABCDEFGHJKMNPQRs")).toBe(true);
+      expect(testNet.test("2123456789ABCDEFGHJKMNPQRs")).toBe(true);
     });
 
     it("accepts addresses with maximum length (35 characters)", () => {
-      expect(testNetRegex.test("m123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(
-        true,
-      );
-      expect(testNetRegex.test("n123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(
-        true,
-      );
-      expect(testNetRegex.test("2123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(
-        true,
-      );
+      expect(testNet.test("m123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(true);
+      expect(testNet.test("n123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(true);
+      expect(testNet.test("2123456789ABCDEFGHJKMNPQRSTUVWXYZab")).toBe(true);
     });
   });
 
@@ -191,7 +183,7 @@ describe("testNetRegex", () => {
       ];
 
       for (const address of invalidAddresses) {
-        expect(testNetRegex.test(address)).toBe(false);
+        expect(testNet.test(address)).toBe(false);
       }
     });
 
@@ -206,7 +198,7 @@ describe("testNetRegex", () => {
       ];
 
       for (const address of invalidAddresses) {
-        expect(testNetRegex.test(address)).toBe(false);
+        expect(testNet.test(address)).toBe(false);
       }
     });
 
@@ -221,7 +213,7 @@ describe("testNetRegex", () => {
       ];
 
       for (const address of shortAddresses) {
-        expect(testNetRegex.test(address)).toBe(false);
+        expect(testNet.test(address)).toBe(false);
       }
     });
 
@@ -233,12 +225,12 @@ describe("testNetRegex", () => {
       ];
 
       for (const address of longAddresses) {
-        expect(testNetRegex.test(address)).toBe(false);
+        expect(testNet.test(address)).toBe(false);
       }
     });
 
     it("rejects empty string", () => {
-      expect(testNetRegex.test("")).toBe(false);
+      expect(testNet.test("")).toBe(false);
     });
 
     it("rejects addresses with whitespace", () => {
@@ -251,7 +243,7 @@ describe("testNetRegex", () => {
       ];
 
       for (const address of addressesWithWhitespace) {
-        expect(testNetRegex.test(address)).toBe(false);
+        expect(testNet.test(address)).toBe(false);
       }
     });
   });
@@ -266,7 +258,7 @@ describe("cross-network validation", () => {
     ];
 
     for (const address of testnetAddresses) {
-      expect(mainNetRegex.test(address)).toBe(false);
+      expect(mainNet.test(address)).toBe(false);
     }
   });
 
@@ -277,33 +269,33 @@ describe("cross-network validation", () => {
     ];
 
     for (const address of mainnetAddresses) {
-      expect(testNetRegex.test(address)).toBe(false);
+      expect(testNet.test(address)).toBe(false);
     }
   });
 });
 
 describe("edge cases", () => {
   it("handles case sensitivity correctly", () => {
-    expect(mainNetRegex.test("DaBcDeFgHjKmNpQrStUvWxYz123456789")).toBe(true);
-    expect(testNetRegex.test("maBcDeFgHjKmNpQrStUvWxYz123456789")).toBe(true);
+    expect(mainNet.test("DaBcDeFgHjKmNpQrStUvWxYz123456789")).toBe(true);
+    expect(testNet.test("maBcDeFgHjKmNpQrStUvWxYz123456789")).toBe(true);
   });
 
   it("validates exact boundary lengths", () => {
     const min26 = "D123456789ABCDEFGHJKMNPQRs";
     expect(min26.length).toBe(26);
-    expect(mainNetRegex.test(min26)).toBe(true);
+    expect(mainNet.test(min26)).toBe(true);
 
     const max35 = "D123456789ABCDEFGHJKMNPQRSTUVWXYZab";
     expect(max35.length).toBe(35);
-    expect(mainNetRegex.test(max35)).toBe(true);
+    expect(mainNet.test(max35)).toBe(true);
 
     const tooShort = "D123456789ABCDEFGHJKMNPQRs".slice(0, -1);
     expect(tooShort.length).toBe(25);
-    expect(mainNetRegex.test(tooShort)).toBe(false);
+    expect(mainNet.test(tooShort)).toBe(false);
 
     const tooLong = "D123456789ABCDEFGHJKMNPQRSTUVWXYZabc";
     expect(tooLong.length).toBe(36);
-    expect(mainNetRegex.test(tooLong)).toBe(false);
+    expect(mainNet.test(tooLong)).toBe(false);
   });
 
   describe("validates real-world-like addresses", () => {
@@ -319,18 +311,18 @@ describe("edge cases", () => {
     ];
 
     it.each(validMainnetAddresses)("mainnet regex accepts %s", (address) => {
-      expect(mainNetRegex.test(address)).toBe(true);
-      expect(testNetRegex.test(address)).toBe(false);
+      expect(mainNet.test(address)).toBe(true);
+      expect(testNet.test(address)).toBe(false);
     });
 
     it.each(validTestnetAddresses)("testnet regex accepts %s", (address) => {
-      expect(testNetRegex.test(address)).toBe(true);
-      expect(mainNetRegex.test(address)).toBe(false);
+      expect(testNet.test(address)).toBe(true);
+      expect(mainNet.test(address)).toBe(false);
     });
   });
 });
 
-describe("hexRegex", () => {
+describe("hex", () => {
   describe("valid hashes", () => {
     it("accepts valid 64-character lowercase hex strings", () => {
       const validHexHashes = [
@@ -342,7 +334,7 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of validHexHashes) {
-        expect(hexRegex.test(hash)).toBe(true);
+        expect(hex.test(hash)).toBe(true);
       }
     });
 
@@ -354,14 +346,14 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of validHexHashes) {
-        expect(hexRegex.test(hash)).toBe(false);
+        expect(hex.test(hash)).toBe(false);
       }
     });
 
     it("validates exact 64-character length", () => {
       const exactLength64 = "a".repeat(64);
       expect(exactLength64.length).toBe(64);
-      expect(hexRegex.test(exactLength64)).toBe(true);
+      expect(hex.test(exactLength64)).toBe(true);
     });
   });
 
@@ -377,7 +369,7 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of shortHashes) {
-        expect(hexRegex.test(hash)).toBe(false);
+        expect(hex.test(hash)).toBe(false);
       }
     });
 
@@ -389,7 +381,7 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of longHashes) {
-        expect(hexRegex.test(hash)).toBe(false);
+        expect(hex.test(hash)).toBe(false);
       }
     });
 
@@ -405,7 +397,7 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of invalidHashes) {
-        expect(hexRegex.test(hash)).toBe(false);
+        expect(hex.test(hash)).toBe(false);
       }
     });
 
@@ -418,7 +410,7 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of uppercaseHashes) {
-        expect(hexRegex.test(hash)).toBe(false);
+        expect(hex.test(hash)).toBe(false);
       }
     });
 
@@ -432,12 +424,12 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of hashesWithWhitespace) {
-        expect(hexRegex.test(hash)).toBe(false);
+        expect(hex.test(hash)).toBe(false);
       }
     });
 
     it("rejects empty string and undefined", () => {
-      expect(hexRegex.test("")).toBe(false);
+      expect(hex.test("")).toBe(false);
     });
   });
 
@@ -450,7 +442,7 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of validTransactionHashes) {
-        expect(hexRegex.test(hash)).toBe(true);
+        expect(hex.test(hash)).toBe(true);
       }
     });
 
@@ -463,7 +455,7 @@ describe("hexRegex", () => {
       ];
 
       for (const hash of invalidFormats) {
-        expect(hexRegex.test(hash)).toBe(false);
+        expect(hex.test(hash)).toBe(false);
       }
     });
   });
@@ -472,22 +464,22 @@ describe("hexRegex", () => {
     it("validates exact boundary length (64 characters)", () => {
       const exactly64Chars = "0".repeat(64);
       expect(exactly64Chars.length).toBe(64);
-      expect(hexRegex.test(exactly64Chars)).toBe(true);
+      expect(hex.test(exactly64Chars)).toBe(true);
 
       const oneCharShort = "0".repeat(63);
       expect(oneCharShort.length).toBe(63);
-      expect(hexRegex.test(oneCharShort)).toBe(false);
+      expect(hex.test(oneCharShort)).toBe(false);
 
       const oneCharLong = "0".repeat(65);
       expect(oneCharLong.length).toBe(65);
-      expect(hexRegex.test(oneCharLong)).toBe(false);
+      expect(hex.test(oneCharLong)).toBe(false);
     });
 
     it("validates all valid hex characters", () => {
       const allValidChars =
         "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
       expect(allValidChars.length).toBe(64);
-      expect(hexRegex.test(allValidChars)).toBe(true);
+      expect(hex.test(allValidChars)).toBe(true);
     });
 
     it("rejects each invalid character at different positions", () => {
@@ -498,14 +490,14 @@ describe("hexRegex", () => {
 
       for (const char of invalidChars) {
         const invalidAtStart = char + baseHash.slice(1);
-        expect(hexRegex.test(invalidAtStart)).toBe(false);
+        expect(hex.test(invalidAtStart)).toBe(false);
 
         const invalidAtEnd = baseHash.slice(0, -1) + char;
-        expect(hexRegex.test(invalidAtEnd)).toBe(false);
+        expect(hex.test(invalidAtEnd)).toBe(false);
 
         const invalidInMiddle =
           baseHash.slice(0, 32) + char + baseHash.slice(33);
-        expect(hexRegex.test(invalidInMiddle)).toBe(false);
+        expect(hex.test(invalidInMiddle)).toBe(false);
       }
     });
   });

@@ -9,7 +9,9 @@ import { InputFormField } from "@/components/ui/forms/input-form-field";
 import { FormPaper } from "@/components/ui/surfaces/FormPaper";
 import { GridPaper } from "@/components/ui/surfaces/GridPaper";
 import { NumberSchema } from "@/lib/form-validation";
-import { mainNetRegex } from "@/lib/hash-validation";
+import { HASH_REGEX } from "@/lib/hash-validation";
+
+const { mainNet } = HASH_REGEX;
 
 const NumberInput = NumberSchema(1);
 
@@ -17,7 +19,7 @@ const NewInvoiceSchema = z.object({
   buyerAddress: z
     .string()
     .nonempty({ error: "Please enter a buyer address." })
-    .regex(mainNetRegex, {
+    .regex(mainNet, {
       error: "Please enter a valid mainnet address.",
     }),
   quantity: NumberInput,
