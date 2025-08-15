@@ -78,7 +78,6 @@ export default function PayInvoice() {
             inputType="number"
             required
           />
-          <Input type="hidden" itemType="number" />
           <Button type="submit" variant="creative">
             Pay Invoice
           </Button>
