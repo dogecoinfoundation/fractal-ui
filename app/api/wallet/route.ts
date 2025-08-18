@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const count = await prisma.wallet.count();
-    return NextResponse.json({ walletExists: count > 0 });
+    const wallet = await prisma.wallet.findFirst();
+    return NextResponse.json({ address: wallet?.address });
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
