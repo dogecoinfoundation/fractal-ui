@@ -39,4 +39,5 @@ model Config {
 
 model Wallet {
   privateKey String @id
+  address    String
 }
