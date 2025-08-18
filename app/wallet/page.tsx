@@ -1,40 +1,16 @@
 "use client";
 
-import { BadgeCheck, CircleX, LoaderPinwheel } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 import Link from "next/link";
+import { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Paper } from "@/components/ui/surfaces/Paper";
-import { useAPI } from "@/hooks/useAPI";
-
-export default function Wallet() {
-  const { data, isLoading, error } = useAPI<{ walletExists: boolean }>(
-    "/api/wallet",
-  );
+import { WalletContext } from "@/context/wallet-context";
+export default function WalletView() {
+  const { walletAddress } = useContext(WalletContext);
 
   const getPageContent = () => {
-    if (error) {
-      return (
-        <div className="flex flex-col h-full gap-2 items-center justify-center text-2xl">
-          <CircleX className="size-10 text-red-400" />
-          <p className="text-red-700">
-            Error fetching wallet. Please reload the page and try again.
-          </p>
-        </div>
-      );
-    }
-
-    if (isLoading) {
-      return (
-        <div className="flex flex-col h-full gap-2 items-center justify-center text-2xl">
-          <LoaderPinwheel className="size-10 text-zinc-400 animate-spin" />
-          <p className="text-muted-foreground">
-            Fetching wallet information...
-          </p>
-        </div>
-      );
-    }
-
-    if (data?.walletExists) {
+    if (walletAddress) {
       return (
         <div className="flex flex-col h-full gap-2 items-center justify-center text-2xl">
           <BadgeCheck className="size-10 text-emerald-500" />

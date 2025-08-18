@@ -1,8 +1,8 @@
 "use client";
 
-import { BadgeCheck, OctagonX } from "lucide-react";
+import { OctagonX } from "lucide-react";
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Paper } from "@/components/ui/surfaces/Paper";
 import { ConfirmSeedPhrase } from "@/components/wallet/create/confirm-seed-phrase";
 import { GenerateSeedPhrase } from "@/components/wallet/create/generate-seed-phrase";
@@ -11,17 +11,17 @@ import {
   SeedPhraseContext,
   type SeedPhraseStatus,
 } from "@/context/seedphrase-context";
-import { useAPI } from "@/hooks/useAPI";
+import { WalletContext } from "@/context/wallet-context";
 import { fisherYatesShuffle } from "@/lib/utils";
 
 export default function CreateWallet() {
-  const { data } = useAPI<{ walletExists: boolean }>("/api/wallet");
+  const { walletAddress } = useContext(WalletContext);
 
   const [seedPhrase, setSeedPhrase] = useState<string[]>([]);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [status, setStatus] = useState<SeedPhraseStatus>("IDLE");
 
-  if (data?.walletExists) return redirect("/wallet");
+  if (walletAddress) return redirect("/wallet");
 
   const generate = async () => {
     try {
@@ -62,16 +62,6 @@ export default function CreateWallet() {
       return <GenerateSeedPhrase />;
 
     if (status === "UNCONFIRMED") return <ConfirmSeedPhrase />;
-
-    if (status === "CONFIRMED")
-      return (
-        <div className="flex flex-col h-full gap-2 items-center justify-center text-2xl">
-          <BadgeCheck className="size-10 text-emerald-500" />
-          <p className="text-emerald-700 text-center">
-            Wallet succesfully configured!
-          </p>
-        </div>
-      );
 
     if (status === "ERROR")
       return (

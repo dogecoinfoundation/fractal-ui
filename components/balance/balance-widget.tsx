@@ -1,17 +1,12 @@
+import { useContext } from "react";
 import { WalletContent } from "@/components/balance/wallet-content";
-import { useAPI } from "@/hooks/useAPI";
+import { WalletContext } from "@/context/wallet-context";
 import { BalanceContent } from "./balance-content";
 
 export const BalanceWidget = () => {
-  const {
-    data: walletData,
-    isLoading: isWalletLoading,
-    error: walletError,
-  } = useAPI<{ walletExists: boolean }>("/api/wallet");
+  const { walletAddress } = useContext(WalletContext);
 
-  if (!walletData?.walletExists) {
-    return <WalletContent isLoading={isWalletLoading} error={walletError} />;
-  }
+  if (!walletAddress) return <WalletContent />;
 
   return <BalanceContent />;
 };
