@@ -7,9 +7,6 @@ import { InputFormField } from "@/components/ui/forms/input-form-field";
 import { FormPaper } from "@/components/ui/surfaces/FormPaper";
 import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
-import { NumberSchema } from "@/lib/form-validation";
-
-const NumberInput = NumberSchema(1);
 
 export const FormSchema = z.object({
   title: z.string().nonempty({
@@ -18,18 +15,22 @@ export const FormSchema = z.object({
   description: z.string().nonempty({
     error: "Please provide a description of the asset you wish to mint.",
   }),
-  fraction_count: NumberInput,
+  fraction_count: z.coerce.number().min(1),
 });
 
 export const MintNewAssetForm = () => {
   const { mutate } = useAPI<Mint[]>("/api/mints");
 
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<
+    z.input<typeof FormSchema>,
+    unknown,
+    z.output<typeof FormSchema>
+  >({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: "",
       description: "",
-      fraction_count: "0",
+      fraction_count: 0,
     },
     mode: "all",
     reValidateMode: "onChange",
