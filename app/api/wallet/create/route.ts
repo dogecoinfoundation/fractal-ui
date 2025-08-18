@@ -1,4 +1,4 @@
-import DogecoinJS from "@mydogeofficial/dogecoin-js";
+import km2, { Crypto, Net } from "@houseofdogeinc/km2";
 import { type NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
 import { encrypt } from "@/lib/crypto";
@@ -24,21 +24,19 @@ export async function POST(request: NextRequest) {
       seedPhrase.length === 24 &&
       password
     ) {
-      const dogecoin = await DogecoinJS.DogecoinJS.init();
-      const privateKey = dogecoin.getDerivedHDAddressFromMnemonic(
-        0,
-        0,
-        "0",
-        seedPhrase.join(" "),
-        "",
-        false,
-      );
+      using seed = km2.SeedPhrase.from({ mnemonic: seedPhrase.join(" ") });
+      using wallet = new km2.Wallet(seed, {
+        cryptocurrency: Crypto.Dogecoin,
+        network: Net.Mainnet,
+      });
+      using kp = wallet.deriveKeypair({ account: 0, change: 0, index: 0 });
 
-      const encryptedPrivateKey = encrypt(privateKey, password);
+      const encryptedPrivateKey = encrypt(kp.privateKey, password);
 
       await prisma.wallet.create({
         data: {
           privateKey: encryptedPrivateKey,
+          address: kp.address,
         },
       });
     }

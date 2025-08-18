@@ -1,4 +1,4 @@
-import DogecoinJS from "@mydogeofficial/dogecoin-js";
+import km2, { Language } from "@houseofdogeinc/km2";
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
 
@@ -14,9 +14,13 @@ export async function POST() {
       );
     }
 
-    const dogecoin = await DogecoinJS.DogecoinJS.init();
-    const seedPhrase = dogecoin.generateRandomEnglishMnemonic("256");
-    return NextResponse.json<{ seedPhrase: string }>({ seedPhrase });
+    const seed = new km2.SeedPhrase({
+      wordCount: 24,
+      language: Language.English,
+    });
+    return NextResponse.json<{ seedPhrase: string }>({
+      seedPhrase: seed.phrase,
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
