@@ -1,3 +1,15 @@
+export type Invoice = {
+  id: string;
+  invoiceHash: string;
+  mintHash: string;
+  quantity: number;
+  price: number;
+  buyerAddress: string;
+  createdAt: string;
+  sellerAddress: string;
+  publicKey: string;
+};
+
 export const CONFIG_KEYS = [
   "timezone",
   "connection_host",
