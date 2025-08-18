@@ -21,6 +21,7 @@ interface InputFormFieldProps<
   inputType?: HTMLInputTypeAttribute;
   placeholder?: string;
   required?: boolean;
+  disabled?: boolean;
 }
 
 export const InputFormField = <
@@ -34,6 +35,7 @@ export const InputFormField = <
   inputType = "text",
   placeholder = "",
   required,
+  disabled,
 }: InputFormFieldProps<TFieldValues, TName>) => {
   return (
     <FormField
@@ -49,7 +51,12 @@ export const InputFormField = <
             <FormMessage />
           </FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} type={inputType} {...field} />
+            <Input
+              placeholder={placeholder}
+              type={inputType}
+              disabled={disabled}
+              {...field}
+            />
           </FormControl>
         </FormItem>
       )}
