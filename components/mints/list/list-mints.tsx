@@ -48,6 +48,15 @@ export const ListMints = ({ showMine = false }: { showMine?: boolean }) => {
           setActiveMint={setActiveMint}
           activeMint={activeMint}
         />
+
+        {data && data.total > PAGE_SIZE && (
+          <MintPagination
+            page={page}
+            totalPages={totalPages}
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+          />
+        )}
       </div>
 
       <div className="flex-col flex-1 p-2">
