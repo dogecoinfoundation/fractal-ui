@@ -3,7 +3,24 @@ import { type Mint, PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const address = searchParams.get("address");
+
+  if (address) {
+    // TODO: Replace with a call to Fractal Engine's API
+    // i.e. fetch GET /api/mints?address=ADDRESS
+
+    const mintsCount = await prisma.mint.count();
+    const skip = Math.floor(Math.random() * mintsCount);
+    const mints = await prisma.mint.findMany({
+      take: 5,
+      skip: skip,
+    });
+
+    return NextResponse.json<Mint[]>(mints);
+  }
+
   try {
     const mints = await prisma.mint.findMany();
 
