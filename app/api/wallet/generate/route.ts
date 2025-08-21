@@ -1,4 +1,4 @@
-import km2, { Language } from "@houseofdogeinc/km2";
+import km2, { Language } from "@houseofdoge/km2";
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
 

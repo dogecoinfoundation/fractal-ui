@@ -1,4 +1,4 @@
-import km2, { Crypto, Net } from "@houseofdogeinc/km2";
+import km2, { Crypto, Net } from "@houseofdoge/km2";
 import { type NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
 import { encrypt } from "@/lib/crypto";
