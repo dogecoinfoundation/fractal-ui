@@ -1,11 +1,6 @@
 import { createContext } from "react";
 
-export type SeedPhraseStatus =
-  | "IDLE"
-  | "ERROR"
-  | "GENERATED"
-  | "UNCONFIRMED"
-  | "CONFIRMED";
+export type SeedPhraseStatus = "IDLE" | "ERROR" | "GENERATED" | "UNCONFIRMED";
 
 export type Candidate = {
   position: number;

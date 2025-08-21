@@ -2,21 +2,21 @@
 
 import { Clipboard } from "lucide-react";
 import { redirect } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { z } from "zod";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Paper } from "@/components/ui/surfaces/Paper";
 import { ManualEntrySeedPhrase } from "@/components/wallet/create/seed-phrase/manual-entry-seed-phrase";
 import { WalletSection } from "@/components/wallet/wallet-section";
-import { useAPI } from "@/hooks/useAPI";
+import { WalletContext } from "@/context/wallet-context";
 
 const ImportSchema = z.object({
   seedPhrase: z.array(z.string()).min(24).max(24),
 });
 
 export default function ImportWallet() {
-  const { data } = useAPI<{ walletExists: boolean }>("/api/wallet");
+  const { walletAddress } = useContext(WalletContext);
   const [seedPhrase, setSeedPhrase] = useState<string[]>([]);
   const [walletCreated, setWalletCreated] = useState(false);
 
@@ -38,7 +38,7 @@ export default function ImportWallet() {
     return () => document.removeEventListener("paste", handlePaste);
   }, [validateText]);
 
-  if (data?.walletExists || walletCreated) return redirect("/wallet");
+  if (walletAddress || walletCreated) return redirect("/wallet");
 
   const pasteFromClipboard = async () => {
     const text = await navigator.clipboard.readText();

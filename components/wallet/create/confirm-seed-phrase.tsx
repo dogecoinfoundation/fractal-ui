@@ -12,11 +12,13 @@ import { ValidateSeedPhrase } from "@/components/wallet/create/seed-phrase/seed-
 import { WalletSection } from "@/components/wallet/wallet-section";
 import { AuthContext } from "@/context/auth-context";
 import { SeedPhraseContext } from "@/context/seedphrase-context";
+import { WalletContext } from "@/context/wallet-context";
 
 export const ConfirmSeedPhrase = () => {
   const { seedPhrase, setSeedPhrase, candidates, setStatus } =
     useContext(SeedPhraseContext);
   const { password } = useContext(AuthContext);
+  const { refreshWalletData } = useContext(WalletContext);
 
   const getRefiner = (index: number) =>
     z
@@ -52,7 +54,7 @@ export const ConfirmSeedPhrase = () => {
         body: JSON.stringify({ seedPhrase, password }),
       });
       await response.json();
-      setStatus("CONFIRMED");
+      refreshWalletData();
     } catch (error) {
       console.error(error);
       setStatus("ERROR");
@@ -130,7 +132,7 @@ export const ConfirmSeedPhrase = () => {
               type="submit"
               disabled={!form.formState.isValid}
             >
-              Next
+              Create Wallet
             </Button>
           </div>
         </WalletSection>

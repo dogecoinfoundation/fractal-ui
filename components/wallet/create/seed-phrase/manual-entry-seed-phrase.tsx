@@ -9,6 +9,7 @@ import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
 import { GridPaper } from "@/components/ui/surfaces/GridPaper";
 import { AuthContext } from "@/context/auth-context";
+import { WalletContext } from "@/context/wallet-context";
 
 type ManualEntrySeedPhraseProps = {
   pastedValues: string[];
@@ -88,6 +89,7 @@ export const ManualEntrySeedPhrase = ({
   setWalletCreated,
 }: ManualEntrySeedPhraseProps) => {
   const { password } = useContext(AuthContext);
+  const { refreshWalletData } = useContext(WalletContext);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
   const form = useForm<z.infer<typeof ManualEntrySeedPhraseSchema>>({
@@ -108,6 +110,7 @@ export const ManualEntrySeedPhrase = ({
       });
       await response.json();
       setWalletCreated(true);
+      refreshWalletData();
     } catch (error) {
       console.error(error);
       setErrorMessage(error instanceof Error ? error.message : "Unknown error");
