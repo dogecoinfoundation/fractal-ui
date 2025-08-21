@@ -1,30 +1,45 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { type Mint, PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@/generated/prisma";
+import { type MintsResponse, PAGE_SIZE } from "@/lib/definitions";
 
 const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const address = searchParams.get("address");
-
-  if (address) {
-    // TODO: Replace with a call to Fractal Engine's API
-    // i.e. fetch GET /api/mints?address=ADDRESS
-
-    const mintsCount = await prisma.mint.count();
-    const skip = Math.floor(Math.random() * mintsCount);
-    const mints = await prisma.mint.findMany({
-      take: 5,
-      skip: skip,
-    });
-
-    return NextResponse.json<Mint[]>(mints);
-  }
+  const page = Number(searchParams.get("page")) || 1;
 
   try {
-    const mints = await prisma.mint.findMany();
+    const total = await prisma.mint.count();
 
-    return NextResponse.json<Mint[]>(mints);
+    if (address) {
+      // TODO: Replace with a call to Fractal Engine's API
+      // i.e. fetch GET /api/mints?address=ADDRESS
+      const skip = Math.floor(Math.random() * total);
+      const mints = await prisma.mint.findMany({
+        take: PAGE_SIZE,
+        skip: skip,
+      });
+      const response: MintsResponse = {
+        mints,
+        total: PAGE_SIZE,
+        page,
+      };
+
+      return NextResponse.json<MintsResponse>(response);
+    }
+
+    const mints = await prisma.mint.findMany({
+      take: PAGE_SIZE,
+      skip: (page - 1) * PAGE_SIZE,
+    });
+    const response: MintsResponse = {
+      mints,
+      total: total,
+      page,
+    };
+
+    return NextResponse.json<MintsResponse>(response);
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
