@@ -1,3 +1,7 @@
+import type { Mint } from "@/generated/prisma";
+
+export const PAGE_SIZE = 9;
+
 export type Invoice = {
   id: string;
   invoiceHash: string;
@@ -8,6 +12,12 @@ export type Invoice = {
   createdAt: string;
   sellerAddress: string;
   publicKey: string;
+};
+
+export type MintsResponse = {
+  mints: Mint[];
+  total: number;
+  page: number;
 };
 
 export const CONFIG_KEYS = [
