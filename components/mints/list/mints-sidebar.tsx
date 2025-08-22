@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Mint } from "@/generated/prisma";
+import type { MintsResponse } from "@/lib/definitions";
 import { cn } from "@/lib/utils";
 
 interface MintsSidebarProps {
@@ -7,7 +8,7 @@ interface MintsSidebarProps {
   filterText: string;
   activeMint: Mint | null;
   setActiveMint: (mint: Mint) => void;
-  data?: Mint[];
+  data?: MintsResponse;
 }
 
 export const MintsSidebar = ({
@@ -27,7 +28,7 @@ export const MintsSidebar = ({
           ))}
         </div>
       ) : (
-        data
+        data?.mints
           ?.filter((mint) =>
             mint.title.toLowerCase().includes(filterText.toLowerCase()),
           )
