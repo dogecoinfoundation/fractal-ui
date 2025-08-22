@@ -1,12 +1,5 @@
 import { redirect } from "next/navigation";
-import {
-  type RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { MintsSidebar } from "@/components/mints/list/mints-sidebar";
 import { MintCard } from "@/components/mints/mint-card";
 import { Input } from "@/components/ui/input";
