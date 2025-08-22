@@ -83,8 +83,8 @@ export const ListMints = ({ showMine = false }: { showMine?: boolean }) => {
             totalPages={totalPages}
             handlePrevPage={handlePrevPage}
             handleNextPage={handleNextPage}
+          isLoading={isLoading}
           />
-        )}
       </div>
 
       <div className="flex-col flex-1 p-2">
