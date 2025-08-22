@@ -28,13 +28,16 @@ export const ListMints = ({ showMine = false }: { showMine?: boolean }) => {
     `/api/mints?page=${page}${showMine ? `&address=${walletAddress}` : ""}`,
   );
   const [totalPages, setTotalPages] = useState(
-    Math.ceil((data?.total || 0) / PAGE_SIZE),
+    Math.ceil((data?.total || 1) / PAGE_SIZE),
   );
 
   useEffect(() => {
-    const total = Math.ceil((data?.total || 0) / PAGE_SIZE);
-    if (total > 0 && total !== totalPages) {
-      setTotalPages(total);
+    if (!data?.total) return;
+
+    const totalFromData = Math.ceil((data?.total || 1) / PAGE_SIZE);
+
+    if (totalFromData !== totalPages) {
+      setTotalPages(totalFromData);
     }
   }, [data?.total, totalPages]);
 
@@ -83,7 +86,7 @@ export const ListMints = ({ showMine = false }: { showMine?: boolean }) => {
             totalPages={totalPages}
             handlePrevPage={handlePrevPage}
             handleNextPage={handleNextPage}
-          isLoading={isLoading}
+            isLoading={isLoading}
           />
         ) : null}
       </div>
