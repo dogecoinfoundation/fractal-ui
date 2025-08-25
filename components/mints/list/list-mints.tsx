@@ -30,8 +30,13 @@ export const ListMints = ({
   );
   const [filterText, setFilterText] = useState("");
 
+  const parameters = new URLSearchParams();
+  parameters.set("page", page.toString());
+  if (showMine && walletAddress) parameters.set("address", walletAddress);
+  if (myTokens) parameters.set("myTokens", "true");
+
   const { data, isLoading, error } = useAPI<MintsResponse | TokensResponse>(
-    `/api/mints?page=${page}${showMine ? `&address=${walletAddress}` : ""}${myTokens ? `&myTokens=true` : ""}`,
+    `/api/mints?${parameters.toString()}`,
   );
   const [totalPages, setTotalPages] = useState(
     Math.ceil((data?.total || 1) / PAGE_SIZE),
