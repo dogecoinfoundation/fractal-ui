@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         cryptocurrency: Crypto.Dogecoin,
         network: Net.Mainnet,
       });
-      using kp = wallet.deriveKeypair({ account: 0, change: 0, index: 0 });
+      using kp = wallet.deriveKeypair({ account: 1, change: 0, index: 0 });
 
       const encryptedPrivateKey = encrypt(kp.privateKey, password);
 
