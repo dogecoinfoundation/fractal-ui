@@ -20,6 +20,14 @@ export type MintsResponse = {
   page: number;
 };
 
+export type MintWithBalance = Mint & { balance: number };
+
+export type TokensResponse = {
+  mints: MintWithBalance[];
+  total: number;
+  page: number;
+};
+
 export const CONFIG_KEYS = [
   "timezone",
   "connection_host",
