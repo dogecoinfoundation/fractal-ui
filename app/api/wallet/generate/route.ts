@@ -14,7 +14,7 @@ export async function POST() {
       );
     }
 
-    const seed = new km2.SeedPhrase({
+    using seed = new km2.SeedPhrase({
       wordCount: 24,
       language: Language.English,
     });
