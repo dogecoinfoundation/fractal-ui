@@ -15,8 +15,8 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1(react-hook-form@7.62.0(react@19.1.0))
       '@houseofdoge/km2':
-        specifier: 0.0.3
-        version: 0.0.3
+        specifier: 0.0.5
+        version: 0.0.5
       '@prisma/client':
         specifier: 6.11.1
         version: 6.11.1(prisma@6.11.1(typescript@5.8.3))(typescript@5.8.3)
@@ -545,8 +545,8 @@ packages:
     peerDependencies:
       react-hook-form: ^7.55.0
 
-  '@houseofdoge/km2@0.0.3':
-    resolution: {integrity: sha512-X7SfV2hx579+DJHOl95by/RjCQ6CE4EMX/oxkwzVKjO7LQowKmBC5YaVjb46pnz7AQs0XMhH0v6GOZXzWeTzBQ==, tarball: https://npm.pkg.github.com/download/@houseofdoge/km2/0.0.3/ba1c21318ae793f0107b20cc3cbe29187cc0ff47}
+  '@houseofdoge/km2@0.0.5':
+    resolution: {integrity: sha512-9Z8RgpWyDobH0BjNoilOjAuLjOghZhoAh/Hbi92f9XYsawxX9Nz4e2n4ZjJv6TvRJhvdncP+mkmTVJ2Cu9XgVg==, tarball: https://npm.pkg.github.com/download/@houseofdoge/km2/0.0.5/89f0fd5d1c384f736113b84962d4c467f844d7a5}
     engines: {node: '>=18'}
 
   '@img/sharp-darwin-arm64@0.34.2':
@@ -2758,7 +2758,7 @@ snapshots:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.62.0(react@19.1.0)
 
-  '@houseofdoge/km2@0.0.3': {}
+  '@houseofdoge/km2@0.0.5': {}
 
   '@img/sharp-darwin-arm64@0.34.2':
     optionalDependencies:
