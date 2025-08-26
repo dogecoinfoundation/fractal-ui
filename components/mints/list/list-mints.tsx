@@ -1,31 +1,42 @@
 import { redirect } from "next/navigation";
-import {
-  type RefObject,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { MintsSidebar } from "@/components/mints/list/mints-sidebar";
 import { MintCard } from "@/components/mints/mint-card";
 import { Input } from "@/components/ui/input";
 import { WalletContext } from "@/context/wallet-context";
 import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
-import { type MintsResponse, PAGE_SIZE } from "@/lib/definitions";
+import {
+  type MintsResponse,
+  type MintWithBalance,
+  PAGE_SIZE,
+  type TokensResponse,
+} from "@/lib/definitions";
 import { cn } from "@/lib/utils";
 import { MintPagination } from "./mint-pagination";
 
-export const ListMints = ({ showMine = false }: { showMine?: boolean }) => {
+export const ListMints = ({
+  showMine = false,
+  myTokens = false,
+}: {
+  showMine?: boolean;
+  myTokens?: boolean;
+}) => {
   const { walletAddress } = useContext(WalletContext);
 
   const [page, setPage] = useState(1);
-  const [activeMint, setActiveMint] = useState<Mint | null>(null);
+  const [activeMint, setActiveMint] = useState<Mint | MintWithBalance | null>(
+    null,
+  );
   const [filterText, setFilterText] = useState("");
 
-  const { data, isLoading, error } = useAPI<MintsResponse>(
-    `/api/mints?page=${page}${showMine ? `&address=${walletAddress}` : ""}`,
+  const parameters = new URLSearchParams();
+  parameters.set("page", page.toString());
+  if (showMine && walletAddress) parameters.set("address", walletAddress);
+  if (myTokens) parameters.set("myTokens", "true");
+
+  const { data, isLoading, error } = useAPI<MintsResponse | TokensResponse>(
+    `/api/mints?${parameters.toString()}`,
   );
   const [totalPages, setTotalPages] = useState(
     Math.ceil((data?.total || 1) / PAGE_SIZE),
@@ -75,7 +86,7 @@ export const ListMints = ({ showMine = false }: { showMine?: boolean }) => {
         <MintsSidebar
           isLoading={isLoading}
           filterText={filterText}
-          data={data}
+          mints={data?.mints}
           setActiveMint={setActiveMint}
           activeMint={activeMint}
         />

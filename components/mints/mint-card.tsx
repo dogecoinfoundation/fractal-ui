@@ -2,9 +2,11 @@ import { tz } from "@date-fns/tz";
 import { format } from "date-fns/format";
 
 import { ArrowUpRight, Cake } from "lucide-react";
+import { TotalTokens } from "@/components/mints/list/total-tokens";
 import { Separator } from "@/components/separator";
 import type { Config, Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
+import type { MintWithBalance } from "@/lib/definitions";
 import { cn } from "@/lib/utils";
 
 export const MintTimestamp = ({
@@ -26,7 +28,7 @@ export const MintTimestamp = ({
   );
 };
 
-export const MintCard = ({ mint }: { mint: Mint }) => {
+export const MintCard = ({ mint }: { mint: Mint | MintWithBalance }) => {
   const { data: timezoneConfig } = useAPI<Config[]>(
     "/api/config?configKey=timezone",
   );
@@ -34,26 +36,27 @@ export const MintCard = ({ mint }: { mint: Mint }) => {
 
   return (
     <article className="flex flex-col gap-2 bg-white border-1 border-gray-300 hover:border-gray-400/80 rounded-sm p-2 h-full justify-between">
-      <header className="flex flex-col gap-2">
-        <div className="flex justify-between items-center gap-1">
-          <div className="flex flex-col gap-1">
-            <div className="text-md font-semibold text-zinc-700 flex gap-1 items-center">
-              <h2>{mint.title}</h2>
-              <a href={mint.feed_url} target="_blank" rel="noopener noreferrer">
-                <ArrowUpRight className="size-4 shrink-0 text-zinc-400 hover:text-zinc-600" />
-              </a>
-            </div>
-            <h3 className="text-sm text-zinc-600">{mint.description}</h3>
-          </div>
-          <div className="flex flex-col gap-0 items-end">
-            <h4 className="font-mono text-xl text-zinc-600 tabular-nums">
-              {mint.fraction_count.toLocaleString()}
-            </h4>
-            <h5 className="text-sm font-semibold text-zinc-400">Tokens</h5>
-          </div>
+      <header className="grid grid-cols-5 gap-2 justify-between">
+        <div className="col-span-4 flex flex-col gap-1">
+          <h2 className="flex text-md font-semibold text-zinc-700 items-center gap-1">
+            {mint.title}
+            <a href={mint.feed_url} target="_blank" rel="noopener noreferrer">
+              <ArrowUpRight className="size-4 shrink-0 text-zinc-400 hover:text-zinc-600" />
+            </a>
+          </h2>
+
+          <h3 className="text-xs text-zinc-600">{mint.description}</h3>
         </div>
-        <Separator />
+
+        <div className="col-span-1 flex flex-col items-end text-center">
+          <TotalTokens
+            fractionCount={mint.fraction_count}
+            balance={"balance" in mint ? mint.balance : undefined}
+          />
+        </div>
       </header>
+
+      <Separator />
 
       <div className="flex flex-row flex-1 gap-4 w-full">
         <div className="flex flex-col gap-1 w-2/5">
