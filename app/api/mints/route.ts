@@ -7,6 +7,8 @@ import {
   type TokensResponse,
 } from "@/lib/definitions";
 import { getRandomInteger } from "@/lib/utils";
+import km2, { Crypto, Net } from "@houseofdoge/km2";
+import { MintToken } from "@/lib/fractal-engine-client";
 
 const prisma = new PrismaClient();
 
@@ -81,12 +83,11 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const newMint = await request.json();
-    const info = await prisma.mint.create({
-      data: newMint,
-    });
+
+    const res = await MintToken(newMint);
 
     return NextResponse.json({
-      id: info.id,
+      id: "1",
       encoded_transaction_body: JSON.stringify({ body: "example" }),
       transaction_hash: "a49d37c2b2d964cb284d670b2c017ba9",
     });

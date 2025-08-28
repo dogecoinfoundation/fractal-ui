@@ -1,17 +1,23 @@
 import { NextResponse } from "next/server";
-import { type Balance, PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@/generated/prisma";
+import { GetIndexerBalance } from "@/lib/indexer-client";
 
 const prisma = new PrismaClient();
 
+export type Balance = {
+  current: number;
+};
+
 export async function GET() {
   try {
-    const walletCount = await prisma.wallet.count();
-    if (walletCount === 0) {
+    const wallet = await prisma.wallet.findFirst();
+    if (!wallet) {
       return NextResponse.json({ error: "Wallet not found." }, { status: 404 });
     }
 
-    const balance = await prisma.balance.findMany();
-    return NextResponse.json<Balance[]>(balance);
+    const balance = await GetIndexerBalance(wallet.address);
+
+    return NextResponse.json<Balance[]>([balance]);
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(

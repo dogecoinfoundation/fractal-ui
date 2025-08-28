@@ -30,16 +30,11 @@ export type TokensResponse = {
 
 export const CONFIG_KEYS = [
   "timezone",
-  "connection_host",
-  "connection_port",
-  "connection_authentication_token",
+  "fractal_engine_url",
+  "indexer_url",
 ] as const;
 
 export const CONFIG_GROUPS: Record<string, (typeof CONFIG_KEYS)[number][]> = {
   timezone: ["timezone"],
-  connection: [
-    "connection_host",
-    "connection_port",
-    "connection_authentication_token",
-  ],
+  connection: ["fractal_engine_url", "indexer_url"],
 };

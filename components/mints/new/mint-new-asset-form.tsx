@@ -7,6 +7,8 @@ import { InputFormField } from "@/components/ui/forms/input-form-field";
 import { FormPaper } from "@/components/ui/surfaces/FormPaper";
 import type { Mint } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
+import { useContext } from "react";
+import { AuthContext } from "@/context/auth-context";
 
 export const FormSchema = z.object({
   title: z.string().nonempty({
@@ -20,6 +22,7 @@ export const FormSchema = z.object({
 
 export const MintNewAssetForm = () => {
   const { mutate } = useAPI<Mint[]>("/api/mints");
+  const { password } = useContext(AuthContext);
 
   const form = useForm<
     z.input<typeof FormSchema>,
@@ -44,11 +47,13 @@ export const MintNewAssetForm = () => {
           title: data.title,
           description: data.description,
           fraction_count: data.fraction_count,
-          metadata: {
-            type: "test",
-            category: "sample",
-          },
-          feed_url: "https://example.com",
+          password: password,
+          tags: null,
+          metadata: null,
+          requirements: null,
+          lockup_options: null,
+          feed_url: null,
+          contract_of_sale: null,
         }),
       });
       await mutate();

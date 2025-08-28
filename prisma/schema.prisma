@@ -24,13 +24,6 @@ model Mint {
   transaction_hash String?
 }
 
-model Balance {
-  id       String @id @default(uuid())
-  currency String
-  symbol   String
-  value    Int
-}
-
 model Config {
   id    String @id @default(uuid())
   key   String @unique

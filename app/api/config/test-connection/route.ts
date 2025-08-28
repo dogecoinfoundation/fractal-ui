@@ -2,11 +2,10 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const host = searchParams.get("host");
-  const port = searchParams.get("port");
-  const authenticationToken = searchParams.get("authenticationToken") ?? "";
+  const fractalEngineUrl = searchParams.get("fractalEngineUrl");
+  const indexerUrl = searchParams.get("indexerUrl");
 
-  if (!host || !port) {
+  if (!fractalEngineUrl || !indexerUrl) {
     return NextResponse.json(
       { message: "Missing required parameters" },
       { status: 400 },
@@ -14,18 +13,17 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const options = authenticationToken
-      ? {
-          headers: {
-            Authorization: `Bearer ${authenticationToken}`,
-          },
-        }
-      : {};
-    const response = await fetch(`http://${host}:${port}`, options);
+    const responseFe = await fetch(`${fractalEngineUrl}/health`);
+    const responseIndexer = await fetch(`${indexerUrl}/health`);
+
+    let status = responseFe.status;
+    if (status === 200) {
+      status = responseIndexer.status;
+    }
 
     return NextResponse.json({
-      status: response.status,
-      message: response.statusText,
+      status: status,
+      message: responseFe.statusText,
     });
   } catch (error) {
     console.error(error);

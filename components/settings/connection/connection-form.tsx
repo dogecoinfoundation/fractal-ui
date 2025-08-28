@@ -8,23 +8,13 @@ import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
 import { ConfigContext } from "@/context/config-context";
 
-const MINIMUM_PORT = 0;
-const MAXIMUM_PORT = 65535;
-const PORT_VALIDATION_MESSAGE = `Must be a number between ${MINIMUM_PORT} and ${MAXIMUM_PORT}.`;
-
 export const ConnectionFormSchema = z.object({
-  host: z.string().nonempty({
+  fractalEngineUrl: z.url().nonempty({
     error: "Must not be empty.",
   }),
-  port: z
-    .number()
-    .min(MINIMUM_PORT, {
-      error: PORT_VALIDATION_MESSAGE,
-    })
-    .max(MAXIMUM_PORT, {
-      error: PORT_VALIDATION_MESSAGE,
-    }),
-  authenticationToken: z.string().optional(),
+  indexerUrl: z.url().nonempty({
+    error: "Must not be empty.",
+  }),
 });
 
 export const ConnectionForm = () => {
@@ -39,32 +29,29 @@ export const ConnectionForm = () => {
   const [saved, setSaved] = useState(false);
 
   const configRows = {
-    host: getConfigRowByKey(configData, "connection_host"),
-    port: getConfigRowByKey(configData, "connection_port"),
-    authenticationToken: getConfigRowByKey(
-      configData,
-      "connection_authentication_token",
-    ),
+    fractalEngineUrl: getConfigRowByKey(configData, "fractal_engine_url"),
+    indexerUrl: getConfigRowByKey(configData, "indexer_url"),
   };
 
-  const form = useForm<z.infer<typeof ConnectionFormSchema>>({
+  const form = useForm<
+    z.input<typeof ConnectionFormSchema>,
+    unknown,
+    z.output<typeof ConnectionFormSchema>
+  >({
     resolver: zodResolver(ConnectionFormSchema),
     defaultValues: {
-      host: "",
-      port: 0,
-      authenticationToken: "",
+      fractalEngineUrl: "",
+      indexerUrl: "",
     },
     values: {
-      host: configRows.host?.value ?? "",
-      port: parseInt(configRows.port?.value ?? "0"),
-      authenticationToken: configRows.authenticationToken?.value ?? "",
+      fractalEngineUrl: configRows.fractalEngineUrl?.value ?? "",
+      indexerUrl: configRows.indexerUrl?.value ?? "",
     },
   });
 
-  const [host, port, authenticationToken] = form.watch([
-    "host",
-    "port",
-    "authenticationToken",
+  const [fractalEngineUrl, indexerUrl] = form.watch([
+    "fractalEngineUrl",
+    "indexerUrl",
   ]);
 
   const onSubmit = async (data: z.infer<typeof ConnectionFormSchema>) => {
@@ -75,12 +62,8 @@ export const ConnectionForm = () => {
       await fetch("/api/config", {
         method: "POST",
         body: JSON.stringify([
-          { key: "connection_host", value: data.host },
-          { key: "connection_port", value: data.port.toString() },
-          {
-            key: "connection_authentication_token",
-            value: data.authenticationToken,
-          },
+          { key: "fractal_engine_url", value: data.fractalEngineUrl },
+          { key: "indexer_url", value: data.indexerUrl },
         ]),
       });
 
@@ -104,26 +87,18 @@ export const ConnectionForm = () => {
             <div className="grid grid-cols-12 w-full gap-4">
               <InputFormField
                 control={form.control}
-                name="host"
-                label="Host"
-                className="grid col-span-7"
-                required
-              />
-              <InputFormField
-                control={form.control}
-                name="port"
-                label="Port"
-                inputType="number"
-                className="grid col-span-5"
+                name="fractalEngineUrl"
+                label="Fractal Engine URL"
+                className="grid col-span-full"
                 required
               />
 
               <InputFormField
                 control={form.control}
-                name="authenticationToken"
-                label="Authentication Token"
-                inputType="password"
+                name="indexerUrl"
+                label="Indexer URL"
                 className="grid col-span-full"
+                required
               />
             </div>
           </div>
@@ -132,9 +107,8 @@ export const ConnectionForm = () => {
             <TestConnection
               loading={configLoading}
               isValid={form.formState.isValid}
-              host={host}
-              port={port}
-              authenticationToken={authenticationToken}
+              fractalEngineUrl={fractalEngineUrl}
+              indexerUrl={indexerUrl}
             />
           </div>
 
@@ -143,7 +117,7 @@ export const ConnectionForm = () => {
             saved={saved}
             error={error}
             isDirty={form.formState.isDirty}
-            isEmpty={!host && !port && !authenticationToken}
+            isEmpty={!fractalEngineUrl && !indexerUrl}
             isLoading={configLoading}
           />
         </form>

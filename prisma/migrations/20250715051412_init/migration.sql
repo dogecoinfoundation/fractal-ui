@@ -19,14 +19,6 @@ CREATE TABLE "Tag" (
 );
 
 -- CreateTable
-CREATE TABLE "Balance" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "currency" TEXT NOT NULL,
-    "symbol" TEXT NOT NULL,
-    "value" INTEGER NOT NULL
-);
-
--- CreateTable
 CREATE TABLE "Config" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "key" TEXT NOT NULL,

@@ -11,21 +11,17 @@ export const useTestConnection = () => {
   const [loading, setLoading] = useState(false);
 
   const testConnection = async (
-    host: string,
-    port: number,
-    authenticationToken?: string,
+    fractalEngineUrl: string,
+    indexerUrl: string,
   ) => {
     setError(undefined);
     setResult(undefined);
     setLoading(true);
 
     const params: Record<string, string> = {
-      host,
-      port: port.toString(),
+      fractalEngineUrl,
+      indexerUrl,
     };
-
-    if (authenticationToken && authenticationToken !== "")
-      params.authenticationToken = authenticationToken;
 
     fetch(
       `/api/config/test-connection?${new URLSearchParams(params).toString()}`,

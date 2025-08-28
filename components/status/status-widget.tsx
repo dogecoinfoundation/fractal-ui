@@ -27,7 +27,7 @@ export const StatusWidget = () => {
         </WidgetContainer>
 
         <WidgetContainer>
-          <h3 className="text-sm font-semibold">dogecoin-core</h3>
+          <h3 className="text-sm font-semibold">Indexer</h3>
           <div className="flex flex-row justify-between items-center">
             <Status status="disconnected">
               <StatusIndicator />

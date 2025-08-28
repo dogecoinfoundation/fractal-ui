@@ -527,23 +527,10 @@ const mintData: Prisma.MintCreateInput[] = [
   },
 ];
 
-const balanceData: Prisma.BalanceCreateInput[] = [
-  {
-    currency: "Dogecoin",
-    symbol: "Ð",
-    value: 1337,
-  },
-];
-
 export async function main() {
   await prisma.mint.deleteMany();
   for (const data of mintData) {
     await prisma.mint.create({ data });
-  }
-
-  await prisma.balance.deleteMany();
-  for (const data of balanceData) {
-    await prisma.balance.create({ data });
   }
 }
 
