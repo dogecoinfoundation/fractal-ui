@@ -16,8 +16,8 @@ export const ConnectionFormSchema = z.object({
   host: z.string().nonempty({
     error: "Must not be empty.",
   }),
-  port: z
-    .number()
+  port: z.coerce
+    .number<number>()
     .min(MINIMUM_PORT, {
       error: PORT_VALIDATION_MESSAGE,
     })

@@ -21,8 +21,8 @@ const NewInvoiceSchema = z.object({
     .regex(HASH_REGEX.mainNet, {
       error: "Please enter a valid mainnet address.",
     }),
-  quantity: z.coerce.number().min(1),
-  pricePer: z.coerce.number().min(1),
+  quantity: z.coerce.number<number>().min(1),
+  pricePer: z.coerce.number<number>().min(1),
 });
 
 export default function CreateNewInvoice() {
@@ -56,7 +56,7 @@ export default function CreateNewInvoice() {
   };
 
   const [quantity, pricePer] = form.watch(["quantity", "pricePer"]);
-  const total = Number(quantity) * Number(pricePer);
+  const total = quantity * pricePer;
 
   return (
     <GridPaper>

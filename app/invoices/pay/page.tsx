@@ -29,7 +29,7 @@ const PayInvoiceSchema = z.object({
     .regex(mainNet, {
       error: "Please enter a valid mainnet address.",
     }),
-  total: z.coerce.number().min(1),
+  total: z.coerce.number<number>().min(1),
 });
 
 export default function PayInvoice() {

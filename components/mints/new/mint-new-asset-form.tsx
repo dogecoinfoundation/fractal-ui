@@ -15,7 +15,7 @@ export const FormSchema = z.object({
   description: z.string().nonempty({
     error: "Please provide a description of the asset you wish to mint.",
   }),
-  fraction_count: z.coerce.number().min(1),
+  fraction_count: z.coerce.number<number>().min(1),
 });
 
 export const MintNewAssetForm = () => {
