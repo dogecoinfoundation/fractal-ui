@@ -29,11 +29,7 @@ export default function CreateNewInvoice() {
   const { walletAddress } = useContext(WalletContext);
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<
-    z.input<typeof NewInvoiceSchema>,
-    unknown,
-    z.output<typeof NewInvoiceSchema>
-  >({
+  const form = useForm({
     resolver: zodResolver(NewInvoiceSchema),
     defaultValues: {
       buyerAddress: "",

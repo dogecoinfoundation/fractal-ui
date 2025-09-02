@@ -16,7 +16,7 @@ const PasswordDialogSchema = z.object({
 export const PasswordDialog = () => {
   const { setPassword } = useContext(AuthContext);
 
-  const form = useForm<z.infer<typeof PasswordDialogSchema>>({
+  const form = useForm({
     resolver: zodResolver(PasswordDialogSchema),
     defaultValues: {
       password: "",

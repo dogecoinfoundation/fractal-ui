@@ -47,7 +47,7 @@ export const ConnectionForm = () => {
     ),
   };
 
-  const form = useForm<z.infer<typeof ConnectionFormSchema>>({
+  const form = useForm({
     resolver: zodResolver(ConnectionFormSchema),
     defaultValues: {
       host: "",

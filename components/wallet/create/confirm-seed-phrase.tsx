@@ -34,7 +34,7 @@ export const ConfirmSeedPhrase = () => {
     word3: getRefiner(2),
   });
 
-  const form = useForm<z.infer<typeof SeedPhraseSchema>>({
+  const form = useForm({
     resolver: zodResolver(SeedPhraseSchema),
     defaultValues: {
       word1: "",

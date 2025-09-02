@@ -21,11 +21,7 @@ export const FormSchema = z.object({
 export const MintNewAssetForm = () => {
   const { mutate } = useAPI<Mint[]>("/api/mints");
 
-  const form = useForm<
-    z.input<typeof FormSchema>,
-    unknown,
-    z.output<typeof FormSchema>
-  >({
+  const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: "",
