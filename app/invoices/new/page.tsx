@@ -21,19 +21,15 @@ const NewInvoiceSchema = z.object({
     .regex(HASH_REGEX.mainNet, {
       error: "Please enter a valid mainnet address.",
     }),
-  quantity: z.coerce.number().min(1),
-  pricePer: z.coerce.number().min(1),
+  quantity: z.coerce.number<number>().min(1),
+  pricePer: z.coerce.number<number>().min(1),
 });
 
 export default function CreateNewInvoice() {
   const { walletAddress } = useContext(WalletContext);
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<
-    z.input<typeof NewInvoiceSchema>,
-    unknown,
-    z.output<typeof NewInvoiceSchema>
-  >({
+  const form = useForm({
     resolver: zodResolver(NewInvoiceSchema),
     defaultValues: {
       buyerAddress: "",
@@ -60,7 +56,7 @@ export default function CreateNewInvoice() {
   };
 
   const [quantity, pricePer] = form.watch(["quantity", "pricePer"]);
-  const total = Number(quantity) * Number(pricePer);
+  const total = quantity * pricePer;
 
   return (
     <GridPaper>

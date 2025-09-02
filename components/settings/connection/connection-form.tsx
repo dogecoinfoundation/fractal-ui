@@ -16,8 +16,8 @@ export const ConnectionFormSchema = z.object({
   host: z.string().nonempty({
     error: "Must not be empty.",
   }),
-  port: z
-    .number()
+  port: z.coerce
+    .number<number>()
     .min(MINIMUM_PORT, {
       error: PORT_VALIDATION_MESSAGE,
     })
@@ -47,7 +47,7 @@ export const ConnectionForm = () => {
     ),
   };
 
-  const form = useForm<z.infer<typeof ConnectionFormSchema>>({
+  const form = useForm({
     resolver: zodResolver(ConnectionFormSchema),
     defaultValues: {
       host: "",

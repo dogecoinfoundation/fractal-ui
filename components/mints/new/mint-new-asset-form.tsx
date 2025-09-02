@@ -15,17 +15,13 @@ export const FormSchema = z.object({
   description: z.string().nonempty({
     error: "Please provide a description of the asset you wish to mint.",
   }),
-  fraction_count: z.coerce.number().min(1),
+  fraction_count: z.coerce.number<number>().min(1),
 });
 
 export const MintNewAssetForm = () => {
   const { mutate } = useAPI<Mint[]>("/api/mints");
 
-  const form = useForm<
-    z.input<typeof FormSchema>,
-    unknown,
-    z.output<typeof FormSchema>
-  >({
+  const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: "",

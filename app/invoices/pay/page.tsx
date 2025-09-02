@@ -29,18 +29,14 @@ const PayInvoiceSchema = z.object({
     .regex(mainNet, {
       error: "Please enter a valid mainnet address.",
     }),
-  total: z.coerce.number().min(1),
+  total: z.coerce.number<number>().min(1),
 });
 
 export default function PayInvoice() {
   const { walletAddress } = useContext(WalletContext);
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<
-    z.input<typeof PayInvoiceSchema>,
-    unknown,
-    z.output<typeof PayInvoiceSchema>
-  >({
+  const form = useForm({
     resolver: zodResolver(PayInvoiceSchema),
     defaultValues: {
       hash: "",

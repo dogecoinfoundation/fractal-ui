@@ -92,7 +92,7 @@ export const ManualEntrySeedPhrase = ({
   const { refreshWalletData } = useContext(WalletContext);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
 
-  const form = useForm<z.infer<typeof ManualEntrySeedPhraseSchema>>({
+  const form = useForm({
     resolver: zodResolver(ManualEntrySeedPhraseSchema),
     defaultValues,
     mode: "all",
