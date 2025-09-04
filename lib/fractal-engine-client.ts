@@ -198,9 +198,9 @@ export const PayInvoice = async (invoiceData: any): Promise<string> => {
 
   const totalValue = dogeToKoinu(utxos[0].value);
   const totalFee = dogeToKoinu("0.002");
-  const invoiceValue = dogeToKoinu(invoiceData.total);
+  const invoiceValue = dogeToKoinu(`${invoiceData.total}`);
 
-  const changeValue = totalValue - invoiceData.total - totalFee;
+  const changeValue = totalValue - invoiceValue - totalFee;
 
   unsignedTrxn.addInput({
     outputIndex: utxos[0].vout,
@@ -380,6 +380,11 @@ const payInvoiceHttp = async (
   let invoiceEnvelope = {
     invoice_hash: invoiceHash,
   };
+
+  console.log(
+    "JSON.stringify(invoiceEnvelope)",
+    JSON.stringify(invoiceEnvelope),
+  );
 
   const res = await fetch(feUrl + "/invoices/encoded-transaction-body", {
     method: "POST",

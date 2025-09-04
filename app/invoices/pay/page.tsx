@@ -13,6 +13,7 @@ import { GridPaper } from "@/components/ui/surfaces/GridPaper";
 import { WalletNotConfiguredAlert } from "@/components/wallet/wallet-not-configured-alert";
 import { WalletContext } from "@/context/wallet-context";
 import { HASH_REGEX } from "@/lib/hash-validation";
+import { AuthContext } from "@/context/auth-context";
 
 const { hex, mainNet } = HASH_REGEX;
 
@@ -32,6 +33,7 @@ const PayInvoiceSchema = z.object({
 export default function PayInvoice() {
   const { walletAddress } = useContext(WalletContext);
   const [loading, setLoading] = useState(false);
+  const { password } = useContext(AuthContext);
 
   const form = useForm<
     z.input<typeof PayInvoiceSchema>,
@@ -53,7 +55,12 @@ export default function PayInvoice() {
       setLoading(true);
       await fetch("/api/invoice/pay", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          invoice_hash: data.invoiceHash,
+          seller_address: data.sellerAddress,
+          total: data.total,
+          password: password,
+        }),
       });
 
       form.reset();
