@@ -4,10 +4,11 @@ import { format } from "date-fns/format";
 import { ArrowUpRight, Cake } from "lucide-react";
 import { TotalTokens } from "@/components/mints/list/total-tokens";
 import { Separator } from "@/components/separator";
-import type { Config, Mint } from "@/generated/prisma";
+import type { Config } from "@/generated/prisma";
 import { useAPI } from "@/hooks/useAPI";
 import type { MintWithBalance } from "@/lib/definitions";
 import { cn } from "@/lib/utils";
+import { Mint } from "@/app/api/mints/route";
 
 export const MintTimestamp = ({
   createdAt,
@@ -51,7 +52,7 @@ export const MintCard = ({ mint }: { mint: Mint | MintWithBalance }) => {
         <div className="col-span-1 flex flex-col items-end text-center">
           <TotalTokens
             fractionCount={mint.fraction_count}
-            balance={"balance" in mint ? mint.balance : undefined}
+            balance={"quantity" in mint ? mint.quantity : undefined}
           />
         </div>
       </header>

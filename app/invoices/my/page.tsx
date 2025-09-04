@@ -14,6 +14,7 @@ import { WalletContext } from "@/context/wallet-context";
 import { useAPI } from "@/hooks/useAPI";
 import type { Invoice } from "@/lib/definitions";
 import { cn } from "@/lib/utils";
+import { InvoicesResponse } from "@/app/api/invoice/my/route";
 
 type SwitchTileProps = {
   id: string;
@@ -54,11 +55,13 @@ export default function MyInvoices() {
   const [sortDescending, setSortDescending] = useState(true);
   const [showBuying, setShowBuying] = useState(true);
   const [showSelling, setShowSelling] = useState(true);
-  const { data, isLoading, error } = useAPI<Invoice[]>("/api/invoice/my");
+  const { data, isLoading, error } = useAPI<InvoicesResponse>(
+    `/api/invoice/my?address=${walletAddress}`,
+  );
 
-  const filteredInvoices = data
+  const filteredInvoices = data?.invoices
     ?.filter((invoice) => {
-      const selling = walletAddress && invoice.sellerAddress === walletAddress;
+      const selling = walletAddress && invoice.seller_address === walletAddress;
 
       if (showBuying && !selling) return true;
       if (showSelling && selling) return true;
@@ -67,8 +70,8 @@ export default function MyInvoices() {
     })
     .sort((a, b) =>
       sortDescending
-        ? new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        : new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+        ? new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        : new Date(a.created_at).getTime() - new Date(b.created_at).getTime(),
     );
 
   return (
@@ -113,7 +116,7 @@ export default function MyInvoices() {
               <InvoiceTile
                 key={invoice.id}
                 invoice={invoice}
-                selling={invoice.sellerAddress === walletAddress}
+                selling={invoice.seller_address === walletAddress}
               />
             ))}
           </div>

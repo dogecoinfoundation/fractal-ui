@@ -33,12 +33,12 @@ export const InvoiceTile = ({
           <div className="flex flex-row gap-4 font-semibold">
             <div className="flex flex-row items-center gap-1">
               <CalendarDays className="size-3.5 shrink-0 text-zinc-400" />
-              <p>{`${format(new Date(invoice.createdAt), "MMMM dd, yyyy")}`}</p>
+              <p>{`${format(new Date(invoice.created_at), "MMMM dd, yyyy")}`}</p>
             </div>
 
             <div className="flex flex-row items-center gap-1">
               <Clock className="size-3.5 shrink-0 text-zinc-400" />
-              <p>{`${format(new Date(invoice.createdAt), "h:mm a")}`}</p>
+              <p>{`${format(new Date(invoice.created_at), "h:mm a")}`}</p>
             </div>
           </div>
           <InvoiceType selling={selling} />
@@ -60,19 +60,19 @@ export const InvoiceTile = ({
           <div className="flex flex-col xl:flex-row gap-2 justify-between">
             <InvoiceItem
               label="Invoice Hash"
-              value={invoice.invoiceHash}
+              value={invoice.hash}
               variant="blue"
             />
             <InvoiceItem
               label="Mint Hash"
-              value={invoice.mintHash}
+              value={invoice.mint_hash}
               variant="blue"
             />
           </div>
           {!selling ? (
             <InvoiceItem
               label="Seller Address"
-              value={invoice.sellerAddress}
+              value={invoice.seller_address}
               variant="amber"
             />
           ) : null}

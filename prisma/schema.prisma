@@ -11,19 +11,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Mint {
-  id               String   @id @default(uuid())
-  title            String
-  description      String
-  created_at       DateTime @default(now())
-  metadata         Json
-  fraction_count   Int
-  hash             String?
-  feed_url         String
-  block_height     Int?
-  transaction_hash String?
-}
-
 model Config {
   id    String @id @default(uuid())
   key   String @unique

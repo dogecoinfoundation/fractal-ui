@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { InputFormField } from "@/components/ui/forms/input-form-field";
 import { FormPaper } from "@/components/ui/surfaces/FormPaper";
-import type { Mint } from "@/generated/prisma";
+import { Mint } from "@/app/api/mints/route";
 import { useAPI } from "@/hooks/useAPI";
 import { useContext } from "react";
 import { AuthContext } from "@/context/auth-context";

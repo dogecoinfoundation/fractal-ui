@@ -1,17 +1,17 @@
-import type { Mint } from "@/generated/prisma";
+import { Mint } from "@/app/api/mints/route";
 
 export const PAGE_SIZE = 9;
 
 export type Invoice = {
   id: string;
-  invoiceHash: string;
-  mintHash: string;
+  hash: string;
+  mint_hash: string;
   quantity: number;
   price: number;
-  buyerAddress: string;
-  createdAt: string;
-  sellerAddress: string;
-  publicKey: string;
+  buyer_address: string;
+  created_at: string;
+  seller_address: string;
+  public_key: string;
 };
 
 export type MintsResponse = {
@@ -20,12 +20,15 @@ export type MintsResponse = {
   page: number;
 };
 
-export type MintWithBalance = Mint & { balance: number };
-
-export type TokensResponse = {
+export type MintWithBalanceResponse = {
   mints: MintWithBalance[];
   total: number;
   page: number;
+};
+
+export type MintWithBalance = Mint & {
+  address: string;
+  quantity: number;
 };
 
 export const CONFIG_KEYS = [

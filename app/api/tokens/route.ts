@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PAGE_SIZE, type Invoice } from "@/lib/definitions";
-import { GetMyInvoices } from "@/lib/fractal-engine-client";
 
-export type InvoicesResponse = {
-  invoices: Invoice[];
-  total: number;
-  page: number;
-  limit: number;
-};
+import { MintWithBalanceResponse, PAGE_SIZE } from "@/lib/definitions";
+import { GetMyTokens } from "@/lib/fractal-engine-client";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -16,8 +10,9 @@ export async function GET(request: NextRequest) {
   const page = Number(searchParams.get("page")) || 0;
 
   try {
-    const invoicesResponse = await GetMyInvoices(page, PAGE_SIZE, address);
-    return NextResponse.json<InvoicesResponse>(invoicesResponse);
+    const mintsResponse = await GetMyTokens(page, PAGE_SIZE, address);
+
+    return NextResponse.json<MintWithBalanceResponse>(mintsResponse);
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
