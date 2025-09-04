@@ -1,14 +1,15 @@
+import { PayInvoice } from "@/lib/fractal-engine-client";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    console.log("Pay invoice request received:", body);
 
-    return NextResponse.json(
-      { message: "Pay invoice endpoint not yet implemented" },
-      { status: 501 },
-    );
+    const res = await PayInvoice(body);
+
+    return NextResponse.json({
+      transaction_hash: res,
+    });
   } catch (error) {
     console.error("Error in invoice POST:", error);
     return NextResponse.json(

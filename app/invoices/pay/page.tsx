@@ -17,7 +17,7 @@ import { HASH_REGEX } from "@/lib/hash-validation";
 const { hex, mainNet } = HASH_REGEX;
 
 const PayInvoiceSchema = z.object({
-  hash: z
+  invoiceHash: z
     .string()
     .nonempty({ error: "Please enter an invoice hash." })
     .regex(hex, {
@@ -25,10 +25,7 @@ const PayInvoiceSchema = z.object({
     }),
   sellerAddress: z
     .string()
-    .nonempty({ error: "Please enter a seller address." })
-    .regex(mainNet, {
-      error: "Please enter a valid mainnet address.",
-    }),
+    .nonempty({ error: "Please enter a seller address." }),
   total: z.coerce.number().min(1),
 });
 
@@ -43,7 +40,7 @@ export default function PayInvoice() {
   >({
     resolver: zodResolver(PayInvoiceSchema),
     defaultValues: {
-      hash: "",
+      invoiceHash: "",
       sellerAddress: "",
       total: 0,
     },
@@ -79,7 +76,7 @@ export default function PayInvoice() {
           >
             <InputFormField
               control={form.control}
-              name="hash"
+              name="invoiceHash"
               label="Invoice Hash"
               required
               disabled={loading}

@@ -176,6 +176,67 @@ export const CreateInvoice = async (invoiceData: any): Promise<string> => {
   return trxnId;
 };
 
+export const PayInvoice = async (invoiceData: any): Promise<string> => {
+  const walletRecord = await prisma.wallet.findFirstOrThrow();
+  const { wallet, network } = await getWallet(
+    walletRecord.privateKey,
+    invoiceData.password,
+  );
+  delete invoiceData.password;
+
+  const utxos = await GetIndexerUTXOs(walletRecord.address);
+
+  if (utxos.length === 0) {
+    throw new Error("No UTXOs found");
+  }
+
+  using kp = wallet.deriveKeypair({ account: 1, change: 0, index: 0 });
+
+  const invoiceResponse = await payInvoiceHttp(invoiceData.invoice_hash);
+
+  const unsignedTrxn = new UnsignedTransaction(Crypto.Dogecoin, network);
+
+  const totalValue = dogeToKoinu(utxos[0].value);
+  const totalFee = dogeToKoinu("0.002");
+  const invoiceValue = dogeToKoinu(invoiceData.total);
+
+  const changeValue = totalValue - invoiceData.total - totalFee;
+
+  unsignedTrxn.addInput({
+    outputIndex: utxos[0].vout,
+    prevTxId: utxos[0].tx,
+    scriptPubKeyHex: utxos[0].script,
+    value: totalValue,
+    sequence: 0xffffffff,
+  });
+
+  unsignedTrxn.addOutput({
+    kind: "payment",
+    address: walletRecord.address,
+    value: changeValue,
+  });
+
+  unsignedTrxn.addOutput({
+    kind: "payment",
+    address: invoiceData.seller_address,
+    value: invoiceValue,
+  });
+
+  unsignedTrxn.addOutput({
+    kind: "opReturn",
+    data: invoiceResponse.encoded_transaction_body,
+    value: 0,
+  });
+
+  const signedTrxn = unsignedTrxn.sign({
+    keypairs: [kp],
+  });
+
+  const trxnId = await sendSignedTransaction(signedTrxn.rawHex);
+
+  return trxnId;
+};
+
 export const MintToken = async (mintData: any): Promise<string> => {
   const feUrl = await getFractalEngineURL();
   const walletRecord = await prisma.wallet.findFirstOrThrow();
@@ -298,6 +359,29 @@ const invoiceHttp = async (
   };
 
   const res = await fetch(feUrl + "/invoices", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(invoiceEnvelope),
+  });
+
+  const resJson = await res.json();
+
+  return resJson;
+};
+
+const payInvoiceHttp = async (
+  invoiceHash: string,
+): Promise<{ encoded_transaction_body: string }> => {
+  const feUrl = await getFractalEngineURL();
+
+  let invoiceEnvelope = {
+    invoice_hash: invoiceHash,
+  };
+
+  const res = await fetch(feUrl + "/invoices/encoded-transaction-body", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
