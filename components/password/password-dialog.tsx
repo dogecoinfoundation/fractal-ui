@@ -19,7 +19,7 @@ export const PasswordDialog = () => {
   const form = useForm<z.infer<typeof PasswordDialogSchema>>({
     resolver: zodResolver(PasswordDialogSchema),
     defaultValues: {
-      password: "abc123",
+      password: "",
     },
   });
 
