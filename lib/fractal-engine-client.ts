@@ -181,8 +181,6 @@ export const CreateInvoice = async (invoiceData: any): Promise<string> => {
 
   const trxnId = await sendSignedTransaction(signedTrxn.rawHex);
 
-  console.log("trxnId", trxnId);
-
   return trxnId;
 };
 
@@ -390,11 +388,6 @@ const payInvoiceHttp = async (
   let invoiceEnvelope = {
     invoice_hash: invoiceHash,
   };
-
-  console.log(
-    "JSON.stringify(invoiceEnvelope)",
-    JSON.stringify(invoiceEnvelope),
-  );
 
   const res = await fetch(feUrl + "/invoices/encoded-transaction-body", {
     method: "POST",

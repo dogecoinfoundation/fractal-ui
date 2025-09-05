@@ -24,10 +24,6 @@ export const BlockStatus = ({
   isLoading: boolean;
   error: Error;
 }) => {
-  console.log("DATA: ", data);
-  console.log("isLoading: ", isLoading);
-  console.log("error: ", error);
-
   return (
     <div className="flex flex-col gap-2 flex-1">
       <div className="flex items-center gap-2">

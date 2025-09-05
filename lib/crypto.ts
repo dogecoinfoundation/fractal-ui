@@ -8,7 +8,6 @@ const algorithm = "aes-256-cbc";
 const iv = crypto.randomBytes(16);
 
 export function encrypt(data: string, password: string) {
-  console.log("data", data);
   const key = crypto
     .createHash("sha512")
     .update(password)
