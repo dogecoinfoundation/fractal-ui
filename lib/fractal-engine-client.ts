@@ -152,6 +152,7 @@ export const CreateInvoice = async (invoiceData: any): Promise<string> => {
 
   const unsignedTrxn = new UnsignedTransaction(Crypto.Dogecoin, network);
 
+  // NOTE: This is a pretty crude way of figuring out UTXOs and Fees.
   const totalValue = dogeToKoinu(utxos[0].value);
   const totalFee = dogeToKoinu("0.002");
 
@@ -204,6 +205,7 @@ export const PayInvoice = async (invoiceData: any): Promise<string> => {
 
   const unsignedTrxn = new UnsignedTransaction(Crypto.Dogecoin, network);
 
+  // NOTE: This is a pretty crude way of figuring out UTXOs and Fees.
   const totalValue = dogeToKoinu(utxos[0].value);
   const totalFee = dogeToKoinu("0.002");
   const invoiceValue = dogeToKoinu(`${invoiceData.total}`);
@@ -270,6 +272,7 @@ export const MintToken = async (mintData: any): Promise<string> => {
 
   const unsignedTrxn = new UnsignedTransaction(Crypto.Dogecoin, network);
 
+  // NOTE: This is a pretty crude way of figuring out UTXOs and Fees.
   const totalValue = dogeToKoinu(utxos[0].value);
   const totalFee = dogeToKoinu("0.002");
 
