@@ -16,7 +16,7 @@ import {
 import { useAPI } from "@/hooks/useAPI";
 import { Health } from "@/app/api/health/route";
 
-export const FractalEngineStatus = ({
+export const IndexerStatus = ({
   data,
   isLoading,
   error,
@@ -27,7 +27,7 @@ export const FractalEngineStatus = ({
 }) => {
   return (
     <StatusCard
-      title="Fractal Engine"
+      title="Indexer"
       titleIcon={<Factory className="size-4 text-muted-foreground" />}
     >
       <StatusSection
@@ -35,43 +35,20 @@ export const FractalEngineStatus = ({
         titleIcon={EthernetPort}
         items={[
           {
-            id: "fe-url",
+            id: "idnexer-url",
             value: (
               <>
-                Fractal Engine URL <Monospace>{data?.indexer_url}</Monospace>
+                Indexer URL <Monospace>{data?.indexer_url}</Monospace>
               </>
             ),
           },
           {
-            id: "fe-version",
+            id: "indexer-connection-status",
             value: (
               <>
-                Fractal Engine Version <Monospace>{data?.version}</Monospace>
+                Indexer Connected{" "}
+                <Monospace>{data?.indexer_connected ? "Yes" : "No"}</Monospace>
               </>
-            ),
-          },
-          {
-            id: "fe-connection-status",
-            value: (
-              <>
-                Fractal Engine Connected{" "}
-                <Monospace>
-                  {data?.fractal_engine_connected ? "Yes" : "No"}
-                </Monospace>
-              </>
-            ),
-          },
-        ]}
-      />
-
-      <StatusSection
-        title="Health"
-        titleIcon={Activity}
-        items={[
-          {
-            id: "fe-block-status",
-            value: (
-              <BlockStatus data={data} error={error} isLoading={isLoading} />
             ),
           },
         ]}

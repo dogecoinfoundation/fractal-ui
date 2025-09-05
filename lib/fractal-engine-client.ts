@@ -22,12 +22,22 @@ const KOINU_DECIMALS = 8;
 
 export const GetFractalEngineHealth = async (): Promise<Health> => {
   const feUrl = await getFractalEngineURL();
-  const result = await fetch(feUrl + "/health");
-  const parsedResult = await result.json();
 
-  console.log("parsedResult", parsedResult);
+  try {
+    const result = await fetch(feUrl + "/health");
+    const parsedResult = await result.json();
 
-  return parsedResult as Health;
+    return {
+      ...parsedResult,
+      fractal_engine_url: feUrl,
+      fractal_engine_connected: true,
+    } as Health;
+  } catch (e) {}
+
+  return {
+    fractal_engine_url: feUrl,
+    fractal_engine_connected: false,
+  } as Health;
 };
 
 export const GetMyTokens = async (

@@ -31,3 +31,23 @@ export const GetIndexerUTXOs = async (address: string): Promise<UTXOItem[]> => {
 
   return parsedResult.utxo as UTXOItem[];
 };
+
+export const GetIndexerHealth = async (): Promise<any> => {
+  const indexerUrl = await getIndexerURL();
+
+  try {
+    const result = await fetch(`${indexerUrl}/health`);
+    const parsedResult = await result.json();
+
+    return {
+      indexer_url: indexerUrl,
+      indexer_connected: true,
+      ...parsedResult,
+    };
+  } catch (e) {}
+
+  return {
+    indexer_url: indexerUrl,
+    indexer_connected: false,
+  };
+};
