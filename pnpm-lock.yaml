@@ -15,8 +15,8 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1(react-hook-form@7.62.0(react@19.1.0))
       '@houseofdoge/km2':
-        specifier: github:houseofdoge/km2#signing_fixes
-        version: git+https://git@github.com:houseofdoge/km2.git#06d822bef6167c11df2c34d92ee61e8d0c2d4811
+        specifier: 0.0.5-beta-signing-trxns
+        version: 0.0.5-beta-signing-trxns
       '@prisma/client':
         specifier: 6.11.1
         version: 6.11.1(prisma@6.11.1(typescript@5.8.3))(typescript@5.8.3)
@@ -548,9 +548,9 @@ packages:
     peerDependencies:
       react-hook-form: ^7.55.0
 
-  '@houseofdoge/km2@git+https://git@github.com:houseofdoge/km2.git#06d822bef6167c11df2c34d92ee61e8d0c2d4811':
-    resolution: {commit: 06d822bef6167c11df2c34d92ee61e8d0c2d4811, repo: git@github.com:houseofdoge/km2.git, type: git}
-    version: 0.0.0
+  '@houseofdoge/km2@0.0.5-beta-signing-trxns':
+    resolution: {integrity: sha512-o40PHIFpCaNypRUtpw/8RCjwBsytK5j6y+wQq1qm42fiZ7M5u71627Lw+Fb7RkoPLqJh8o9N3yE0OL5F173LUw==, tarball: https://npm.pkg.github.com/download/@houseofdoge/km2/0.0.5-beta-signing-trxns/b416a242d8d9010ebb9e9f6d6e35cb018a5bcccb}
+    engines: {node: '>=18'}
 
   '@img/sharp-darwin-arm64@0.34.2':
     resolution: {integrity: sha512-OfXHZPppddivUJnqyKoi5YVeHRkkNE2zUFT2gbpKxp/JZCFYEYubnMg+gOp6lWfasPrTS+KPosKqdI+ELYVDtg==}
@@ -2764,7 +2764,7 @@ snapshots:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.62.0(react@19.1.0)
 
-  '@houseofdoge/km2@git+https://git@github.com:houseofdoge/km2.git#06d822bef6167c11df2c34d92ee61e8d0c2d4811': {}
+  '@houseofdoge/km2@0.0.5-beta-signing-trxns': {}
 
   '@img/sharp-darwin-arm64@0.34.2':
     optionalDependencies:

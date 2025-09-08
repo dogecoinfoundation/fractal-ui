@@ -16,6 +16,7 @@ import { Mint, MintsResponse } from "@/app/api/mints/route";
 import { URLSearchParams } from "url";
 import { MintWithBalanceResponse } from "./definitions";
 import { InvoicesResponse } from "@/app/api/invoice/my/route";
+import { removeNullKeys } from "./utils";
 
 const KOINU = 100_000_000;
 const KOINU_DECIMALS = 8;
@@ -352,21 +353,18 @@ const invoiceHttp = async (
 
   using kp = wallet.deriveKeypair({ account: 1, change: 0, index: 0 });
 
+  invoiceData = removeNullKeys(invoiceData);
+
   const hashedPayload = sha256Hash(jsonStringifyCanonical(invoiceData));
 
   const signature = kp.signMessage({
     message: hashedPayload,
   });
 
-  const hexSignature = Buffer.from(signature.toBase64(), "base64").toString(
-    "hex",
-  );
-
   let invoiceEnvelope = {
     payload: invoiceData,
-    signature: hexSignature,
+    signature: signature.toBase64(),
     public_key: kp.publicKey,
-    address: address,
   };
 
   const res = await fetch(feUrl + "/invoices", {
@@ -415,21 +413,20 @@ const mintTokenHttp = async (
 
   using kp = wallet.deriveKeypair({ account: 1, change: 0, index: 0 });
 
+  mintData.owner_address = address;
+
+  mintData = removeNullKeys(mintData);
+
   const hashedPayload = sha256Hash(jsonStringifyCanonical(mintData));
 
   const signature = kp.signMessage({
     message: hashedPayload,
   });
 
-  const hexSignature = Buffer.from(signature.toBase64(), "base64").toString(
-    "hex",
-  );
-
   let mintEnvelope = {
     payload: mintData,
-    signature: hexSignature,
+    signature: signature.toBase64(),
     public_key: kp.publicKey,
-    address: address,
   };
 
   const res = await fetch(feUrl + "/mints", {
