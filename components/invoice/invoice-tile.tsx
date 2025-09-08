@@ -69,13 +69,16 @@ export const InvoiceTile = ({
               variant="blue"
             />
           </div>
-          {!selling ? (
-            <InvoiceItem
-              label="Seller Address"
-              value={invoice.seller_address}
-              variant="amber"
-            />
-          ) : null}
+          <InvoiceItem
+            label="Seller Address"
+            value={invoice.seller_address}
+            variant="amber"
+          />
+          <InvoiceItem
+            label="Buyer Address"
+            value={invoice.buyer_address}
+            variant="amber"
+          />
         </div>
       </div>
     </div>
