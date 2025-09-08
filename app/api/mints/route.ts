@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@/generated/prisma";
 import { type MintWithBalance, PAGE_SIZE } from "@/lib/definitions";
 import { getRandomInteger } from "@/lib/utils";
-import km2, { Crypto, Net } from "@houseofdoge/km2";
+import km2 from "@houseofdoge/km2";
 import { GetMyMints, MintToken } from "@/lib/fractal-engine-client";
 
 const prisma = new PrismaClient();
