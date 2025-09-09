@@ -1,11 +1,12 @@
+import { Wallet } from "@/generated/prisma";
 import { createContext } from "react";
 
 type WalletContextType = {
-  walletAddress?: string;
+  wallet?: Wallet;
   refreshWalletData: () => void;
 };
 
 export const WalletContext = createContext<WalletContextType>({
-  walletAddress: undefined,
+  wallet: undefined,
   refreshWalletData: () => {},
 });

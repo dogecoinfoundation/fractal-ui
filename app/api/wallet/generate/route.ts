@@ -5,14 +5,6 @@ import { PrismaClient } from "@/generated/prisma";
 export async function POST() {
   try {
     const prisma = new PrismaClient();
-    const count = await prisma.wallet.count();
-
-    if (count > 0) {
-      return NextResponse.json(
-        { error: "Wallet already exists." },
-        { status: 400 },
-      );
-    }
 
     using seed = new km2.SeedPhrase({
       wordCount: 24,

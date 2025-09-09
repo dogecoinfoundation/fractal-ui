@@ -7,11 +7,11 @@ import { WalletNotConfiguredAlert } from "@/components/wallet/wallet-not-configu
 import { WalletContext } from "@/context/wallet-context";
 
 export default function MintNewAsset() {
-  const { walletAddress } = useContext(WalletContext);
+  const { wallet } = useContext(WalletContext);
 
   return (
     <GridPaper>
-      {!walletAddress ? <WalletNotConfiguredAlert /> : <MintNewAssetForm />}
+      {!wallet ? <WalletNotConfiguredAlert /> : <MintNewAssetForm />}
     </GridPaper>
   );
 }

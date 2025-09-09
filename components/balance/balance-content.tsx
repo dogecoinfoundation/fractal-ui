@@ -2,14 +2,20 @@ import Link from "next/link";
 import { WidgetContainer } from "@/components/ui/widget/widget-container";
 import { useAPI } from "@/hooks/useAPI";
 import { Balance } from "@/app/api/balance/route";
+import { Wallet } from "@/generated/prisma";
+import { WalletContext } from "@/context/wallet-context";
+import { useContext } from "react";
 
 export const BalanceContent = () => {
-  const { data, isLoading, error } = useAPI<Balance[]>("/api/balance");
+  const { wallet } = useContext(WalletContext);
+  const { data, isLoading, error } = useAPI<Balance[]>(
+    `/api/balance?_wallet=${wallet?.name}`,
+  );
 
   return (
     <Link href="/balance/add">
       <WidgetContainer>
-        <h3 className="text-sm font-semibold">Balance</h3>
+        <h3 className="text-sm font-semibold">Balance for {wallet?.name}</h3>
         {error ? <p>Error fetching balance.</p> : null}
         {isLoading ? <p>Loading...</p> : null}
         {data?.map((balance) => (

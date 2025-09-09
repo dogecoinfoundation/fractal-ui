@@ -18,6 +18,8 @@ model Config {
 }
 
 model Wallet {
-  privateKey String @id
+  name       String  @unique
+  privateKey String  @id
   address    String
+  active     Boolean @default(false)
 }

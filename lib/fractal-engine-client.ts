@@ -127,7 +127,9 @@ export const GetMyMints = async (
 };
 
 export const CreateInvoice = async (invoiceData: any): Promise<string> => {
-  const walletRecord = await prisma.wallet.findFirstOrThrow();
+  const walletRecord = await prisma.wallet.findFirstOrThrow({
+    where: { active: true },
+  });
   const { wallet, network } = await getWallet(
     walletRecord.privateKey,
     invoiceData.password,
@@ -187,7 +189,9 @@ export const CreateInvoice = async (invoiceData: any): Promise<string> => {
 };
 
 export const PayInvoice = async (invoiceData: any): Promise<string> => {
-  const walletRecord = await prisma.wallet.findFirstOrThrow();
+  const walletRecord = await prisma.wallet.findFirstOrThrow({
+    where: { active: true },
+  });
   const { wallet, network } = await getWallet(
     walletRecord.privateKey,
     invoiceData.password,
@@ -249,8 +253,9 @@ export const PayInvoice = async (invoiceData: any): Promise<string> => {
 };
 
 export const MintToken = async (mintData: any): Promise<string> => {
-  const feUrl = await getFractalEngineURL();
-  const walletRecord = await prisma.wallet.findFirstOrThrow();
+  const walletRecord = await prisma.wallet.findFirstOrThrow({
+    where: { active: true },
+  });
   const { wallet, network } = await getWallet(
     walletRecord.privateKey,
     mintData.password,

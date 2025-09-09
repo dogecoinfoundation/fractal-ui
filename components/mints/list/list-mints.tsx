@@ -23,7 +23,7 @@ export const ListMints = ({
   showMine?: boolean;
   myTokens?: boolean;
 }) => {
-  const { walletAddress } = useContext(WalletContext);
+  const { wallet } = useContext(WalletContext);
 
   const [page, setPage] = useState(0);
   const [activeMint, setActiveMint] = useState<Mint | MintWithBalance | null>(
@@ -33,7 +33,7 @@ export const ListMints = ({
 
   const parameters = new URLSearchParams();
   parameters.set("page", page.toString());
-  if (showMine && walletAddress) parameters.set("address", walletAddress);
+  if (showMine && wallet) parameters.set("address", wallet?.address);
   if (myTokens) parameters.set("myTokens", "true");
 
   const { data, isLoading, error } = useAPI<
@@ -53,7 +53,7 @@ export const ListMints = ({
     }
   }, [data?.total, totalPages]);
 
-  if (showMine && !walletAddress) redirect("/wallet");
+  if (showMine && !wallet) redirect("/wallet");
 
   const handlePrevPage = useCallback(() => {
     if (page > 1) setPage(page - 1);

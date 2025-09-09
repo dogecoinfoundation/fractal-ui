@@ -4,9 +4,9 @@ import { WalletContext } from "@/context/wallet-context";
 import { BalanceContent } from "./balance-content";
 
 export const BalanceWidget = () => {
-  const { walletAddress } = useContext(WalletContext);
+  const { wallet } = useContext(WalletContext);
 
-  if (!walletAddress) return <WalletContent />;
+  if (!wallet?.name) return <WalletContent />;
 
   return <BalanceContent />;
 };

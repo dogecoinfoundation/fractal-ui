@@ -10,7 +10,7 @@ export type Balance = {
 
 export async function GET() {
   try {
-    const wallet = await prisma.wallet.findFirst();
+    const wallet = await prisma.wallet.findFirst({ where: { active: true } });
     if (!wallet) {
       return NextResponse.json({ error: "Wallet not found." }, { status: 404 });
     }

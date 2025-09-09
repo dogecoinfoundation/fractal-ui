@@ -10,18 +10,18 @@ import { GridPaper } from "@/components/ui/surfaces/GridPaper";
 import { WalletContext } from "@/context/wallet-context";
 
 export default function AddBalance() {
-  const { walletAddress } = useContext(WalletContext);
+  const { wallet } = useContext(WalletContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
   const [qrCode, setQrCode] = useState<string | null>(null);
 
-  if (!walletAddress) redirect("/wallet");
+  if (!wallet) redirect("/wallet");
 
   useEffect(() => {
-    if (!walletAddress) return;
+    if (!wallet) return;
 
     setLoading(true);
-    QRCode.toDataURL(`dogecoin:${String(walletAddress)}`)
+    QRCode.toDataURL(`dogecoin:${String(wallet.address)}`)
       .then((url) => {
         setQrCode(url);
       })
@@ -32,7 +32,7 @@ export default function AddBalance() {
         console.error(err);
       })
       .finally(() => setLoading(false));
-  }, [walletAddress]);
+  }, [wallet]);
 
   return (
     <GridPaper>
@@ -44,7 +44,7 @@ export default function AddBalance() {
           </h2>
         </div>
         <div className="px-3 py-2 w-fit self-center border-1 rounded-sm border-amber-900/40 bg-amber-50 text-amber-900/85 font-mono text-center">
-          {walletAddress}
+          {wallet.address}
         </div>
 
         {error ? (

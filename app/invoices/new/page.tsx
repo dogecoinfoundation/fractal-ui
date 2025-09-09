@@ -23,7 +23,7 @@ const NewInvoiceSchema = z.object({
 });
 
 export default function CreateNewInvoice() {
-  const { walletAddress } = useContext(WalletContext);
+  const { wallet } = useContext(WalletContext);
   const [loading, setLoading] = useState(false);
   const { password } = useContext(AuthContext);
 
@@ -69,7 +69,7 @@ export default function CreateNewInvoice() {
 
   return (
     <GridPaper>
-      {!walletAddress ? (
+      {!wallet ? (
         <WalletNotConfiguredAlert />
       ) : (
         <Form {...form}>
