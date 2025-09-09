@@ -69,6 +69,11 @@ const patchNextConfig = (config: any, isServer: boolean, dev: boolean) => {
 };
 
 const nextConfig: NextConfig = {
+  images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
   allowedDevOrigins: ["192.168.1.*"],
   turbopack: {
     resolveAlias: {

@@ -1,13 +1,12 @@
 "use client";
 
-import { LoaderPinwheel } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navGroups, sidebarNavGroups } from "@/app/navigation";
 import { BalanceWidget } from "@/components/balance/balance-widget";
 import { StatusWidget } from "@/components/status/status-widget";
 import { cn } from "@/lib/utils";
-import { Separator } from "./separator";
 import { Health } from "@/app/api/health/route";
 import { useAPI } from "@/hooks/useAPI";
 
@@ -21,17 +20,18 @@ export const SideBar = () => {
 
   return (
     <nav className="flex flex-col justify-between gap-3 p-4 h-screen min-w-55 sticky top-0 overflow-y-auto select-none border-r-1 border-r-gray-300 bg-gray-50">
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-4">
         <Link
           href="/"
           className="flex flex-col items-center select-none rounded-md hover:text-gray-500"
         >
-          <h1 className="text-md font-semibold">Fractal Administration</h1>
-          <div className="flex flex-row flex-1 w-full items-center justify-between gap-2">
-            <Separator className="w-full" />
-            <LoaderPinwheel className="size-8 text-zinc-400" />
-            <Separator className="w-full" />
-          </div>
+          <Image
+            src="/fractal-engine-logo.svg"
+            alt="Fractal Engine Logo"
+            width={200}
+            height={40}
+            unoptimized
+          />
         </Link>
 
         <div className="flex flex-col gap-2">
