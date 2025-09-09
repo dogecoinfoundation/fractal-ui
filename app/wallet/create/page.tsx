@@ -15,13 +15,9 @@ import { WalletContext } from "@/context/wallet-context";
 import { fisherYatesShuffle } from "@/lib/utils";
 
 export default function CreateWallet() {
-  const { walletAddress } = useContext(WalletContext);
-
   const [seedPhrase, setSeedPhrase] = useState<string[]>([]);
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [status, setStatus] = useState<SeedPhraseStatus>("IDLE");
-
-  if (walletAddress) return redirect("/wallet");
 
   const generate = async () => {
     try {

@@ -20,7 +20,11 @@ const patchNextConfig = (config: any, isServer: boolean, dev: boolean) => {
   // https://github.com/vercel/next.js/issues/25852
   // Use the client static directory in the server bundle and prod mode
   // Fixes `Error occurred prerendering page "/"`
-  config.experiments = { ...config.experiments, asyncWebAssembly: true };
+  config.experiments = {
+    ...config.experiments,
+    asyncWebAssembly: true,
+    layers: true,
+  };
 
   if (!dev) {
     config.plugins.push(
@@ -72,6 +76,7 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.1.*"],
   turbopack: {
     resolveAlias: {
+      "@houseofdoge/km2": "@houseofdoge/km2/bindings/wasm/package.json",
       "@/app/globals.css": "./app/globals.css",
     },
   },

@@ -13,8 +13,10 @@ import { WalletSection } from "@/components/wallet/wallet-section";
 import { AuthContext } from "@/context/auth-context";
 import { SeedPhraseContext } from "@/context/seedphrase-context";
 import { WalletContext } from "@/context/wallet-context";
+import { useRouter } from "next/navigation";
 
 export const ConfirmSeedPhrase = () => {
+  const router = useRouter();
   const { seedPhrase, setSeedPhrase, candidates, setStatus } =
     useContext(SeedPhraseContext);
   const { password } = useContext(AuthContext);
@@ -32,6 +34,7 @@ export const ConfirmSeedPhrase = () => {
     word1: getRefiner(0),
     word2: getRefiner(1),
     word3: getRefiner(2),
+    name: z.string().min(2).max(100),
   });
 
   const form = useForm<z.infer<typeof SeedPhraseSchema>>({
@@ -40,6 +43,7 @@ export const ConfirmSeedPhrase = () => {
       word1: "",
       word2: "",
       word3: "",
+      name: "",
     },
     mode: "all",
     reValidateMode: "onChange",
@@ -51,10 +55,12 @@ export const ConfirmSeedPhrase = () => {
     try {
       const response = await fetch("/api/wallet/create", {
         method: "POST",
-        body: JSON.stringify({ seedPhrase, password }),
+        body: JSON.stringify({ name: allFields.name, seedPhrase, password }),
       });
       await response.json();
       refreshWalletData();
+
+      router.push("/wallet");
     } catch (error) {
       console.error(error);
       setStatus("ERROR");
@@ -112,6 +118,15 @@ export const ConfirmSeedPhrase = () => {
               seedPhrase={seedPhrase}
               candidatesMap={candidatesMap}
               fields={allFields}
+            />
+          </div>
+
+          <div className="grid grid-cols-4 gap-8">
+            <InputFormField
+              required
+              control={form.control}
+              name="name"
+              label={`Wallet Name`}
             />
           </div>
 

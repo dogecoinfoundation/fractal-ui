@@ -4,16 +4,17 @@ import { MintsSidebar } from "@/components/mints/list/mints-sidebar";
 import { MintCard } from "@/components/mints/mint-card";
 import { Input } from "@/components/ui/input";
 import { WalletContext } from "@/context/wallet-context";
-import type { Mint } from "@/generated/prisma";
+
 import { useAPI } from "@/hooks/useAPI";
 import {
   type MintsResponse,
   type MintWithBalance,
+  MintWithBalanceResponse,
   PAGE_SIZE,
-  type TokensResponse,
 } from "@/lib/definitions";
 import { cn } from "@/lib/utils";
 import { MintPagination } from "./mint-pagination";
+import { Mint } from "@/app/api/mints/route";
 
 export const ListMints = ({
   showMine = false,
@@ -22,9 +23,9 @@ export const ListMints = ({
   showMine?: boolean;
   myTokens?: boolean;
 }) => {
-  const { walletAddress } = useContext(WalletContext);
+  const { wallet } = useContext(WalletContext);
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [activeMint, setActiveMint] = useState<Mint | MintWithBalance | null>(
     null,
   );
@@ -32,12 +33,12 @@ export const ListMints = ({
 
   const parameters = new URLSearchParams();
   parameters.set("page", page.toString());
-  if (showMine && walletAddress) parameters.set("address", walletAddress);
+  if (showMine && wallet) parameters.set("address", wallet?.address);
   if (myTokens) parameters.set("myTokens", "true");
 
-  const { data, isLoading, error } = useAPI<MintsResponse | TokensResponse>(
-    `/api/mints?${parameters.toString()}`,
-  );
+  const { data, isLoading, error } = useAPI<
+    MintsResponse | MintWithBalanceResponse
+  >(`/api/${myTokens ? "tokens" : "mints"}?${parameters.toString()}`);
   const [totalPages, setTotalPages] = useState(
     Math.ceil((data?.total || 1) / PAGE_SIZE),
   );
@@ -52,7 +53,7 @@ export const ListMints = ({
     }
   }, [data?.total, totalPages]);
 
-  if (showMine && !walletAddress) redirect("/wallet");
+  if (showMine && !wallet) redirect("/wallet");
 
   const handlePrevPage = useCallback(() => {
     if (page > 1) setPage(page - 1);
@@ -65,7 +66,7 @@ export const ListMints = ({
   const getBodyText = () => {
     if (isLoading) return "Loading...";
     if (error) return "Error fetching mints!";
-    if (data && data.mints.length === 0) return "No mints found.";
+    if (data && data.mints?.length === 0) return "No mints found.";
 
     return "Please select a mint from the list to the left.";
   };

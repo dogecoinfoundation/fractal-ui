@@ -15,8 +15,8 @@ importers:
         specifier: ^5.2.1
         version: 5.2.1(react-hook-form@7.62.0(react@19.1.0))
       '@houseofdoge/km2':
-        specifier: 0.0.5
-        version: 0.0.5
+        specifier: 0.0.5-beta-signing-trxns
+        version: 0.0.5-beta-signing-trxns
       '@prisma/client':
         specifier: 6.11.1
         version: 6.11.1(prisma@6.11.1(typescript@5.8.3))(typescript@5.8.3)
@@ -53,6 +53,9 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
+      json-canonicalize:
+        specifier: ^2.0.0
+        version: 2.0.0
       lucide-react:
         specifier: ^0.525.0
         version: 0.525.0(react@19.1.0)
@@ -545,8 +548,8 @@ packages:
     peerDependencies:
       react-hook-form: ^7.55.0
 
-  '@houseofdoge/km2@0.0.5':
-    resolution: {integrity: sha512-9Z8RgpWyDobH0BjNoilOjAuLjOghZhoAh/Hbi92f9XYsawxX9Nz4e2n4ZjJv6TvRJhvdncP+mkmTVJ2Cu9XgVg==, tarball: https://npm.pkg.github.com/download/@houseofdoge/km2/0.0.5/89f0fd5d1c384f736113b84962d4c467f844d7a5}
+  '@houseofdoge/km2@0.0.5-beta-signing-trxns':
+    resolution: {integrity: sha512-o40PHIFpCaNypRUtpw/8RCjwBsytK5j6y+wQq1qm42fiZ7M5u71627Lw+Fb7RkoPLqJh8o9N3yE0OL5F173LUw==, tarball: https://npm.pkg.github.com/download/@houseofdoge/km2/0.0.5-beta-signing-trxns/b416a242d8d9010ebb9e9f6d6e35cb018a5bcccb}
     engines: {node: '>=18'}
 
   '@img/sharp-darwin-arm64@0.34.2':
@@ -1675,6 +1678,9 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
+  json-canonicalize@2.0.0:
+    resolution: {integrity: sha512-yyrnK/mEm6Na3ChbJUWueXdapueW0p380RUyTW87XGb1ww8l8hU0pRrGC3vSWHe9CxrbPHX2fGUOZpNiHR0IIg==}
+
   json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}
 
@@ -2758,7 +2764,7 @@ snapshots:
       '@standard-schema/utils': 0.3.0
       react-hook-form: 7.62.0(react@19.1.0)
 
-  '@houseofdoge/km2@0.0.5': {}
+  '@houseofdoge/km2@0.0.5-beta-signing-trxns': {}
 
   '@img/sharp-darwin-arm64@0.34.2':
     optionalDependencies:
@@ -3779,6 +3785,8 @@ snapshots:
       - utf-8-validate
 
   jsesc@3.1.0: {}
+
+  json-canonicalize@2.0.0: {}
 
   json-parse-even-better-errors@2.3.1: {}
 

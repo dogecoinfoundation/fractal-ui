@@ -13,21 +13,19 @@ import { GridPaper } from "@/components/ui/surfaces/GridPaper";
 import { WalletNotConfiguredAlert } from "@/components/wallet/wallet-not-configured-alert";
 import { WalletContext } from "@/context/wallet-context";
 import { HASH_REGEX } from "@/lib/hash-validation";
+import { AuthContext } from "@/context/auth-context";
 
 const NewInvoiceSchema = z.object({
-  buyerAddress: z
-    .string()
-    .nonempty({ error: "Please enter a buyer address." })
-    .regex(HASH_REGEX.mainNet, {
-      error: "Please enter a valid mainnet address.",
-    }),
+  buyerAddress: z.string().nonempty({ error: "Please enter a buyer address." }),
+  mintHash: z.string().nonempty({ error: "Please enter a mint hash." }),
   quantity: z.coerce.number().min(1),
   pricePer: z.coerce.number().min(1),
 });
 
 export default function CreateNewInvoice() {
-  const { walletAddress } = useContext(WalletContext);
+  const { wallet } = useContext(WalletContext);
   const [loading, setLoading] = useState(false);
+  const { password } = useContext(AuthContext);
 
   const form = useForm<
     z.input<typeof NewInvoiceSchema>,
@@ -37,6 +35,7 @@ export default function CreateNewInvoice() {
     resolver: zodResolver(NewInvoiceSchema),
     defaultValues: {
       buyerAddress: "",
+      mintHash: "",
       quantity: 0,
       pricePer: 0,
     },
@@ -49,7 +48,13 @@ export default function CreateNewInvoice() {
       setLoading(true);
       await fetch("/api/invoice/create", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          buyer_address: data.buyerAddress,
+          mint_hash: data.mintHash,
+          quantity: data.quantity,
+          price: data.pricePer,
+          password: password,
+        }),
       });
       form.reset();
     } catch (error) {
@@ -64,7 +69,7 @@ export default function CreateNewInvoice() {
 
   return (
     <GridPaper>
-      {!walletAddress ? (
+      {!wallet ? (
         <WalletNotConfiguredAlert />
       ) : (
         <Form {...form}>
@@ -76,6 +81,13 @@ export default function CreateNewInvoice() {
               control={form.control}
               name="buyerAddress"
               label="Buyer Address"
+              required
+              disabled={loading}
+            />
+            <InputFormField
+              control={form.control}
+              name="mintHash"
+              label="Mint Hash"
               required
               disabled={loading}
             />

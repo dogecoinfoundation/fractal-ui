@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { Mint } from "@/generated/prisma";
+import { Mint } from "@/app/api/mints/route";
 import { type MintWithBalance, PAGE_SIZE } from "@/lib/definitions";
 import { cn } from "@/lib/utils";
 
@@ -55,9 +55,9 @@ export const MintsSidebar = ({
             <h3 className="text-xs text-gray-600 text-left w-full">
               {mint.description}
             </h3>
-            {"balance" in mint ? (
+            {"quantity" in mint ? (
               <h4 className="text-xs text-gray-500 text-left w-full font-medium">
-                {mint.balance.toLocaleString()} tokens owned out of{" "}
+                {mint.quantity.toLocaleString()} tokens owned out of{" "}
                 {mint.fraction_count.toLocaleString()}
               </h4>
             ) : null}

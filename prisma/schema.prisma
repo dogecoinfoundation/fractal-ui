@@ -11,26 +11,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Mint {
-  id               String   @id @default(uuid())
-  title            String
-  description      String
-  created_at       DateTime @default(now())
-  metadata         Json
-  fraction_count   Int
-  hash             String?
-  feed_url         String
-  block_height     Int?
-  transaction_hash String?
-}
-
-model Balance {
-  id       String @id @default(uuid())
-  currency String
-  symbol   String
-  value    Int
-}
-
 model Config {
   id    String @id @default(uuid())
   key   String @unique
@@ -38,6 +18,8 @@ model Config {
 }
 
 model Wallet {
-  privateKey String @id
+  name       String  @unique
+  privateKey String  @id
   address    String
+  active     Boolean @default(false)
 }

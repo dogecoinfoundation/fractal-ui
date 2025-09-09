@@ -9,9 +9,8 @@ import { cn } from "@/lib/utils";
 type TestConnectionProps = {
   loading: boolean;
   isValid: boolean;
-  host: string;
-  port: number;
-  authenticationToken?: string;
+  fractalEngineUrl: string;
+  indexerUrl: string;
 };
 
 const statusVariants = cva(
@@ -34,9 +33,8 @@ const statusVariants = cva(
 export const TestConnection = ({
   loading,
   isValid,
-  host,
-  port,
-  authenticationToken,
+  fractalEngineUrl,
+  indexerUrl,
 }: TestConnectionProps) => {
   const {
     result,
@@ -88,7 +86,7 @@ export const TestConnection = ({
         type="button"
         className="h-full"
         disabled={testLoading || loading || !isValid}
-        onClick={() => testConnection(host, port, authenticationToken)}
+        onClick={() => testConnection(fractalEngineUrl, indexerUrl)}
       >
         Test
       </Button>

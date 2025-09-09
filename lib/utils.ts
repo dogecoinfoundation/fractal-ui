@@ -20,3 +20,7 @@ export function fisherYatesShuffle<T>(array: Array<T>) {
 export function getRandomInteger(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export function removeNullKeys(obj: Record<string, any>) {
+  return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== null));
+}

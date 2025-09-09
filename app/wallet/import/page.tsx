@@ -16,7 +16,6 @@ const ImportSchema = z.object({
 });
 
 export default function ImportWallet() {
-  const { walletAddress } = useContext(WalletContext);
   const [seedPhrase, setSeedPhrase] = useState<string[]>([]);
   const [walletCreated, setWalletCreated] = useState(false);
 
@@ -38,7 +37,7 @@ export default function ImportWallet() {
     return () => document.removeEventListener("paste", handlePaste);
   }, [validateText]);
 
-  if (walletAddress || walletCreated) return redirect("/wallet");
+  if (walletCreated) return redirect("/wallet");
 
   const pasteFromClipboard = async () => {
     const text = await navigator.clipboard.readText();

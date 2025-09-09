@@ -6,25 +6,37 @@ import { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { Paper } from "@/components/ui/surfaces/Paper";
 import { WalletContext } from "@/context/wallet-context";
+import { useAPI } from "@/hooks/useAPI";
+import { Wallet } from "@/generated/prisma";
+import { WalletTile } from "@/components/wallet/wallet-tile";
 export default function WalletView() {
-  const { walletAddress } = useContext(WalletContext);
+  const { data, error, isLoading, mutate } =
+    useAPI<Wallet[]>("/api/wallet/all");
+  const { wallet } = useContext(WalletContext);
 
   const getPageContent = () => {
-    if (walletAddress) {
-      return (
-        <div className="flex flex-col h-full gap-2 items-center justify-center text-2xl">
-          <BadgeCheck className="size-10 text-emerald-500" />
-          <p className="text-emerald-700">Wallet has been configured.</p>
-        </div>
-      );
-    }
-
     return (
       <div className="flex flex-col gap-6 h-full justify-center items-center">
-        <p className="text-2xl text-zinc-600 text-center">
-          There is no wallet configured. Please import an existing wallet or
-          create a new one:
-        </p>
+        {(data?.length || 0) > 1 && (
+          <div>
+            {data?.map((wallet) => (
+              <WalletTile key={wallet.name} wallet={wallet} mutate={mutate} />
+            ))}
+          </div>
+        )}
+
+        {data?.length === 0 && (
+          <p className="text-2xl text-zinc-600 text-center">
+            There is no wallet configured. Please import an existing wallet or
+            create a new one:
+          </p>
+        )}
+        {wallet?.name && (
+          <p className="text-2xl text-zinc-600 text-center">
+            You already have a wallet configured ({wallet.name}). You can still
+            import an existing wallet or create a new one:
+          </p>
+        )}
         <div className="flex flex-row gap-6 self-center justify-between w-1/2">
           <Link href="/wallet/import" className="flex-1">
             <Button className="w-full text-xl p-8">Import</Button>

@@ -13,11 +13,12 @@ import { GridPaper } from "@/components/ui/surfaces/GridPaper";
 import { WalletNotConfiguredAlert } from "@/components/wallet/wallet-not-configured-alert";
 import { WalletContext } from "@/context/wallet-context";
 import { HASH_REGEX } from "@/lib/hash-validation";
+import { AuthContext } from "@/context/auth-context";
 
 const { hex, mainNet } = HASH_REGEX;
 
 const PayInvoiceSchema = z.object({
-  hash: z
+  invoiceHash: z
     .string()
     .nonempty({ error: "Please enter an invoice hash." })
     .regex(hex, {
@@ -25,16 +26,14 @@ const PayInvoiceSchema = z.object({
     }),
   sellerAddress: z
     .string()
-    .nonempty({ error: "Please enter a seller address." })
-    .regex(mainNet, {
-      error: "Please enter a valid mainnet address.",
-    }),
+    .nonempty({ error: "Please enter a seller address." }),
   total: z.coerce.number().min(1),
 });
 
 export default function PayInvoice() {
-  const { walletAddress } = useContext(WalletContext);
+  const { wallet } = useContext(WalletContext);
   const [loading, setLoading] = useState(false);
+  const { password } = useContext(AuthContext);
 
   const form = useForm<
     z.input<typeof PayInvoiceSchema>,
@@ -43,7 +42,7 @@ export default function PayInvoice() {
   >({
     resolver: zodResolver(PayInvoiceSchema),
     defaultValues: {
-      hash: "",
+      invoiceHash: "",
       sellerAddress: "",
       total: 0,
     },
@@ -56,7 +55,12 @@ export default function PayInvoice() {
       setLoading(true);
       await fetch("/api/invoice/pay", {
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          invoice_hash: data.invoiceHash,
+          seller_address: data.sellerAddress,
+          total: data.total,
+          password: password,
+        }),
       });
 
       form.reset();
@@ -69,7 +73,7 @@ export default function PayInvoice() {
 
   return (
     <GridPaper>
-      {!walletAddress ? (
+      {!wallet ? (
         <WalletNotConfiguredAlert />
       ) : (
         <Form {...form}>
@@ -79,7 +83,7 @@ export default function PayInvoice() {
           >
             <InputFormField
               control={form.control}
-              name="hash"
+              name="invoiceHash"
               label="Invoice Hash"
               required
               disabled={loading}

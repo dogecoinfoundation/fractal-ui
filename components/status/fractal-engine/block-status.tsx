@@ -15,9 +15,15 @@ const getProgressValue = (isLoading: boolean, data?: Health) => {
   return (data.current_block_height / data.latest_block_height) * 100;
 };
 
-export const BlockStatus = () => {
-  const { data, isLoading, error } = useAPI<Health>("/api/health");
-
+export const BlockStatus = ({
+  data,
+  isLoading,
+  error,
+}: {
+  data: Health | undefined;
+  isLoading: boolean;
+  error: Error;
+}) => {
   return (
     <div className="flex flex-col gap-2 flex-1">
       <div className="flex items-center gap-2">

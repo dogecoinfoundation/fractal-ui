@@ -7,8 +7,12 @@ import { navGroups, sidebarNavGroups } from "@/app/navigation";
 import { BalanceWidget } from "@/components/balance/balance-widget";
 import { StatusWidget } from "@/components/status/status-widget";
 import { cn } from "@/lib/utils";
+import { Health } from "@/app/api/health/route";
+import { useAPI } from "@/hooks/useAPI";
 
 export const SideBar = () => {
+  const healthResponse = useAPI<Health>("/api/health");
+
   const pathname = usePathname();
   const activeGroupName = navGroups.find((group) =>
     group.items.some((item) => item.url === pathname),
@@ -66,8 +70,8 @@ export const SideBar = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <BalanceWidget />
-        <StatusWidget />
+        {healthResponse?.data?.indexer_connected && <BalanceWidget />}
+        <StatusWidget {...healthResponse} />
       </div>
     </nav>
   );
