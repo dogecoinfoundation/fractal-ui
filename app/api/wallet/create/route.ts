@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
       using seed = km2.SeedPhrase.from({ mnemonic: seedPhrase.join(" ") });
       using wallet = new km2.Wallet(seed, {
         cryptocurrency: Crypto.Dogecoin,
-        network: network,
+        network,
       });
       using kp = wallet.deriveKeypair({ account: 1, change: 0, index: 0 });
 

@@ -4,8 +4,6 @@ import { PrismaClient } from "@/generated/prisma";
 
 export async function POST() {
   try {
-    const prisma = new PrismaClient();
-
     using seed = new km2.SeedPhrase({
       wordCount: 24,
       language: Language.English,

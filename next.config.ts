@@ -1,7 +1,6 @@
 import { access, symlink } from "node:fs/promises";
 import { join } from "node:path";
 import type { NextConfig } from "next";
-const path = require("path");
 
 type Compiler = {
   hooks: {
